@@ -1,0 +1,17 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+
+GNU General Public License (GPL) version 3 guarantees freedom to share and change all versions of a program.
+
+Permissions include commercial use, modification, distribution, and patent use.
+Copyleft: if you distribute a modified work, you must license it as a whole under GPLv3.
+
+You must provide Corresponding Source when conveying object code.
+Additional terms must be consistent with GPLv3.
+
+NO WARRANTY; the program is provided AS-IS to the extent permitted by applicable law.
+
+Copyleft overlaps with distribution rights and source provision.
+
+
