@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run converter on examples
+        run: |
+          mkdir -p build
+          python src/liz2standoff.py examples/apache-2.0.liz build/apache-2.0.txt build/apache-2.0.xml
+          python src/liz2standoff.py examples/gpl-3.0.liz build/gpl-3.0.txt build/gpl-3.0.xml
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build/**

@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "license-annotator"
+version = "1.0.0"
+description = "Konvertiert annotierte Plaintext-Dateien (*.liz) in Standoff-XML und erzeugt Visualisierungen via XSLT."
+readme = "README.md"
+authors = [
+  { name = "Thomas Schubert", email = "info@example.com" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+keywords = ["annotation", "xml", "xslt", "license", "standoff", "markup"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Text Processing :: Markup",
+  "Topic :: Software Development :: Build Tools"
+]
+
+[project.scripts]
+liz2standoff = "liz2standoff:main"
+
+[project.urls]
+Homepage = "https://github.com/example/license-annotator"
+Documentation = "https://github.com/example/license-annotator#readme"
+Issues = "https://github.com/example/license-annotator/issues"
+
+[tool.setuptools]
+# Füge das src-Verzeichnis hinzu, aber vermeide build/
+packages = []
+include-package-data = false
+script-files = ["src/liz2standoff.py"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
