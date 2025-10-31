@@ -11,12 +11,13 @@
 #
 # Offsets sind 0-basiert, end-exklusiv, gemessen im reinen Text nach Entfernen der Marker.
 
-import re
-import sys
 import html
-import unicodedata
+import re
+import shutil
 from pathlib import Path
 from xml.sax.saxutils import quoteattr
+
+import unicodedata
 
 TAG_RE = re.compile(
     r"\[\[\s*(/?)([A-Za-z][\w:-]*)(?:\#([\w.-]+))?(?:\s+([^\]]*?))?\s*\]\]",
@@ -24,6 +25,20 @@ TAG_RE = re.compile(
 )
 
 ATTR_RE = re.compile(r'([A-Za-z_][\w:.-]*)\s*=\s*"(.*?)"', re.DOTALL)
+
+
+def copy_text_file(src_dir: str, dst_dir: str) -> None:
+    """Kopiert eine Textdatei von src_dir nach dst_dir."""
+    src_path = Path(src_dir)
+    dst_path = Path(dst_dir)
+    print(f"Von: {src_path} Nach: {dst_path}")
+
+    # Sicherstellen, dass Zielverzeichnis existiert
+    dst_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Datei komplett kopieren (Inhalt + Metadaten wie Zeitstempel)
+    shutil.copy2(src_path, dst_path)
+
 
 def parse_attrs(s):
     # Parse key="value" Paare; ignoriert fehlerhafte Fragmente.
@@ -34,6 +49,7 @@ def parse_attrs(s):
         k, v = m.group(1), m.group(2)
         attrs[k] = v
     return attrs
+
 
 def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     src = Path(inp).read_text(encoding="utf-8")
@@ -64,7 +80,7 @@ def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
                 "start": out_len,
                 "attrs": parse_attrs(attrs_raw),
             }
-        else:          # Ende
+        else:  # Ende
             if not sid:
                 raise ValueError(f"End-Tag [[/{typ}]] ohne #id bei Pos {m.start()} in {inp}")
             span = open_spans.pop(sid, None)
@@ -95,7 +111,10 @@ def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
         return " ".join(f'{k}={quoteattr(v)}' for k, v in a_dict.items())
 
     lines = []
-    lines.append('<?xml version="1.0" encoding="UTF-8"?>')
+    lines.append('<?xml version="1.0" encoding="UTF-8" standalone="no"?>')
+    lines.append('<!--DOCTYPE rezepte SYSTEM "src/rezepte.dtd"-->')
+    lines.append('<?xml-stylesheet type="text/xsl" href="./style.xsl"?>')
+    lines.append('<?thomas-schubert document-status="draft" version="2.0"?>')
     lines.append('<doc>')
     lines.append('  <text>')
     lines.append('    ' + html.escape(plain_text))
@@ -110,8 +129,14 @@ def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     lines.append('</doc>')
     Path(out_xml).write_text("\n".join(lines), encoding="utf-8")
 
+
 if __name__ == "__main__":
-    inp = sys.argv[1] if len(sys.argv) > 1 else "input.liz"
-    out_txt = sys.argv[2] if len(sys.argv) > 2 else "output.txt"
-    out_xml = sys.argv[3] if len(sys.argv) > 3 else "output.xml"
+    src_folder: str = "../lizenzkatalog"
+    xsl_folder: str = "../src/xslt"
+    dst_folder: str = "../docs"
+    license_name: str = "gpl-3.0"
+    copy_text_file(f"{xsl_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
+    inp = f"{src_folder}/{license_name}.liz"
+    out_txt = f"{dst_folder}/{license_name}.txt"
+    out_xml = f"{dst_folder}/{license_name}.xml"
     main(inp, out_txt, out_xml)

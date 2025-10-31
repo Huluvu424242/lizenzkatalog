@@ -62,10 +62,10 @@ Du kannst sie mit Saxon (CLI) anwenden oder mit Saxon-JS im Browser nutzen.
 Beispiel (Saxon HE CLI):
 ```bash
 # Apache 2.0
-java -jar saxon-he.jar -s:build/apache-2.0.xml -xsl:src/xslt/standoff2table.xsl -o:build/apache-2.0.html
+java -jar saxon-he.jar -s:build/apache-2.0.xml -xsl:src/xslt/liz2table-style.xsl -o:build/apache-2.0.html
 
 # GPL
-java -jar saxon-he.jar -s:build/gpl-3.0.xml -xsl:src/xslt/standoff2table.xsl -o:build/gpl-3.0.html
+java -jar saxon-he.jar -s:build/gpl-3.0.xml -xsl:src/xslt/liz2table-style.xsl -o:build/gpl-3.0.html
 ```
 
 ## Hinweise
