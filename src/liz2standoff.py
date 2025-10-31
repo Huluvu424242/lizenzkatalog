@@ -51,7 +51,8 @@ def parse_attrs(s):
     return attrs
 
 
-def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
+def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
+    print(f"Verarbeite: {inp}")
     src = Path(inp).read_text(encoding="utf-8")
     # Normalisierung für stabile Offsets
     src = unicodedata.normalize("NFC", src)
@@ -105,6 +106,7 @@ def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     # Plaintext schreiben
     plain_text = "".join(out_buf)
     Path(out_txt).write_text(plain_text, encoding="utf-8")
+    print(f" --> {out_txt}")
 
     # XML schreiben
     def attrs_to_xml(a_dict):
@@ -128,15 +130,20 @@ def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     lines.append('  </annotations>')
     lines.append('</doc>')
     Path(out_xml).write_text("\n".join(lines), encoding="utf-8")
+    print(f" --> {out_xml}")
 
 
 if __name__ == "__main__":
     src_folder: str = "../lizenzkatalog"
     xsl_folder: str = "../src/xslt"
     dst_folder: str = "../build"
-    license_name: str = "gpl-3.0"
+    srcpath: Path = Path(src_folder)
+    liz_dateien: list[str] = [f.name for f in srcpath.glob("*.liz")]
+
+    print(liz_dateien)
     copy_text_file(f"{xsl_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
-    inp = f"{src_folder}/{license_name}.liz"
-    out_txt = f"{dst_folder}/{license_name}.txt"
-    out_xml = f"{dst_folder}/{license_name}.xml"
-    main(inp, out_txt, out_xml)
+    for license_name in liz_dateien:
+        inp = f"{src_folder}/{license_name}"
+        out_txt = f"{dst_folder}/{license_name}.txt"
+        out_xml = f"{dst_folder}/{license_name}.xml"
+        konvertiere(inp, out_txt, out_xml)
