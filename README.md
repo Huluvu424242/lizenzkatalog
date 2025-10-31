@@ -43,7 +43,7 @@ license-annotator/
 
 ```bash
 python3 src/liz2standoff.py examples/apache-2.0.liz build/apache-2.0.txt build/apache-2.0.xml
-python3 src/liz2standoff.py examples/gpl-3.0.liz     build/gpl-3.0.txt     build/gpl-3.0.xml
+python3 src/liz2standoff.py examples/gpl-3.0.liz     build/gpl-3.0.txt     build/gpl-3.0.tei.xml
 ```
 
 Optional: Alle `*.liz` in `examples/` verarbeiten:
@@ -65,7 +65,7 @@ Beispiel (Saxon HE CLI):
 java -jar saxon-he.jar -s:build/apache-2.0.xml -xsl:src/xslt/liz2table-style.xsl -o:build/apache-2.0.html
 
 # GPL
-java -jar saxon-he.jar -s:build/gpl-3.0.xml -xsl:src/xslt/liz2table-style.xsl -o:build/gpl-3.0.html
+java -jar saxon-he.jar -s:build/gpl-3.0.tei.xml -xsl:src/xslt/liz2table-style.xsl -o:build/gpl-3.0.html
 ```
 
 ## Hinweise

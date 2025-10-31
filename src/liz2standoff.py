@@ -138,12 +138,12 @@ if __name__ == "__main__":
     xsl_folder: str = "../src/xslt"
     dst_folder: str = "../build"
     srcpath: Path = Path(src_folder)
-    liz_dateien: list[str] = [f.name for f in srcpath.glob("*.liz")]
+    liz_dateien: list[str] = [f.stem for f in srcpath.glob("*.liz")]
 
     print(liz_dateien)
     copy_text_file(f"{xsl_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
     for license_name in liz_dateien:
-        inp = f"{src_folder}/{license_name}"
+        inp = f"{src_folder}/{license_name}.liz"
         out_txt = f"{dst_folder}/{license_name}.txt"
-        out_xml = f"{dst_folder}/{license_name}.xml"
+        out_xml = f"{dst_folder}/{license_name}.tei.xml"
         konvertiere(inp, out_txt, out_xml)
