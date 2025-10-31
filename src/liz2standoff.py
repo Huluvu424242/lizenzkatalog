@@ -133,7 +133,7 @@ def main(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
 if __name__ == "__main__":
     src_folder: str = "../lizenzkatalog"
     xsl_folder: str = "../src/xslt"
-    dst_folder: str = "../docs"
+    dst_folder: str = "../build"
     license_name: str = "gpl-3.0"
     copy_text_file(f"{xsl_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
     inp = f"{src_folder}/{license_name}.liz"
