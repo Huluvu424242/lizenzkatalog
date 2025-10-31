@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--DOCTYPE rezepte SYSTEM "src/rezepte.dtd"-->
-<?xml-stylesheet type="text/xsl" href="./style.xsl"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
 <?thomas-schubert document-status="draft" version="2.0"?>
 <doc>
   <text>
