@@ -14,6 +14,45 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
    Goethe [[person#p1 ref="gnd:118540238"]]Johann W. v. Goethe[[/person#p1]]
    war ein [[relation#r1]]Freund von [[person#p2]]Schiller[[/person#p2]][[/relation#r1]].
    ```
+   
+   Annotationsmöglichkeiten
+   Nutzung uneingeschränkt
+   Nutzung Nutzungsart Einschränkung
+   Nutzungsarten - use: 
+   * doc:: Dokumentation
+   * sw-app: Eigenständige Anwendung
+   * sw-lib: Softwarekomponente, Bibliothek als Abhängigkeit
+   Aktionen - act:
+   * cop: Vervielfältigung, Kopieren
+   * mod: Verändern, Modifikation
+   * mov: Verteilen, Verbreiten
+   * sel: Verkaufen
+   * der: Derive, Ableiten, Einbau in eigene Software
+   
+   Pflichten/Folgen - rul:
+   * nolia: Haftungsausschluss, Warranty Disclaimer
+   * by: Namensnennung
+   * sa: Weitergabe unter gleicher Lizenz
+   * nd: Keine Modifikation
+   * nodrm: Keine technischen Schutzmaßnahmen wie Kpierschutz erlaubt
+   * nomili: Keine Militärische Nutzung
+   * nc: Keine Kommerzielle Nutzung
+   * com: Kommerzielle Nutzung
+   * edu: Nutzung in Bildung oder Forschung
+   * psi: Nutzung in Behörden, Verwaltungen
+
+  Beispiel Haftungsausschluss
+  ```
+  8.2 [[rul#nolia]]If liability may not be excluded by law, it is limited to actual and direct financial loss to the extent it is caused by proved negligence on the part of the Licensor.[[/rul#nolia]]
+  ```
+
+
+  Beispiel Verbreitung eingeschränkt:
+  ```
+  Goethe [[person#p1 ref="gnd:118540238"]]Johann W. v. Goethe[[/person#p1]]
+  war ein [[relation#r1]]Freund von [[person#p2]]Schiller[[/person#p2]][[/relation#r1]].
+  ```
+
 
 2. Python-Skript erzeugt
    - `output.txt` (reiner Text ohne Marker)
