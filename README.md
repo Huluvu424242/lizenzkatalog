@@ -16,35 +16,78 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
    ```
    
    Annotationsmöglichkeiten
-   Allgemein - lic: 
+
+   Allgemein (lic): 
    * name: Name der Lizenz
+     ```[[lic#name]]...[[/lic#name]]```
    * spdx: SPDX ID der Lizenz
+     ```[[lic#spdx=IDBezeichner]]```
    * fsf: FSF Approved
+     ```[[lic#fsf]]```
    * OSI: OSI Approved
+     ```[[lic#osi]]```
    * c: Alle Rechte vorbehalten
+     ```[[lic#c]]```
    * c0: Nutzung uneingeschränkt
-   Nutzungsarten - use: 
-   * doc:: Dokumentation
-   * sw-app: Eigenständige Anwendung
-   * sw-lib: Softwarekomponente, Bibliothek als Abhängigkeit
-   Aktionen - act:
-   * cop: Vervielfältigung, Kopieren
-   * mod: Verändern, Modifikation
-   * mov: Verteilen, Verbreiten
-   * sel: Verkaufen
-   * der: Derive, Ableiten, Einbau in eigene Software
+     ```[[lic#c0]]```
    
-   Pflichten/Folgen - rul:
+   Nutzungsarten (use): 
+   * doc:: Dokumentation
+     ```[[use#doc]]...[[/use#doc]]```
+   * lib: Softwarekomponente, Bibliothek als Abhängigkeit
+     ```[[use#lib]]...[[/use#lib]]```
+   * app: Eigenständige lokale Anwendung
+     ```[[use#app]]...[[/use#app]]```
+   * cld: Eigenständige Cloud Anwendung
+     ```[[use#cld]]...[[/use#cld]]```
+
+   Begrenzung (lim)
+   * pc: Anzahl Rechner
+     ```[[lim#pc]]...[[/lim#pc]]```
+   * dev: Anzahl Geräte (Drucker etc.)
+     ```[[lim#dev]]...[[/lim#dev]]```
+   * srv: Anzahl Server
+     ```[[lim#srv]]...[[/lim#srv]]```
+   * cpu: Anzahl CPU
+     ```[[lim#cpu]]...[[/lim#cpu]]```
+   * krn: Anzahl Kerne
+     ```[[lim#krn]]...[[/lim#krn]]```
+   * usr: Anzahl Nutzer
+     ```[[lim#usr]]...[[/lim#usr]]```
+
+   Aktionen (act):
+   * cop: Vervielfältigung, Kopieren
+     ```[[act#cop]]...[[/act#cop]]```
+   * mod: Verändern, Modifikation
+     ```[[act#mod]]...[[/act#mod]]```
+   * mov: Verteilen, Verbreiten
+     ```[[act#mov]]...[[/act#mov]]```
+   * sel: Verkaufen
+     ```[[act#sel]]...[[/act#sel]]```
+   * der: Derive, Ableiten, Einbau in eigene Software
+     ```[[act#der]]...[[/act#der]]```
+   
+   Pflichten/Folgen (rul):
    * nolia: Haftungsausschluss, Warranty Disclaimer
+     ```[[rul#nolia]]...[[/rul#nolia]]```
    * by: Namensnennung
+     ```[[rul#by]]...[[/rul#by]]```
    * sa: Weitergabe unter gleicher Lizenz
+     ```[[rul#sa]]...[[/rul#sa]]```
    * nd: Keine Modifikation
+     ```[[rul#nd]]...[[/rul#nd]]```
    * nodrm: Keine technischen Schutzmaßnahmen wie Kpierschutz erlaubt
+     ```[[rul#nodrm]]...[[/rul#nodrm]]```
    * nomili: Keine Militärische Nutzung
+     ```[[rul#nomili]]...[[/rul#nomili]]```
    * nc: Keine Kommerzielle Nutzung
+     ```[[rul#nc]]...[[/rul#nc]]```
    * com: Kommerzielle Nutzung
+     ```[[rul#com]]...[[/rul#com]]```
    * edu: Nutzung in Bildung oder Forschung
+     ```[[rul#edu]]...[[/rul#edu]]```
    * psi: Nutzung in Behörden, Verwaltungen
+     ```[[rul#psi]]...[[/rul#psi]]```
 
   Beispiel Haftungsausschluss
   ```
