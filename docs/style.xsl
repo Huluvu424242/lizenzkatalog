@@ -28,7 +28,7 @@
             <body>
                 <h1>Annotationen</h1>
 
-                <!-- Gesamttext (für Auszug in Tabelle 2) -->
+                <!-- Lizenztext für Auszüge -->
                 <xsl:variable name="txt" select="string(text)"/>
 
                 <!-- ===================================== -->
@@ -75,7 +75,6 @@
                         <th>Start</th>
                         <th>End</th>
                         <th>Auszug</th>
-                        <th>Attribute</th>
                     </tr>
 
                     <xsl:for-each select="notes/note[@start and @end]">
@@ -93,14 +92,6 @@
                             <td><xsl:value-of select="@start"/></td>
                             <td><xsl:value-of select="@end"/></td>
                             <td><xsl:value-of select="normalize-space($frag)"/></td>
-                            <td>
-                                <xsl:for-each select="@*[not(name()='id' or name()='type' or name()='start' or name()='end')]">
-                                    <div><b><xsl:value-of select="name()"/>:</b> <xsl:value-of select="."/></div>
-                                </xsl:for-each>
-                                <xsl:if test="count(@*[not(name()='id' or name()='type' or name()='start' or name()='end')])=0">
-                                    <span class="muted">–</span>
-                                </xsl:if>
-                            </td>
                         </tr>
                     </xsl:for-each>
                 </table>
