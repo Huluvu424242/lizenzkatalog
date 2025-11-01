@@ -3,8 +3,8 @@
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
-  <text>
-    GNU GENERAL PUBLIC LICENSE
+  <text xml:space="preserve">
+GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 
 [[license#lic type=&quot;gpl-3.0&quot; url=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;]]

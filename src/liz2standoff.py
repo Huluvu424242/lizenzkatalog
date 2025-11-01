@@ -70,12 +70,6 @@ MASTER_RE = re.compile(
 # # Optional: ermöglicht literale [[ bzw. ]] im Text via Escape
 ESCAPE_OPEN = r"\[\["
 ESCAPE_CLOSE = r"\]\]"
-#
-# # Tokenizer findet alle Tags (open/singleton/close) oder Text
-# MASTER_RE = re.compile(
-#     f"{OPEN_OR_SINGLETON_RE.pattern}|{CLOSE_RE.pattern}",
-#     re.VERBOSE | re.DOTALL,
-# )
 
 
 def unquote_value(v: str) -> str:
@@ -225,8 +219,8 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     lines.append('<?xml-stylesheet type="text/xsl" href="style.xsl"?>')
     lines.append('<?thomas-schubert document-status="draft" version="2.0"?>')
     lines.append('<annotation>')
-    lines.append('  <text>')
-    lines.append('    ' + html.escape(plain_text))
+    lines.append('  <text xml:space="preserve">')
+    lines.append(html.escape(plain_text))
     lines.append('  </text>')
     lines.append('  <notes>')
 

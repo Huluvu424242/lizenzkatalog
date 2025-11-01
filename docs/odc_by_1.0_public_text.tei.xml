@@ -3,8 +3,8 @@
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
-  <text>
-    # ODC Attribution License (ODC-By)
+  <text xml:space="preserve">
+# ODC Attribution License (ODC-By)
 
 ### Preamble
 

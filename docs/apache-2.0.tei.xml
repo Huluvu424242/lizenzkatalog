@@ -3,8 +3,8 @@
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
-  <text>
-    Apache License, Version 2.0
+  <text xml:space="preserve">
+Apache License, Version 2.0
 
 [[license#lic type=&quot;apache-2.0&quot; url=&quot;https://www.apache.org/licenses/LICENSE-2.0&quot;]]
 [[title#t1]]Apache License[[/title#t1]], Version [[version#v1]]2.0[[/version#v1]]
