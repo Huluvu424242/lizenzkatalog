@@ -23,8 +23,7 @@
 
     </text>
     <annotations>
-        <span id="lic" type="license" start="52" end="601" type="gpl-3.0"
-              url="https://www.gnu.org/licenses/gpl-3.0.en.html"/>
+        <span id="lic" type="license" start="52" end="601"/>
         <span id="t1" type="title" start="53" end="79"/>
         <span id="v1" type="version" start="86" end="95"/>
         <span id="f0" type="freedom" start="107" end="160"/>
@@ -32,13 +31,13 @@
         <span id="r2" type="rights" start="199" end="211"/>
         <span id="r3" type="rights" start="213" end="225"/>
         <span id="r4" type="rights" start="231" end="241"/>
-        <span id="cl1" type="copyleft" start="243" end="330" strength="strong"/>
-        <span id="c1" type="condition" start="333" end="398" type="source"/>
+        <span id="cl1" type="copyleft" start="243" end="330" />
+        <span id="c1" type="condition" start="333" end="398" />
         <span id="s1" type="source" start="350" end="370"/>
-        <span id="c2" type="condition" start="399" end="446" type="license-compat"/>
+        <span id="c2" type="condition" start="399" end="446"/>
         <span id="d1" type="disclaimer" start="448" end="533"/>
         <span id="rel1" type="relation" start="535" end="544"/>
-        <span id="xr1" type="xref" start="544" end="578" ref="#cl1"/>
-        <span id="xr2" type="xref" start="598" end="598" ref="#s1"/>
+        <span id="xr1" type="xref" start="544" end="578" />
+        <span id="xr2" type="xref" start="598" end="598"/>
     </annotations>
 </doc>
