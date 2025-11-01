@@ -82,14 +82,16 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- Tabelle 1: ohne Textbezug -->
+                <!-- ===================================== -->
+                <!-- Tabelle 1: Annotationen ohne Textbezug -->
+                <!-- ===================================== -->
                 <h2>Annotationen ohne Textbezug</h2>
                 <table>
                     <tr>
                         <th>#</th>
                         <th>Typ</th>
+                        <th>Wert</th>
                         <th>ID</th>
-                        <th>Attribute</th>
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) or not(@end)]">
                         <xsl:sort select="@type"/>
@@ -102,15 +104,13 @@
                                     </xsl:call-template>
                                 </span>
                             </td>
-                            <td><xsl:value-of select="@id"/></td>
                             <td>
-                                <xsl:for-each select="@*[not(name()='id' or name()='type' or name()='start' or name()='end')]">
-                                    <div><b><xsl:value-of select="name()"/>:</b> <xsl:value-of select="."/></div>
-                                </xsl:for-each>
-                                <xsl:if test="count(@*[not(name()='id' or name()='type' or name()='start' or name()='end')])=0">
-                                    <span class="muted">–</span>
-                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when>
+                                    <xsl:otherwise><span class="muted">–</span></xsl:otherwise>
+                                </xsl:choose>
                             </td>
+                            <td><xsl:value-of select="@id"/></td>
                         </tr>
                     </xsl:for-each>
                 </table>
@@ -118,7 +118,9 @@
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- Tabelle 2: mit Textbezug -->
+                <!-- ===================================== -->
+                <!-- Tabelle 2: Annotationen mit Textbezug  -->
+                <!-- ===================================== -->
                 <h2>Annotationen mit Textbezug</h2>
                 <table>
                     <tr>
@@ -129,6 +131,7 @@
                         <th>Start Pos</th>
                         <th>End Pos</th>
                     </tr>
+
                     <xsl:for-each select="notes/note[@start and @end]">
                         <xsl:sort select="number(@start)" data-type="number" order="ascending"/>
                         <xsl:sort select="number(@end)" data-type="number" order="ascending"/>
