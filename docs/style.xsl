@@ -71,10 +71,10 @@
                     <tr>
                         <th>#</th>
                         <th>Type</th>
-                        <th>ID</th>
-                        <th>Start</th>
-                        <th>End</th>
                         <th>Auszug</th>
+                        <th>ID</th>
+                        <th>Start Pos</th>
+                        <th>End Pos</th>
                     </tr>
 
                     <xsl:for-each select="notes/note[@start and @end]">
@@ -88,10 +88,10 @@
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
                             <td><code><xsl:value-of select="@type"/></code></td>
+                            <td><xsl:value-of select="normalize-space($frag)"/></td>
                             <td><xsl:value-of select="@id"/></td>
                             <td><xsl:value-of select="@start"/></td>
                             <td><xsl:value-of select="@end"/></td>
-                            <td><xsl:value-of select="normalize-space($frag)"/></td>
                         </tr>
                     </xsl:for-each>
                 </table>
