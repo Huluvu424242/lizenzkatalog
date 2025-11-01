@@ -137,7 +137,7 @@
                         <xsl:sort select="number(@end)" data-type="number" order="ascending"/>
                         <xsl:variable name="s" select="number(@start)"/>
                         <xsl:variable name="e" select="number(@end)"/>
-                        <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s)"/>
+                        <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
 
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
