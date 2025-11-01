@@ -114,21 +114,21 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
 
     lines = []
     lines.append('<?xml version="1.0" encoding="UTF-8" standalone="no"?>')
-    lines.append('<!--DOCTYPE rezepte SYSTEM "src/rezepte.dtd"-->')
-    lines.append('<?xml-stylesheet type="text/xsl" href="./style.xsl"?>')
-    lines.append('<?thomas-schubert document-status="draft" version="2.0"?>')
-    lines.append('<doc>')
+    lines.append('<!DOCTYPE annotation SYSTEM "annotation.dtd">')
+    lines.append('<?xml-stylesheet type="text/xsl" href="style.xsl"?>')
+    lines.append('<?thomas-schubert document-status="draft" version="1.0"?>')
+    lines.append('<annotation>')
     lines.append('  <text>')
     lines.append('    ' + html.escape(plain_text))
     lines.append('  </text>')
-    lines.append('  <annotations>')
+    lines.append('  <notes>')
     for sp in sorted(spans, key=lambda s: (s["start"], s["end"])):
         extra = attrs_to_xml(sp["attrs"])
         if extra:
             extra = " " + extra
-        lines.append(f'    <span id="{sp["id"]}" type="{sp["type"]}" start="{sp["start"]}" end="{sp["end"]}"{extra}/>')
-    lines.append('  </annotations>')
-    lines.append('</doc>')
+        lines.append(f'    <note id="{sp["id"]}" type="{sp["type"]}" start="{sp["start"]}" end="{sp["end"]}"{extra}/>')
+    lines.append('  </notes>')
+    lines.append('</annotation>')
     Path(out_xml).write_text("\n".join(lines), encoding="utf-8")
     print(f" --> {out_xml}")
 
@@ -142,6 +142,7 @@ if __name__ == "__main__":
 
     print(liz_dateien)
     copy_text_file(f"{xsl_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
+    copy_text_file(f"{xsl_folder}/annotation.dtd", f"{dst_folder}/annotation.dtd")
     for license_name in liz_dateien:
         inp = f"{src_folder}/{license_name}.liz"
         out_txt = f"{dst_folder}/{license_name}.txt"

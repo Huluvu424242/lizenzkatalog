@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="1.0"?>
+<annotation>
+  <text>
+    Apache License, Version 2.0
+
+
+Apache License, Version 2.0
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the &quot;Software&quot;), to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+You must include a NOTICE file when provided by the work.
+This license includes an express patent grant.
+Trade names, trademarks, service marks are not licensed.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND...
+
+Note: Patent grant overlaps with rights granted above.
+
+
+
+  </text>
+  <notes>
+    <note id="lic" type="license" start="29" end="822" type="apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
+    <note id="t1" type="title" start="30" end="44"/>
+    <note id="v1" type="version" start="54" end="57"/>
+    <note id="gr1" type="grant" start="59" end="69"/>
+    <note id="r1" type="rights" start="209" end="286"/>
+    <note id="c1" type="condition" start="536" end="593" type="notice"/>
+    <note id="c2" type="condition" start="594" end="640" type="patent"/>
+    <note id="p1" type="patent" start="627" end="639"/>
+    <note id="c3" type="condition" start="641" end="697" type="trademark"/>
+    <note id="d1" type="disclaimer" start="699" end="764"/>
+    <note id="rel1" type="relation" start="766" end="785"/>
+    <note id="xr1" type="xref" start="785" end="819" ref="#p1"/>
+  </notes>
+</annotation>
