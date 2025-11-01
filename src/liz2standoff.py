@@ -134,9 +134,9 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
 
 
 if __name__ == "__main__":
-    src_folder: str = "../lizenzkatalog"
-    xsl_folder: str = "../src/xslt"
-    dst_folder: str = "../build"
+    src_folder: str = "lizenzkatalog"
+    xsl_folder: str = "src/xslt"
+    dst_folder: str = "build"
     srcpath: Path = Path(src_folder)
     liz_dateien: list[str] = [f.stem for f in srcpath.glob("*.liz")]
 
