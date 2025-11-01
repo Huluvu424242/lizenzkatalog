@@ -16,8 +16,13 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
    ```
    
    Annotationsmöglichkeiten
-   Nutzung uneingeschränkt
-   Nutzung Nutzungsart Einschränkung
+   Allgemein - lic: 
+   * name: Name der Lizenz
+   * spdx: SPDX ID der Lizenz
+   * fsf: FSF Approved
+   * OSI: OSI Approved
+   * c: Alle Rechte vorbehalten
+   * c0: Nutzung uneingeschränkt
    Nutzungsarten - use: 
    * doc:: Dokumentation
    * sw-app: Eigenständige Anwendung
