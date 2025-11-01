@@ -1,20 +1,20 @@
 Apache License, Version 2.0
 
+[[license#lic type="apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"]]
+[[title#t1]]Apache License[[/title#t1]], Version [[version#v1]]2.0[[/version#v1]]
 
-Apache License, Version 2.0
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-and associated documentation files (the "Software"), to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+[[grant#gr1]]Permission[[/grant#gr1]] is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to [[rights#r1]]use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies[[/rights#r1]] of the Software,
 and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-You must include a NOTICE file when provided by the work.
-This license includes an express patent grant.
-Trade names, trademarks, service marks are not licensed.
+[[condition#c1 type="notice"]]You must include a NOTICE file when provided by the work.[[/condition#c1]]
+[[condition#c2 type="patent"]]This license includes an express [[patent#p1]]patent grant[[/patent#p1]].[[/condition#c2]]
+[[condition#c3 type="trademark"]]Trade names, trademarks, service marks are not licensed.[[/condition#c3]]
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND...
+[[disclaimer#d1]]THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND...[[/disclaimer#d1]]
 
-Note: Patent grant overlaps with rights granted above.
+[[relation#rel1]]Note: Patent grant [[/relation#rel1]][[xref#xr1 ref="#p1"]]overlaps with rights granted above[[/xref#xr1]].
 
-
+[[/license#lic]]

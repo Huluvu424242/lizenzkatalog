@@ -1,5 +1,5 @@
 # ODC Attribution License (ODC-By)
-[[lic#spdx="ODC-By-1.0"]]
+
 ### Preamble
 
 The Open Data Commons Attribution License is a license agreement

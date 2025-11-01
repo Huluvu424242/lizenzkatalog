@@ -1,44 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE annotation SYSTEM "annotation.dtd">
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<?thomas-schubert document-status="draft" version="1.0"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text>
     GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 
+[[license#lic type=&quot;gpl-3.0&quot; url=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;]]
+[[title#t1]]GNU General Public License[[/title#t1]] (GPL) [[version#v1]]version 3[[/version#v1]] guarantees [[freedom#f0]]freedom to share and change all versions of a program[[/freedom#f0]].
 
-GNU General Public License (GPL) version 3 guarantees freedom to share and change all versions of a program.
+Permissions include [[rights#r1]]commercial use[[/rights#r1]], [[rights#r2]]modification[[/rights#r2]], [[rights#r3]]distribution[[/rights#r3]], and [[rights#r4]]patent use[[/rights#r4]].
+[[copyleft#cl1 strength=&quot;strong&quot;]]Copyleft: if you distribute a modified work, you must license it as a whole under GPLv3[[/copyleft#cl1]].
 
-Permissions include commercial use, modification, distribution, and patent use.
-Copyleft: if you distribute a modified work, you must license it as a whole under GPLv3.
+[[condition#c1 type=&quot;source&quot;]]You must provide [[source#s1]]Corresponding Source[[/source#s1]] when conveying object code.[[/condition#c1]]
+[[condition#c2 type=&quot;license-compat&quot;]]Additional terms must be consistent with GPLv3.[[/condition#c2]]
 
-You must provide Corresponding Source when conveying object code.
-Additional terms must be consistent with GPLv3.
+[[disclaimer#d1]]NO WARRANTY; the program is provided AS-IS to the extent permitted by applicable law.[[/disclaimer#d1]]
 
-NO WARRANTY; the program is provided AS-IS to the extent permitted by applicable law.
+[[relation#rel1]]Copyleft [[/relation#rel1]][[xref#xr1 ref=&quot;#cl1&quot;]]overlaps with distribution rights [[/xref#xr1]]and source provision[[xref#xr2 ref=&quot;#s1&quot;]][[/xref#xr2]].
 
-Copyleft overlaps with distribution rights and source provision.
-
-
+[[/license#lic]]
 
   </text>
   <notes>
-    <note id="lic" type="license" start="52" end="601" type="gpl-3.0" url="https://www.gnu.org/licenses/gpl-3.0.en.html"/>
-    <note id="t1" type="title" start="53" end="79"/>
-    <note id="v1" type="version" start="86" end="95"/>
-    <note id="f0" type="freedom" start="107" end="160"/>
-    <note id="r1" type="rights" start="183" end="197"/>
-    <note id="r2" type="rights" start="199" end="211"/>
-    <note id="r3" type="rights" start="213" end="225"/>
-    <note id="r4" type="rights" start="231" end="241"/>
-    <note id="cl1" type="copyleft" start="243" end="330" strength="strong"/>
-    <note id="c1" type="condition" start="333" end="398" type="source"/>
-    <note id="s1" type="source" start="350" end="370"/>
-    <note id="c2" type="condition" start="399" end="446" type="license-compat"/>
-    <note id="d1" type="disclaimer" start="448" end="533"/>
-    <note id="rel1" type="relation" start="535" end="544"/>
-    <note id="xr1" type="xref" start="544" end="578" ref="#cl1"/>
-    <note id="xr2" type="xref" start="598" end="598" ref="#s1"/>
   </notes>
 </annotation>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE annotation SYSTEM "annotation.dtd">
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<?thomas-schubert document-status="draft" version="1.0"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text>
     # ODC Attribution License (ODC-By)
-[[lic#spdx=&quot;ODC-By-1.0&quot;]]
+
 ### Preamble
 
 The Open Data Commons Attribution License is a license agreement
@@ -437,7 +437,8 @@ terms of this License.
 
   </text>
   <notes>
-    <note id="name" type="lic" start="2" end="34"/>
-    <note id="nolia" type="rul" start="16640" end="16813"/>
+    <note id="a1" type="lic#name" start="2" end="34"/>
+    <note id="a3" type="rul#nolia" start="16615" end="16788"/>
+    <note id="a2" type="lic#spdx" value="ODC-By-1.0"/>
   </notes>
 </annotation>
