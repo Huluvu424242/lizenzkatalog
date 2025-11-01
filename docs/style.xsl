@@ -19,17 +19,7 @@
         <h1>Annotationen</h1>
     
 
-        <table>
-          <tr>
-            <th>#</th>
-            <th>Type</th>
-            <th>ID</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Auszug</th>
-            <th>Attribute</th>
-          </tr>
-
+       
         
 
         <h2>Originaltext</h2>
