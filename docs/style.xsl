@@ -15,13 +15,11 @@
             <xsl:when test="$t='lic#osi'">OSI-Freigabe</xsl:when>
             <xsl:when test="$t='lic#c'">Alle Rechte vorbehalten</xsl:when>
             <xsl:when test="$t='lic#c0'">Nutzung uneingeschränkt</xsl:when>
-
             <!-- use -->
             <xsl:when test="$t='use#doc'">Dokumentation</xsl:when>
             <xsl:when test="$t='use#lib'">Bibliothek/Komponente</xsl:when>
             <xsl:when test="$t='use#app'">Lokale Anwendung</xsl:when>
             <xsl:when test="$t='use#cld'">Cloud-Anwendung</xsl:when>
-
             <!-- lim -->
             <xsl:when test="$t='lim#pc'">Anzahl Rechner</xsl:when>
             <xsl:when test="$t='lim#dev'">Anzahl Geräte</xsl:when>
@@ -29,14 +27,12 @@
             <xsl:when test="$t='lim#cpu'">Anzahl CPUs</xsl:when>
             <xsl:when test="$t='lim#krn'">Anzahl Kerne</xsl:when>
             <xsl:when test="$t='lim#usr'">Anzahl Nutzer</xsl:when>
-
             <!-- act -->
             <xsl:when test="$t='act#cop'">Vervielfältigung</xsl:when>
             <xsl:when test="$t='act#mod'">Modifikation</xsl:when>
             <xsl:when test="$t='act#mov'">Verbreitung</xsl:when>
             <xsl:when test="$t='act#sel'">Verkauf</xsl:when>
             <xsl:when test="$t='act#der'">Abgeleitete Werke</xsl:when>
-
             <!-- rul -->
             <xsl:when test="$t='rul#nolia'">Haftungsausschluss</xsl:when>
             <xsl:when test="$t='rul#by'">Namensnennung</xsl:when>
@@ -48,7 +44,6 @@
             <xsl:when test="$t='rul#com'">Kommerziell</xsl:when>
             <xsl:when test="$t='rul#edu'">Bildung/Forschung</xsl:when>
             <xsl:when test="$t='rul#psi'">Behörden/Verwaltung</xsl:when>
-
             <!-- Fallback -->
             <xsl:otherwise>
                 <xsl:value-of select="$t"/>
@@ -82,9 +77,9 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- ===================================== -->
-                <!-- Tabelle 1: Annotationen ohne Textbezug -->
-                <!-- ===================================== -->
+                <!-- ============================== -->
+                <!-- Tabelle 1: ohne Textbezug      -->
+                <!-- ============================== -->
                 <h2>Annotationen ohne Textbezug</h2>
                 <table>
                     <tr>
@@ -95,10 +90,21 @@
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) or not(@end)]">
                         <xsl:sort select="@type"/>
+                        <!-- Tooltip für Singletons: [[typ=wert]] oder [[typ]] -->
+                        <xsl:variable name="tooltip">
+                            <xsl:choose>
+                                <xsl:when test="@value">
+                                    <xsl:value-of select="concat('[[', @type, '=', @value, ']]')"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="concat('[[', @type, ']]')"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
                             <td>
-                                <span title="{@type}">
+                                <span title="{$tooltip}">
                                     <xsl:call-template name="label-for-type">
                                         <xsl:with-param name="t" select="@type"/>
                                     </xsl:call-template>
@@ -118,9 +124,9 @@
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- ===================================== -->
-                <!-- Tabelle 2: Annotationen mit Textbezug  -->
-                <!-- ===================================== -->
+                <!-- ============================== -->
+                <!-- Tabelle 2: mit Textbezug       -->
+                <!-- ============================== -->
                 <h2>Annotationen mit Textbezug</h2>
                 <table>
                     <tr>
@@ -131,18 +137,20 @@
                         <th>Start Pos</th>
                         <th>End Pos</th>
                     </tr>
-
                     <xsl:for-each select="notes/note[@start and @end]">
                         <xsl:sort select="number(@start)" data-type="number" order="ascending"/>
                         <xsl:sort select="number(@end)" data-type="number" order="ascending"/>
                         <xsl:variable name="s" select="number(@start)"/>
                         <xsl:variable name="e" select="number(@end)"/>
+                        <!-- Falls End inklusiv: +1; andernfalls +0 -->
                         <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
+                        <!-- Tooltip für Spannen: [[typ]]...[[/typ]] -->
+                        <xsl:variable name="tooltipSpan" select="concat('[[', @type, ']]...[[/', @type, ']]')"/>
 
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
                             <td>
-                                <span title="{@type}">
+                                <span title="{$tooltipSpan}">
                                     <xsl:call-template name="label-for-type">
                                         <xsl:with-param name="t" select="@type"/>
                                     </xsl:call-template>
