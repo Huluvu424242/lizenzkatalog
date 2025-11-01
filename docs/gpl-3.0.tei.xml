@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--DOCTYPE rezepte SYSTEM "src/rezepte.dtd"-->
+<!DOCTYPE doc SYSTEM "doc.dtd">
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
 <?thomas-schubert document-status="draft" version="2.0"?>
 <doc>
-  <text>
-    GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
+    <text>
+        GNU GENERAL PUBLIC LICENSE
+        Version 3, 29 June 2007
 
 
-GNU General Public License (GPL) version 3 guarantees freedom to share and change all versions of a program.
+        GNU General Public License (GPL) version 3 guarantees freedom to share and change all versions of a program.
 
-Permissions include commercial use, modification, distribution, and patent use.
-Copyleft: if you distribute a modified work, you must license it as a whole under GPLv3.
+        Permissions include commercial use, modification, distribution, and patent use.
+        Copyleft: if you distribute a modified work, you must license it as a whole under GPLv3.
 
-You must provide Corresponding Source when conveying object code.
-Additional terms must be consistent with GPLv3.
+        You must provide Corresponding Source when conveying object code.
+        Additional terms must be consistent with GPLv3.
 
-NO WARRANTY; the program is provided AS-IS to the extent permitted by applicable law.
+        NO WARRANTY; the program is provided AS-IS to the extent permitted by applicable law.
 
-Copyleft overlaps with distribution rights and source provision.
+        Copyleft overlaps with distribution rights and source provision.
 
 
-
-  </text>
-  <annotations>
-    <span id="lic" type="license" start="52" end="601" type="gpl-3.0" url="https://www.gnu.org/licenses/gpl-3.0.en.html"/>
-    <span id="t1" type="title" start="53" end="79"/>
-    <span id="v1" type="version" start="86" end="95"/>
-    <span id="f0" type="freedom" start="107" end="160"/>
-    <span id="r1" type="rights" start="183" end="197"/>
-    <span id="r2" type="rights" start="199" end="211"/>
-    <span id="r3" type="rights" start="213" end="225"/>
-    <span id="r4" type="rights" start="231" end="241"/>
-    <span id="cl1" type="copyleft" start="243" end="330" strength="strong"/>
-    <span id="c1" type="condition" start="333" end="398" type="source"/>
-    <span id="s1" type="source" start="350" end="370"/>
-    <span id="c2" type="condition" start="399" end="446" type="license-compat"/>
-    <span id="d1" type="disclaimer" start="448" end="533"/>
-    <span id="rel1" type="relation" start="535" end="544"/>
-    <span id="xr1" type="xref" start="544" end="578" ref="#cl1"/>
-    <span id="xr2" type="xref" start="598" end="598" ref="#s1"/>
-  </annotations>
+    </text>
+    <annotations>
+        <span id="lic" type="license" start="52" end="601" type="gpl-3.0"
+              url="https://www.gnu.org/licenses/gpl-3.0.en.html"/>
+        <span id="t1" type="title" start="53" end="79"/>
+        <span id="v1" type="version" start="86" end="95"/>
+        <span id="f0" type="freedom" start="107" end="160"/>
+        <span id="r1" type="rights" start="183" end="197"/>
+        <span id="r2" type="rights" start="199" end="211"/>
+        <span id="r3" type="rights" start="213" end="225"/>
+        <span id="r4" type="rights" start="231" end="241"/>
+        <span id="cl1" type="copyleft" start="243" end="330" strength="strong"/>
+        <span id="c1" type="condition" start="333" end="398" type="source"/>
+        <span id="s1" type="source" start="350" end="370"/>
+        <span id="c2" type="condition" start="399" end="446" type="license-compat"/>
+        <span id="d1" type="disclaimer" start="448" end="533"/>
+        <span id="rel1" type="relation" start="535" end="544"/>
+        <span id="xr1" type="xref" start="544" end="578" ref="#cl1"/>
+        <span id="xr2" type="xref" start="598" end="598" ref="#s1"/>
+    </annotations>
 </doc>
