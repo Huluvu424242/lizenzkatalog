@@ -16,10 +16,10 @@ jobs:
           python-version: '3.x'
       - name: Run converter on examples
         run: |
-          mkdir -p build
+          mkdir -p docs
           python src/liz2standoff.py
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build
-          path: build/**
+          name: docs
+          path: docs/**
