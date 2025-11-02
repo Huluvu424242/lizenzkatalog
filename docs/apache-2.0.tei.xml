@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
+<annotation>
+  <text xml:space="preserve">
+Apache License, Version 2.0
+
+[[license#lic type=&quot;apache-2.0&quot; url=&quot;https://www.apache.org/licenses/LICENSE-2.0&quot;]]
+[[title#t1]]Apache License[[/title#t1]], Version [[version#v1]]2.0[[/version#v1]]
+
+[[grant#gr1]]Permission[[/grant#gr1]] is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the &quot;Software&quot;), to [[rights#r1]]use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies[[/rights#r1]] of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+[[condition#c1 type=&quot;notice&quot;]]You must include a NOTICE file when provided by the work.[[/condition#c1]]
+[[condition#c2 type=&quot;patent&quot;]]This license includes an express [[patent#p1]]patent grant[[/patent#p1]].[[/condition#c2]]
+[[condition#c3 type=&quot;trademark&quot;]]Trade names, trademarks, service marks are not licensed.[[/condition#c3]]
+
+[[disclaimer#d1]]THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND...[[/disclaimer#d1]]
+
+[[relation#rel1]]Note: Patent grant [[/relation#rel1]][[xref#xr1 ref=&quot;#p1&quot;]]overlaps with rights granted above[[/xref#xr1]].
+
+[[/license#lic]]
+
+  </text>
+  <notes>
+  </notes>
+</annotation>

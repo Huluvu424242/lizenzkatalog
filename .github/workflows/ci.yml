@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run converter on examples
+        run: |
+          mkdir -p docs
+          python src/liz2standoff.py
+      - name: Commit and push build artifacts
+        if: success()  # Nur ausführen, wenn der Build erfolgreich war
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Branch aus der Workflow-Umgebung übernehmen
+          # PUSH_BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+          
+          # Änderungen hinzufügen, committen und pushen
+          git add docs
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen zum Commit gefunden."
+          else
+            git commit -m "chore: add build artifacts [ci skip]"
+            git push origin "$BRANCH_NAME"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

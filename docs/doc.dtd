@@ -1,0 +1,13 @@
+<!-- $Id$ -->
+<?thomas-michel document-status="draft" version="2.0"?>
+
+<!ELEMENT doc (text, annotations?)+>
+
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT annotations (span)+>
+
+<!ELEMENT span EMPTY>
+<!ATTLIST span id ID #REQUIRED>
+<!ATTLIST span type CDATA #REQUIRED>
+<!ATTLIST span start CDATA #IMPLIED>
+<!ATTLIST span end CDATA #IMPLIED>
