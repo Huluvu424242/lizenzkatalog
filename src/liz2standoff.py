@@ -64,7 +64,7 @@ CLOSE_RE = re.compile(
 MASTER_RE = re.compile(
     f"{OPEN_OR_SINGLETON_RE.pattern}|{CLOSE_RE.pattern}",
     re.VERBOSE | re.DOTALL,
-    )
+)
 
 #
 # # Optional: ermöglicht literale [[ bzw. ]] im Text via Escape
@@ -279,8 +279,11 @@ if __name__ == "__main__":
     copy_text_file(f"{styles_folder}/annotation.dtd", f"{dst_folder}/annotation.dtd")
     copy_text_file(f"{site_folder}/index.html", f"{dst_folder}/index.html")
     copy_text_file(f"{site_folder}/content.js", f"{dst_folder}/content.js")
+    xmlfilenames: list[str] = []
     for license_name in liz_dateien:
         inp = f"{src_folder}/{license_name}.liz"
         out_txt = f"{dst_folder}/{license_name}.txt"
         out_xml = f"{dst_folder}/{license_name}.tei.xml"
         konvertiere(inp, out_txt, out_xml)
+        xmlfilenames.append(f"{license_name}.tei.xml")
+    Path(f"{dst_folder}/content.txt").write_text("\n".join(xmlfilenames), encoding="utf-8")
