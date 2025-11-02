@@ -6,7 +6,7 @@
 # 2) ein Standoff-XML mit <note type="cat#name" id="…" [start="…"] [end="…"] [value="…"] …/>
 #
 # Neue Marker-Syntax (kompatibel mit deinem Schema):
-#   [[cat#name]] ... [[/cat#name]]         -> Spannen-Annotation (verschachtelt/überlappend erlaubt)
+#   [[cat#name]] ... [[/cat#name]]         -> Bereiche-Annotation (verschachtelt/überlappend erlaubt)
 #   [[cat#name=VALUE]]                     -> Singleton-Annotation (ohne Textbezug)
 #   [[lic#fsf]] / [[lic#osi]] / [[lic#c]] / [[lic#c0]] -> Singletons ohne Wert
 #
@@ -120,10 +120,10 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     out_buf: List[str] = []  # bereinigter Text (ohne Marker)
     out_len = 0  # Länge des bereinigten Texts
 
-    # Stacks für offene Spannen je Tag (cat#name) — ermöglicht Überlappung
+    # Stacks für offene Bereiche je Tag (cat#name) — ermöglicht Überlappung
     open_stacks: Dict[str, List[Dict]] = {}
 
-    # Ergebnisliste: sowohl Spannen als auch Singletons
+    # Ergebnisliste: sowohl Bereiche als auch Singletons
     notes: List[Dict] = []
 
     auto_seq = 0  # laufende ID-Vergabe
@@ -194,13 +194,13 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     out_buf.append(tail)
     out_len += len(tail)
 
-    # Nicht geschlossene Spannen melden
+    # Nicht geschlossene Bereiche melden
     dangling = []
     for tag_key, stack in open_stacks.items():
         for fr in stack:
             dangling.append(f'{tag_key} (id={fr["id"]}, start={fr["start"]})')
     if dangling:
-        raise ValueError("Nicht geschlossene Spannen: " + ", ".join(dangling) + f" in {inp}")
+        raise ValueError("Nicht geschlossene Bereiche: " + ", ".join(dangling) + f" in {inp}")
 
     # Plaintext schreiben
     plain_text = "".join(out_buf)
@@ -224,7 +224,7 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     lines.append('  </text>')
     lines.append('  <notes>')
 
-    # Sortierung: Spannen zuerst nach (start, end), Singletons danach stabil
+    # Sortierung: Bereiche zuerst nach (start, end), Singletons danach stabil
     spans_sorted: List[Tuple[int, int, Dict]] = []
     singletons: List[Dict] = []
     for n in notes:
@@ -234,7 +234,7 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             singletons.append(n)
     spans_sorted.sort(key=lambda t: (t[0], t[1]))
 
-    # Spannen ausgeben
+    # Bereiche ausgeben
     for _, _, sp in spans_sorted:
         attrs = [
             xml_attr_pair("id", sp.get("id")),
@@ -242,7 +242,7 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             xml_attr_pair("start", sp.get("start")),
             xml_attr_pair("end", sp.get("end")),
         ]
-        # Falls später Werte in Spannen benutzt werden sollen:
+        # Falls später Werte in Bereiche benutzt werden sollen:
         if "value" in sp and sp["value"] is not None:
             attrs.append(xml_attr_pair("value", sp["value"]))
         attrs = [a for a in attrs if a is not None]

@@ -10,7 +10,7 @@
                 indent="yes"/>
     <xsl:strip-space elements=""/>
 
-    <!-- Muenchian key: alle Spannen (mit Textbezug) nach @type gruppieren -->
+    <!-- Muenchian key: alle Bereiche (mit Textbezug) nach @type gruppieren -->
     <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
 
     <!-- ===== Label-Mapping (Typcode -> Anzeige) ===== -->
@@ -244,7 +244,7 @@
         <xsl:param name="typeOrder"/>
         <xsl:variable name="txt" select="string(/annotation/text)"/>
 
-        <!-- sortierte Spannen als RTF (inkl. type-Attribut!) -->
+        <!-- sortierte Bereiche als RTF (inkl. type-Attribut!) -->
         <xsl:variable name="sortedSpansRTF">
             <xsl:for-each select="/annotation/notes/note[@start and @end]">
                 <xsl:sort select="@start" data-type="number" order="ascending"/>
