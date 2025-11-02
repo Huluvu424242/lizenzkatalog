@@ -51,7 +51,7 @@ Die Systematik untergliedert sich in folgende Bereiche( Allgemein, Nutzungsart, 
 * name: Name der Lizenz
  ```[[lic#name]]...[[/lic#name]]```
 * spdx: SPDX ID der Lizenz
- ```[[lic#spdx=IDBezeichner]]```
+ ```[[lic#spdx=IDBezeichner]]```  Quelle: https://spdx.org/licenses/licenses.json
 * fsf: FSF Approved
  ```[[lic#fsf]]```
 * OSI: OSI Approved
