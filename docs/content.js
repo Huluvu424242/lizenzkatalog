@@ -22,11 +22,11 @@ async function loadFileList() {
         listContainer.innerHTML = '';
 
         // Für jede Zeile einen Listeneintrag mit Link erstellen
-        for (const fileName of lines) {
+        for (const licenseName of lines) {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.href = fileName;      // Link-Ziel
-            a.textContent = fileName; // sichtbarer Text
+            a.href = licenseName + ".tei.xml";      // Link-Ziel
+            a.textContent = licenseName; // sichtbarer Text
             li.appendChild(a);
             listContainer.appendChild(li);
         }
