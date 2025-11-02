@@ -269,6 +269,7 @@ if __name__ == "__main__":
     src_folder: str = "lizenzkatalog"
     styles_folder: str = "src/styles"
     site_folder: str = "src/site"
+    img_folder: str = "src/img"
     dst_folder: str = "docs"
 
     srcpath: Path = Path(src_folder)
@@ -280,6 +281,7 @@ if __name__ == "__main__":
     copy_text_file(f"{styles_folder}/annotation.dtd", f"{dst_folder}/annotation.dtd")
     copy_text_file(f"{site_folder}/index.html", f"{dst_folder}/index.html")
     copy_text_file(f"{site_folder}/content.js", f"{dst_folder}/content.js")
+    copy_text_file(f"{img_folder}/ospolizenzkatalog.svg", f"{dst_folder}/ospolizenzkatalog.svg")
     xmlfilenames: list[str] = []
     for license_name in liz_dateien:
         inp = f"{src_folder}/{license_name}.liz"

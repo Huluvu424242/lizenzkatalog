@@ -123,7 +123,7 @@
             </head>
             <body>
                 <h1>
-                    <img src="ospokatalog.svg" alt="Logo" width="200" height="200"
+                    <img src="ospolizenzkatalog.svg" alt="Logo" width="200" height="200"
                          style="max-width:100%; height:auto;" />
                     <xsl:text>Auswertung</xsl:text>
                     <xsl:if test="string($licenseName) != ''">
