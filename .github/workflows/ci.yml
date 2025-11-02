@@ -18,3 +18,23 @@ jobs:
         run: |
           mkdir -p docs
           python src/liz2standoff.py
+      - name: Commit and push build artifacts
+        if: success()  # Nur ausführen, wenn der Build erfolgreich war
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Branch aus der Workflow-Umgebung übernehmen
+          PUSH_BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          BRANCH_NAME=${{ PUSH_BRANCH_NAME || github.head_ref || github.ref_name }}
+          
+          # Änderungen hinzufügen, committen und pushen
+          git add .
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen zum Commit gefunden."
+          else
+            git commit -m "chore: add build artifacts [ci skip]"
+            git push origin "$BRANCH_NAME"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
