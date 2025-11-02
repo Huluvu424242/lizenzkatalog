@@ -285,5 +285,5 @@ if __name__ == "__main__":
         out_txt = f"{dst_folder}/{license_name}.txt"
         out_xml = f"{dst_folder}/{license_name}.tei.xml"
         konvertiere(inp, out_txt, out_xml)
-        xmlfilenames.append(f"{license_name}.tei.xml")
+        xmlfilenames.append(f"{license_name}")
     Path(f"{dst_folder}/content.txt").write_text("\n".join(xmlfilenames), encoding="utf-8")
