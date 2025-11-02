@@ -278,6 +278,7 @@ if __name__ == "__main__":
     copy_text_file(f"{styles_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
     copy_text_file(f"{styles_folder}/annotation.dtd", f"{dst_folder}/annotation.dtd")
     copy_text_file(f"{site_folder}/index.html", f"{dst_folder}/index.html")
+    copy_text_file(f"{site_folder}/content.js", f"{dst_folder}/content.js")
     for license_name in liz_dateien:
         inp = f"{src_folder}/{license_name}.liz"
         out_txt = f"{dst_folder}/{license_name}.txt"
