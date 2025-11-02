@@ -21,15 +21,23 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
 
 ## Idee
 
-1. Plaintext mit eigenen Markern:
-   - Start: `[[typ#id key="value" ...]]`
-   - Ende:  `[[/typ#id]]`
+Linzenz im Plaintext mit eigenen Markern:
 
-   Beispiel:
-   ```
-   Goethe [[person#p1 ref="gnd:118540238"]]Johann W. v. Goethe[[/person#p1]]
-   war ein [[relation#r1]]Freund von [[person#p2]]Schiller[[/person#p2]][[/relation#r1]].
-   ```
+Beispiel:
+**Datei:** `odc_by_1.0_public_text.liz`
+```text filename="test.liz"
+# [[lic#name]]ODC Attribution License (ODC-By)[[/lic#name]]
+[[lic#spdx="ODC-By-1.0"]]
+### Preamble
+:
+:
+[[rul#nolia]]
+8.2 If liability may not be excluded by law, it is limited to actual and
+direct financial loss to the extent it is caused by proved negligence on
+the part of the Licensor.
+[[/rul#nolia]]
+
+```
 
 # Systematik
 Details der Systematik zur Annotierung von Lizenztexten um diese analysieren und bewerten zu können. 
