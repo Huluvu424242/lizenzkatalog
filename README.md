@@ -156,7 +156,7 @@ Die Systematik untergliedert sich in folgende Bereiche( Allgemein, Nutzungsart, 
 *
 * ```[[eval#grün ]]```
 
-# Projekt und Mitarbeit
+# Technische Umsetzung
 
 2. Python-Skript erzeugt
    - `output.txt` (reiner Text ohne Marker)
