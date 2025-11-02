@@ -5,6 +5,8 @@
                 extension-element-prefixes="exsl">
 
     <xsl:output method="html" encoding="UTF-8" indent="yes"/>
+    <!-- Quelle nicht anfassen (wichtig für Offsets) -->
+    <xsl:strip-space elements=""/>
 
     <!-- ===== Label-Mapping (Typcode -> Anzeige) ===== -->
     <xsl:template name="label-for-type">
@@ -69,7 +71,6 @@
                     code { background: #f6f8fa; padding: .1rem .25rem; border-radius: 4px; }
                     pre { white-space: pre-wrap; background: #fafafa; border: 1px dashed #ddd; padding: .75rem; }
                     .muted { color: #777; }
-                    .warn { color: #b00; font-weight: bold; }
                     .hl-1 { background-color: #fff3cd; }  /* gelb */
                     .hl-2 { background-color: #d1ecf1; }  /* cyan */
                     .hl-3 { background-color: #e2e3e5; }  /* grau */
@@ -83,9 +84,7 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- ============= -->
-                <!-- Tabelle 1     -->
-                <!-- ============= -->
+                <!-- ===== Tabelle 1: ohne Textbezug ===== -->
                 <h2>Annotationen ohne Textbezug</h2>
                 <table>
                     <tr>
@@ -96,7 +95,6 @@
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) or not(@end)]">
                         <xsl:sort select="@type"/>
-                        <!-- Tooltip: [[typ=wert]] oder [[typ]] -->
                         <xsl:variable name="tooltip">
                             <xsl:choose>
                                 <xsl:when test="@value">
@@ -130,9 +128,7 @@
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- ============= -->
-                <!-- Tabelle 2     -->
-                <!-- ============= -->
+                <!-- ===== Tabelle 2: mit Textbezug ===== -->
                 <h2>Annotationen mit Textbezug</h2>
                 <table>
                     <tr>
@@ -151,7 +147,6 @@
                         <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
                         <xsl:variable name="tooltipSpan" select="concat('[[', @type, ']]...[[/', @type, ']]')"/>
                         <tr>
-                            <!-- Link zu #frag-ID -->
                             <td><a href="#frag-{@id}"><xsl:value-of select="position()"/></a></td>
                             <td>
                                 <span title="{$tooltipSpan}">
@@ -171,43 +166,45 @@
                     <p class="muted">Keine Annotationen mit Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- ============================== -->
-                <!-- Originaltext mit Hervorhebung  -->
-                <!-- ============================== -->
+                <!-- ===== Originaltext mit Hervorhebung (ohne literalen Weißraum!) ===== -->
                 <h2>Originaltext (mit Hervorhebungen)</h2>
-                <pre>
-                    <!-- sortierte Spannen als RTF -->
-                    <xsl:variable name="sortedSpansRTF">
-                        <xsl:for-each select="notes/note[@start and @end]">
-                            <xsl:sort select="number(@start)"/>
-                            <xsl:sort select="number(@end)"/>
-                            <span start="{@start}" end="{@end}" id="{@id}"/>
-                        </xsl:for-each>
-                    </xsl:variable>
+                <pre><xsl:call-template name="render-original"/></pre>
 
-                    <!-- Node-Set erzeugen (EXSLT) -->
-                    <xsl:variable name="sortedSpans" select="exsl:node-set($sortedSpansRTF)/span"/>
-
-                    <xsl:choose>
-                        <xsl:when test="$sortedSpans">
-                            <xsl:call-template name="render-from">
-                                <xsl:with-param name="txt" select="$txt"/>
-                                <xsl:with-param name="nodes" select="$sortedSpans"/>
-                                <xsl:with-param name="idx" select="1"/>
-                                <xsl:with-param name="cursor" select="0"/>
-                            </xsl:call-template>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <!-- Fallback (kein exsl:node-set verfügbar) -->
-                            <xsl:value-of select="$txt"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </pre>
             </body>
         </html>
     </xsl:template>
 
-    <!-- Rekursives Rendering der Hervorhebungen -->
+    <!-- ==== Rendering des Originaltexts OHNE extra Weißraum im <pre> ==== -->
+    <xsl:template name="render-original">
+        <xsl:variable name="txt" select="string(/annotation/text)"/>
+
+        <!-- sortierte Spannen als RTF aufbauen -->
+        <xsl:variable name="sortedSpansRTF">
+            <xsl:for-each select="/annotation/notes/note[@start and @end]">
+                <xsl:sort select="number(@start)"/>
+                <xsl:sort select="number(@end)"/>
+                <span start="{@start}" end="{@end}" id="{@id}"/>
+            </xsl:for-each>
+        </xsl:variable>
+
+        <!-- Node-Set (EXSLT); Fallback: keine Hervorhebung -->
+        <xsl:variable name="nodes" select="exsl:node-set($sortedSpansRTF)/span"/>
+        <xsl:choose>
+            <xsl:when test="$nodes">
+                <xsl:call-template name="render-from">
+                    <xsl:with-param name="txt" select="$txt"/>
+                    <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="idx" select="1"/>
+                    <xsl:with-param name="cursor" select="0"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$txt"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Rekursive Ausgabe: segmentiert + markiert; erzeugt KEINEN literalen Weißraum -->
     <xsl:template name="render-from">
         <xsl:param name="txt"/>
         <xsl:param name="nodes"/>
@@ -220,12 +217,12 @@
                 <xsl:variable name="s" select="number($n/@start)"/>
                 <xsl:variable name="e" select="number($n/@end)"/>
 
-                <!-- Unmarkierter Text von cursor .. s -->
+                <!-- 1) Unmarkiert bis s -->
                 <xsl:if test="$s &gt; $cursor">
                     <xsl:value-of select="substring($txt, $cursor + 1, $s - $cursor)"/>
                 </xsl:if>
 
-                <!-- Markierter Bereich (inclusive Ende) -->
+                <!-- 2) Markierter Bereich (inclusive Ende) -->
                 <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
                 <xsl:variable name="colorClass">
                     <xsl:choose>
@@ -240,7 +237,7 @@
                     <xsl:value-of select="$frag"/>
                 </span>
 
-                <!-- Rekursiv fortsetzen; Cursor := max(cursor, e+1) -->
+                <!-- 3) Weiter -->
                 <xsl:call-template name="render-from">
                     <xsl:with-param name="txt" select="$txt"/>
                     <xsl:with-param name="nodes" select="$nodes"/>
