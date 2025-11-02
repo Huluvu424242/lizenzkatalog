@@ -4,9 +4,10 @@
 
 Das Projekt stellt ein erweiterbares und anpassbares System zur Analyse und Bewertung von Lizenzen 
 nebst eines Registers mit Bewertungen der gängigsten Lizenzen (Lizenzkatalog) 
-für den Einsatz im Umfeld einer OSPO (oder eines Nutzers) bereit. 
+für den Einsatz im Umfeld einer [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office)
+(oder eines Nutzers) bereit. 
 
-Hiermit soll die OSPO (oder der Nutzer)
+Hiermit soll die [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) (oder der Nutzer)
 Unterstützung bei der Analyse und Bewertung von Lizenzen im eigenen Umfeld erhalten.
 
 Das System ist frei einsetzbar und kann auch 1:1 on premise auf einem beim Nutzer 
