@@ -123,7 +123,7 @@
             </head>
             <body>
                 <h1>
-                    <xsl:text>Annotationen</xsl:text>
+                    <xsl:text>Auswertung</xsl:text>
                     <xsl:if test="string($licenseName) != ''">
                         <xsl:text>: </xsl:text>
                         <xsl:value-of select="$licenseName"/>
@@ -133,7 +133,7 @@
                 <xsl:variable name="txt" select="string(text)"/>
 
                 <!-- ===== Tabelle 1: ohne Textbezug ===== -->
-                <h2>Annotationen ohne Textbezug</h2>
+                <h2>Allgemeine Infos</h2>
                 <table>
                     <tr>
                         <th>#</th>
@@ -186,7 +186,7 @@
                 </xsl:variable>
                 <xsl:variable name="typeOrder" select="exsl:node-set($typeOrderRTF)/t"/>
 
-                <h2>Annotationen mit Textbezug</h2>
+                <h2>Informationen mit Textbezug</h2>
                 <table>
                     <tr>
                         <th>#</th>
