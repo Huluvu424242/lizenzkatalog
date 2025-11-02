@@ -267,15 +267,17 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
 
 if __name__ == "__main__":
     src_folder: str = "lizenzkatalog"
-    xsl_folder: str = "src/xslt"
+    styles_folder: str = "src/styles"
+    site_folder: str = "src/site"
     dst_folder: str = "docs"
 
     srcpath: Path = Path(src_folder)
     liz_dateien = [f.stem for f in srcpath.glob("*.liz")]
 
     print(liz_dateien)
-    copy_text_file(f"{xsl_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
-    copy_text_file(f"{xsl_folder}/annotation.dtd", f"{dst_folder}/annotation.dtd")
+    copy_text_file(f"{styles_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
+    copy_text_file(f"{styles_folder}/annotation.dtd", f"{dst_folder}/annotation.dtd")
+    copy_text_file(f"{site_folder}/index.html", f"{dst_folder}/index.html")
     for license_name in liz_dateien:
         inp = f"{src_folder}/{license_name}.liz"
         out_txt = f"{dst_folder}/{license_name}.txt"

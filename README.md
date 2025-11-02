@@ -180,7 +180,7 @@ ospo-lizenzkatalog/
 │  └─ gpl-3.0.liz
 ├─ src/
 │  ├─ liz2standoff.py
-│  └─ xslt/
+│  └─ styles/
 │     └─ standoff2table.xsl
 └─ build/              # Ausgabeordner für CI und lokale Läufe
 ```
@@ -192,7 +192,7 @@ python3 src/liz2standoff.py
 ```
 ## Visualisierung
 
-Die Datei [`src/xslt/liz2table-style.xsl`](src/xslt/liz2table-style.xsl) ist
+Die Datei [`src/styles/liz2table-style.xsl`](src/styles/liz2table-style.xsl) ist
 ein **XSLT 1.0** Stylesheet. Diese kann direkt im Browser genutzt werden. 
 
 
