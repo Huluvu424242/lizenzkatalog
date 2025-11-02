@@ -4,7 +4,10 @@
                 xmlns:exsl="http://exslt.org/common"
                 extension-element-prefixes="exsl">
 
-    <xsl:output method="html" encoding="UTF-8" indent="yes"/>
+    <xsl:output method="html"
+                doctype-system="about:legacy-compat"
+                encoding="UTF-8"
+                indent="yes"/>
     <xsl:strip-space elements=""/>
 
     <!-- Muenchian key: alle Spannen (mit Textbezug) nach @type gruppieren -->
@@ -61,7 +64,7 @@
     </xsl:template>
 
     <xsl:template match="annotation">
-        <html>
+        <html lang="de">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
                 <title>Standoff-Annotationen</title>
