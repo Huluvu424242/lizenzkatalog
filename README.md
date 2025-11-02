@@ -41,7 +41,7 @@ the part of the Licensor.
 
 ```
 Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](lizenzkatalog/index.html) oder speziell zum Beispiel hier 
-in der Auswertung zur [Lizeng ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/odc_by_1.0_public_text.tei.xml)
+in der Auswertung zur [Lizenz ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/odc_by_1.0_public_text.tei.xml)
 
 
 # Systematik
