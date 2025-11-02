@@ -685,8 +685,8 @@ Public License instead of this License.  But first, please read
     <note id="a3" type="act#mod" start="4046" end="4403"/>
     <note id="a4" type="act#der" start="10478" end="10688"/>
     <note id="a5" type="act#der" start="11029" end="11496"/>
-    <note id="a6" type="rul#lia" start="30795" end="31347"/>
-    <note id="a7" type="rul#lia" start="31379" end="31985"/>
+    <note id="a6" type="rul#nolia" start="30795" end="31347"/>
+    <note id="a7" type="rul#nolia" start="31379" end="31985"/>
     <note id="a2" type="lic#spdx" value="GPL-3.0"/>
   </notes>
 </annotation>
