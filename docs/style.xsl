@@ -64,10 +64,43 @@
     </xsl:template>
 
     <xsl:template match="annotation">
+        <!-- Gesamter Text als String (für Spans) -->
+        <xsl:variable name="docText" select="string(text)"/>
+
+        <!-- Lizenzname ermitteln: zuerst @value, sonst Span -->
+        <xsl:variable name="licenseName">
+            <xsl:choose>
+                <!-- Fall A: Notiz ohne Textbezug, Wert in @value -->
+                <xsl:when test="notes/note[@type='lic#name' and @value]">
+                    <xsl:value-of select="normalize-space(notes/note[@type='lic#name' and @value][1]/@value)"/>
+                </xsl:when>
+
+                <!-- Fall B: Notiz mit Textbezug über Start/Ende -->
+                <xsl:when test="notes/note[@type='lic#name' and @start and @end]">
+                    <xsl:variable name="n" select="notes/note[@type='lic#name' and @start and @end][1]"/>
+                    <xsl:value-of select="normalize-space(
+                    substring($docText, number($n/@start) + 1,
+                                       number($n/@end) - number($n/@start) + 1)
+                )"/>
+                </xsl:when>
+
+                <!-- sonst leer -->
+                <xsl:otherwise/>
+            </xsl:choose>
+        </xsl:variable>
+
+
+
         <html lang="de">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-                <title>Standoff-Annotationen</title>
+                <title>
+                    <xsl:text>Standoff-Annotationen</xsl:text>
+                    <xsl:if test="string($licenseName) != ''">
+                        <xsl:text> – </xsl:text>
+                        <xsl:value-of select="$licenseName"/>
+                    </xsl:if>
+                </title>
                 <style>
                     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 1rem; }
                     table { border-collapse: collapse; width: 100%; margin-bottom: 1.5rem; }
@@ -89,7 +122,13 @@
                 </style>
             </head>
             <body>
-                <h1>Annotationen</h1>
+                <h1>
+                    <xsl:text>Annotationen</xsl:text>
+                    <xsl:if test="string($licenseName) != ''">
+                        <xsl:text>: </xsl:text>
+                        <xsl:value-of select="$licenseName"/>
+                    </xsl:if>
+                </h1>
 
                 <xsl:variable name="txt" select="string(text)"/>
 
