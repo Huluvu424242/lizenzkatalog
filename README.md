@@ -1,5 +1,5 @@
 [![OSPOLizenkatalog-Logo](src/img/ospolizenzkatalog_100x100.png)](src/img/ospolizenzkatalog.png)
-# [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office)Lizenzkatalog 
+# [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) Lizenzkatalog 
 ## Projektziel
 
 Das Projekt stellt ein erweiterbares und anpassbares System zur Analyse und Bewertung von Lizenzen 
