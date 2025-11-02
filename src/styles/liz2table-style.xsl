@@ -123,7 +123,7 @@
             </head>
             <body>
                 <h1>
-                    <xsl:text>Auswertung</xsl:text>
+                    <xsl:text>Auswertung</xsl:text><br/>
                     <xsl:if test="string($licenseName) != ''">
                         <xsl:text>: </xsl:text>
                         <xsl:value-of select="$licenseName"/>
