@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:exsl="http://exslt.org/common"
+                extension-element-prefixes="exsl">
 
     <xsl:output method="html" encoding="UTF-8" indent="yes"/>
 
-    <!-- ===== Label-Mapping (wie zuvor) ===== -->
+    <!-- ===== Label-Mapping (Typcode -> Anzeige) ===== -->
     <xsl:template name="label-for-type">
         <xsl:param name="t"/>
         <xsl:choose>
@@ -44,7 +46,7 @@
             <xsl:when test="$t='rul#com'">Kommerziell</xsl:when>
             <xsl:when test="$t='rul#edu'">Bildung/Forschung</xsl:when>
             <xsl:when test="$t='rul#psi'">Behörden/Verwaltung</xsl:when>
-            <!-- fallback -->
+            <!-- Fallback -->
             <xsl:otherwise><xsl:value-of select="$t"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -81,9 +83,9 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- ============================== -->
-                <!-- Tabelle 1: ohne Textbezug      -->
-                <!-- ============================== -->
+                <!-- ============= -->
+                <!-- Tabelle 1     -->
+                <!-- ============= -->
                 <h2>Annotationen ohne Textbezug</h2>
                 <table>
                     <tr>
@@ -94,10 +96,15 @@
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) or not(@end)]">
                         <xsl:sort select="@type"/>
+                        <!-- Tooltip: [[typ=wert]] oder [[typ]] -->
                         <xsl:variable name="tooltip">
                             <xsl:choose>
-                                <xsl:when test="@value"><xsl:value-of select="concat('[[', @type, '=', @value, ']]')"/></xsl:when>
-                                <xsl:otherwise><xsl:value-of select="concat('[[', @type, ']]')"/></xsl:otherwise>
+                                <xsl:when test="@value">
+                                    <xsl:value-of select="concat('[[', @type, '=', @value, ']]')"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="concat('[[', @type, ']]')"/>
+                                </xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
                         <tr>
@@ -109,7 +116,12 @@
                                     </xsl:call-template>
                                 </span>
                             </td>
-                            <td><xsl:choose><xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when><xsl:otherwise><span class="muted">–</span></xsl:otherwise></xsl:choose></td>
+                            <td>
+                                <xsl:choose>
+                                    <xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when>
+                                    <xsl:otherwise><span class="muted">–</span></xsl:otherwise>
+                                </xsl:choose>
+                            </td>
                             <td><xsl:value-of select="@id"/></td>
                         </tr>
                     </xsl:for-each>
@@ -118,9 +130,9 @@
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- ============================== -->
-                <!-- Tabelle 2: mit Textbezug       -->
-                <!-- ============================== -->
+                <!-- ============= -->
+                <!-- Tabelle 2     -->
+                <!-- ============= -->
                 <h2>Annotationen mit Textbezug</h2>
                 <table>
                     <tr>
@@ -138,19 +150,8 @@
                         <xsl:variable name="e" select="number(@end)"/>
                         <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
                         <xsl:variable name="tooltipSpan" select="concat('[[', @type, ']]...[[/', @type, ']]')"/>
-                        <!-- Farbe zyklisch 1..5 -->
-                        <xsl:variable name="colorClass">
-                            <xsl:choose>
-                                <xsl:when test="position() mod 5 = 1">hl-1</xsl:when>
-                                <xsl:when test="position() mod 5 = 2">hl-2</xsl:when>
-                                <xsl:when test="position() mod 5 = 3">hl-3</xsl:when>
-                                <xsl:when test="position() mod 5 = 4">hl-4</xsl:when>
-                                <xsl:otherwise>hl-5</xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:variable>
-
                         <tr>
-                            <!-- Link auf Anker im hervorgehobenen Originaltext -->
+                            <!-- Link zu #frag-ID -->
                             <td><a href="#frag-{@id}"><xsl:value-of select="position()"/></a></td>
                             <td>
                                 <span title="{$tooltipSpan}">
@@ -166,103 +167,97 @@
                         </tr>
                     </xsl:for-each>
                 </table>
-
-                <!-- ============================== -->
-                <!-- Hervorhebungen im Originaltext  -->
-                <!-- ============================== -->
-                <xsl:variable name="notesSorted" select="notes/note[@start and @end]">
-                    <!-- (nur Referenz, Sortierung unten per for-each) -->
-                </xsl:variable>
-
-                <!-- Warnung bei kreuzenden Überlappungen (einfacher Check) -->
-                <xsl:variable name="hasOverlap">
-                    <xsl:for-each select="notes/note[@start and @end]">
-                        <xsl:sort select="number(@start)"/>
-                        <xsl:sort select="number(@end)"/>
-                        <xsl:if test="position() &gt; 1">
-                            <xsl:variable name="prevEnd" select="number(preceding-sibling::note[@start and @end][1]/@end)"/>
-                            <xsl:if test="number(@start) &lt; $prevEnd">1</xsl:if>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:variable>
-                <xsl:if test="contains(string($hasOverlap),'1')">
-                    <p class="warn">Hinweis: Es existieren überlappende/kreuzende Bereiche. Die Darstellung unten hebt nur die
-                        nicht-überlappenden Segmente in Reihenfolge hervor.</p>
+                <xsl:if test="not(notes/note[@start and @end])">
+                    <p class="muted">Keine Annotationen mit Textbezug vorhanden.</p>
                 </xsl:if>
 
+                <!-- ============================== -->
+                <!-- Originaltext mit Hervorhebung  -->
+                <!-- ============================== -->
                 <h2>Originaltext (mit Hervorhebungen)</h2>
                 <pre>
-                    <!-- Wir gehen Bereich für Bereich voran und färben, solange keine Kreuzung entsteht -->
-                    <xsl:variable name="lenText" select="string-length($txt)"/>
-                    <!-- Cursor-gestützte, einfache Segmentierung -->
-                    <xsl:variable name="lastEnd">
-                        <xsl:choose>
-                            <xsl:when test="notes/note[@start and @end]">
-                                <xsl:value-of select="0"/>
-                            </xsl:when>
-                            <xsl:otherwise><xsl:value-of select="0"/></xsl:otherwise>
-                        </xsl:choose>
+                    <!-- sortierte Spannen als RTF -->
+                    <xsl:variable name="sortedSpansRTF">
+                        <xsl:for-each select="notes/note[@start and @end]">
+                            <xsl:sort select="number(@start)"/>
+                            <xsl:sort select="number(@end)"/>
+                            <span start="{@start}" end="{@end}" id="{@id}"/>
+                        </xsl:for-each>
                     </xsl:variable>
 
-                    <!-- Plain-Text und dann nacheinander die markierten Ausschnitte einfügen -->
-                    <xsl:variable name="sorted" select="notes/note[@start and @end]">
-                        <!-- nur Referenz -->
-                    </xsl:variable>
+                    <!-- Node-Set erzeugen (EXSLT) -->
+                    <xsl:variable name="sortedSpans" select="exsl:node-set($sortedSpansRTF)/span"/>
 
-                    <!-- State: wir bauen den Text in Reihenfolge der Spannen (ohne echte Rekursion über alle Fälle) -->
-                    <xsl:for-each select="notes/note[@start and @end]">
-                        <xsl:sort select="number(@start)"/>
-                        <xsl:sort select="number(@end)"/>
-                        <xsl:variable name="s" select="number(@start)"/>
-                        <xsl:variable name="e" select="number(@end)"/>
-                        <!-- statisch: vorheriger Endpunkt -->
-                        <xsl:variable name="prevEnd">
-                            <xsl:choose>
-                                <xsl:when test="position()=1">0</xsl:when>
-                                <xsl:otherwise><xsl:value-of select="number(preceding-sibling::note[@start and @end][1]/@end)"/></xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:variable>
-                        <!-- 1) unmarkierter Text von prevEnd bis s -->
-                        <xsl:value-of select="substring($txt, $prevEnd + 1, $s - $prevEnd)"/>
-
-                        <!-- 2) markierter Bereich, wenn nicht gekreuzt (s >= prevEnd) -->
-                        <xsl:choose>
-                            <xsl:when test="$s &gt;= $prevEnd">
-                                <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
-                                <xsl:variable name="colorClass">
-                                    <xsl:choose>
-                                        <xsl:when test="position() mod 5 = 1">hl-1</xsl:when>
-                                        <xsl:when test="position() mod 5 = 2">hl-2</xsl:when>
-                                        <xsl:when test="position() mod 5 = 3">hl-3</xsl:when>
-                                        <xsl:when test="position() mod 5 = 4">hl-4</xsl:when>
-                                        <xsl:otherwise>hl-5</xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:variable>
-                                <span id="frag-{@id}" class="{$colorClass}">
-                                    <xsl:value-of select="$frag"/>
-                                </span>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <!-- Kreuzende Überlappung: wir geben den Bereich unmarkiert aus -->
-                                <xsl:value-of select="substring($txt, $s + 1, $e - $s + 1)"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-
-                        <!-- Bei letzter Spanne: Rest anhängen -->
-                        <xsl:if test="position()=last()">
-                            <xsl:variable name="endAll" select="$e"/>
-                            <xsl:value-of select="substring($txt, $endAll + 1)"/>
-                        </xsl:if>
-                    </xsl:for-each>
-
-                    <!-- Falls es gar keine Spannen gibt, kompletten Text ausgeben -->
-                    <xsl:if test="not(notes/note[@start and @end])">
-                        <xsl:value-of select="$txt"/>
-                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="$sortedSpans">
+                            <xsl:call-template name="render-from">
+                                <xsl:with-param name="txt" select="$txt"/>
+                                <xsl:with-param name="nodes" select="$sortedSpans"/>
+                                <xsl:with-param name="idx" select="1"/>
+                                <xsl:with-param name="cursor" select="0"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <!-- Fallback (kein exsl:node-set verfügbar) -->
+                            <xsl:value-of select="$txt"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </pre>
-
             </body>
         </html>
+    </xsl:template>
+
+    <!-- Rekursives Rendering der Hervorhebungen -->
+    <xsl:template name="render-from">
+        <xsl:param name="txt"/>
+        <xsl:param name="nodes"/>
+        <xsl:param name="idx"/>
+        <xsl:param name="cursor"/>
+
+        <xsl:choose>
+            <xsl:when test="$idx &lt;= count($nodes)">
+                <xsl:variable name="n" select="$nodes[$idx]"/>
+                <xsl:variable name="s" select="number($n/@start)"/>
+                <xsl:variable name="e" select="number($n/@end)"/>
+
+                <!-- Unmarkierter Text von cursor .. s -->
+                <xsl:if test="$s &gt; $cursor">
+                    <xsl:value-of select="substring($txt, $cursor + 1, $s - $cursor)"/>
+                </xsl:if>
+
+                <!-- Markierter Bereich (inclusive Ende) -->
+                <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
+                <xsl:variable name="colorClass">
+                    <xsl:choose>
+                        <xsl:when test="$idx mod 5 = 1">hl-1</xsl:when>
+                        <xsl:when test="$idx mod 5 = 2">hl-2</xsl:when>
+                        <xsl:when test="$idx mod 5 = 3">hl-3</xsl:when>
+                        <xsl:when test="$idx mod 5 = 4">hl-4</xsl:when>
+                        <xsl:otherwise>hl-5</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <span id="frag-{$n/@id}" class="{$colorClass}">
+                    <xsl:value-of select="$frag"/>
+                </span>
+
+                <!-- Rekursiv fortsetzen; Cursor := max(cursor, e+1) -->
+                <xsl:call-template name="render-from">
+                    <xsl:with-param name="txt" select="$txt"/>
+                    <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="idx" select="$idx + 1"/>
+                    <xsl:with-param name="cursor">
+                        <xsl:choose>
+                            <xsl:when test="$e + 1 &gt; $cursor"><xsl:value-of select="$e + 1"/></xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$cursor"/></xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- Rest ab cursor -->
+                <xsl:value-of select="substring($txt, $cursor + 1)"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>
