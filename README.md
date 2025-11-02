@@ -1,4 +1,4 @@
-![OSPOLizenkatalog-Logo](lizenzkatalog/img/ospolizenzkatalog.png){width=100px height=100px}]
+![OSPOLizenkatalog-Logo](lizenzkatalog/img/ospolizenzkatalog_100x100.png)]
 # OSPO Lizenzkatalog
 ## Projektziel
 
