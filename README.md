@@ -199,7 +199,7 @@ ein **XSLT 1.0** Stylesheet. Diese kann direkt im Browser genutzt werden.
 ## Hinweise
 - Offsets sind 0-basiert und end-exklusiv.
 - Eingabetexte werden NFC-normalisiert, damit Offsets stabil bleiben.
-- IDs sind Pflicht bei überlappenden Spannen.
+- IDs sind Pflicht bei überlappenden Bereiche.
 
 # Mitarbeit / Contributions
 TODO noch festzulegen

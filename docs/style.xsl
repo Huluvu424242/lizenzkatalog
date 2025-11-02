@@ -4,10 +4,13 @@
                 xmlns:exsl="http://exslt.org/common"
                 extension-element-prefixes="exsl">
 
-    <xsl:output method="html" encoding="UTF-8" indent="yes"/>
+    <xsl:output method="html"
+                doctype-system="about:legacy-compat"
+                encoding="UTF-8"
+                indent="yes"/>
     <xsl:strip-space elements=""/>
 
-    <!-- Muenchian key: alle Spannen (mit Textbezug) nach @type gruppieren -->
+    <!-- Muenchian key: alle Bereiche (mit Textbezug) nach @type gruppieren -->
     <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
 
     <!-- ===== Label-Mapping (Typcode -> Anzeige) ===== -->
@@ -61,10 +64,43 @@
     </xsl:template>
 
     <xsl:template match="annotation">
-        <html>
+        <!-- Gesamter Text als String (für Spans) -->
+        <xsl:variable name="docText" select="string(text)"/>
+
+        <!-- Lizenzname ermitteln: zuerst @value, sonst Span -->
+        <xsl:variable name="licenseName">
+            <xsl:choose>
+                <!-- Fall A: Notiz ohne Textbezug, Wert in @value -->
+                <xsl:when test="notes/note[@type='lic#name' and @value]">
+                    <xsl:value-of select="normalize-space(notes/note[@type='lic#name' and @value][1]/@value)"/>
+                </xsl:when>
+
+                <!-- Fall B: Notiz mit Textbezug über Start/Ende -->
+                <xsl:when test="notes/note[@type='lic#name' and @start and @end]">
+                    <xsl:variable name="n" select="notes/note[@type='lic#name' and @start and @end][1]"/>
+                    <xsl:value-of select="normalize-space(
+                    substring($docText, number($n/@start) + 1,
+                                       number($n/@end) - number($n/@start) + 1)
+                )"/>
+                </xsl:when>
+
+                <!-- sonst leer -->
+                <xsl:otherwise/>
+            </xsl:choose>
+        </xsl:variable>
+
+
+
+        <html lang="de">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-                <title>Standoff-Annotationen</title>
+                <title>
+                    <xsl:text>Standoff-Annotationen</xsl:text>
+                    <xsl:if test="string($licenseName) != ''">
+                        <xsl:text> – </xsl:text>
+                        <xsl:value-of select="$licenseName"/>
+                    </xsl:if>
+                </title>
                 <style>
                     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 1rem; }
                     table { border-collapse: collapse; width: 100%; margin-bottom: 1.5rem; }
@@ -86,12 +122,21 @@
                 </style>
             </head>
             <body>
-                <h1>Annotationen</h1>
+                <h1>
+                    <xsl:text>Auswertung</xsl:text>
+                    <xsl:if test="string($licenseName) != ''">
+                        <br/>
+                        <xsl:value-of select="$licenseName"/>
+                    </xsl:if>
+                </h1>
 
                 <xsl:variable name="txt" select="string(text)"/>
 
                 <!-- ===== Tabelle 1: ohne Textbezug ===== -->
-                <h2>Annotationen ohne Textbezug</h2>
+                <h2>
+                    <img src="ospolizenzkatalog.svg" alt="Logo" width="100" height="100"
+                         style="max-width:100%; height:auto;" />
+                    Allgemeine Infos</h2>
                 <table>
                     <tr>
                         <th>#</th>
@@ -144,7 +189,10 @@
                 </xsl:variable>
                 <xsl:variable name="typeOrder" select="exsl:node-set($typeOrderRTF)/t"/>
 
-                <h2>Annotationen mit Textbezug</h2>
+                <h2>
+                    <img src="ospolizenzkatalog.svg" alt="Logo" width="100" height="100"
+                         style="max-width:100%; height:auto;" />
+                    Informationen mit Textbezug</h2>
                 <table>
                     <tr>
                         <th>#</th>
@@ -202,7 +250,7 @@
         <xsl:param name="typeOrder"/>
         <xsl:variable name="txt" select="string(/annotation/text)"/>
 
-        <!-- sortierte Spannen als RTF (inkl. type-Attribut!) -->
+        <!-- sortierte Bereiche als RTF (inkl. type-Attribut!) -->
         <xsl:variable name="sortedSpansRTF">
             <xsl:for-each select="/annotation/notes/note[@start and @end]">
                 <xsl:sort select="@start" data-type="number" order="ascending"/>
