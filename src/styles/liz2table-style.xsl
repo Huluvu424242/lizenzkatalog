@@ -134,7 +134,10 @@
 
                 <!-- ===== Tabelle 1: ohne Textbezug ===== -->
                 <h2>
-                    <img src="ospolizenzkatalog.svg" alt="KI generiert by ChatGPT©️2025" width="100" height="100"
+                    <img src="ospolizenzkatalog.svg"
+                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                         title="KI generiert by ChatGPT©️2025"
+                         width="100" height="100"
                          style="max-width:100%; height:auto;" />
                     Allgemeine Infos</h2>
                 <table>
@@ -190,7 +193,10 @@
                 <xsl:variable name="typeOrder" select="exsl:node-set($typeOrderRTF)/t"/>
 
                 <h2>
-                    <img src="ospolizenzkatalog.svg" alt="KI generiert by ChatGPT©️2025" width="100" height="100"
+                    <img src="ospolizenzkatalog.svg"
+                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                         title="KI generiert by ChatGPT©️2025"
+                         width="100" height="100"
                          style="max-width:100%; height:auto;" />
                     Informationen mit Textbezug</h2>
                 <table>
