@@ -24,7 +24,7 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
 Linzenz im Plaintext mit eigenen Markern:
 
 **Beispiel:** `odc_by_1.0_public_text.liz`
-```text filename="odc_by_1.0_public_text.liz"
+```text title="odc_by_1.0_public_text.liz"
 # [[lic#name]]ODC Attribution License (ODC-By)[[/lic#name]]
 [[lic#spdx="ODC-By-1.0"]]
 ### Preamble
@@ -37,6 +37,9 @@ the part of the Licensor.
 [[/rul#nolia]]
 
 ```
+Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](lizenzkatalog/index.html) oder speziell zum Beispiel hier 
+in der Auswertung zur [Lizeng ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/odc_by_1.0_public_text.tei.xml)
+
 
 # Systematik
 Details der Systematik zur Annotierung von Lizenztexten um diese analysieren und bewerten zu können. 
