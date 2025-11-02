@@ -1,4 +1,4 @@
-[![OSPOLizenkatalog-Logo](src/img/ospolizenzkatalog_100x100.png) "KI generiert by chatgpt©️2025"](src/img/ospolizenzkatalog.png)
+[![OSPOLizenkatalog-Logo](src/img/ospolizenzkatalog_100x100.png  "KI generiert by chatgpt©️2025")](src/img/ospolizenzkatalog.png)
 # [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) 
 ## Projektziel
 
