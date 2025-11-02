@@ -1,9 +1,9 @@
 [![OSPOLizenkatalog-Logo](src/img/ospolizenzkatalog_100x100.png)](src/img/ospolizenzkatalog.png)
-# [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) [Lizenzkatalog](lizenzkatalog/index.html) 
+# [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) 
 ## Projektziel
 
 Das Projekt stellt ein erweiterbares und anpassbares System zur Analyse und Bewertung von Lizenzen 
-nebst eines Registers mit Bewertungen der gängigsten Lizenzen ([Lizenzkatalog](lizenzkatalog/index.html)) 
+nebst eines Registers mit Bewertungen der gängigsten Lizenzen ([Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/)) 
 für den Einsatz im Umfeld einer [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office)
 (oder eines Nutzers) bereit. 
 
@@ -40,7 +40,7 @@ the part of the Licensor.
 [[/rul#nolia]]
 
 ```
-Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](lizenzkatalog/index.html) oder speziell zum Beispiel hier 
+Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) oder speziell zum Beispiel hier 
 in der Auswertung zur [Lizenz ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/odc_by_1.0_public_text.tei.xml)
 
 
