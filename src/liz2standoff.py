@@ -273,6 +273,7 @@ if __name__ == "__main__":
 
     srcpath: Path = Path(src_folder)
     liz_dateien = [f.stem for f in srcpath.glob("*.liz")]
+    liz_dateien.sort(key=lambda s: s.lower())
 
     print(liz_dateien)
     copy_text_file(f"{styles_folder}/liz2table-style.xsl", f"{dst_folder}/style.xsl")
