@@ -28,7 +28,7 @@ jobs:
           BRANCH_NAME=${{ github.head_ref || github.ref_name }}
           
           # Änderungen hinzufügen, committen und pushen
-          git add .
+          git add docs
           if git diff --cached --quiet; then
             echo "Keine Änderungen zum Commit gefunden."
           else
