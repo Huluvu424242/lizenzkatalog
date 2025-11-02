@@ -10,9 +10,9 @@ Hiermit soll die OSPO (oder der Nutzer)
 Unterstützung bei der Analyse und Bewertung von Lizenzen im eigenen Umfeld erhalten.
 
 Das System ist frei einsetzbar und kann auch 1:1 on premise auf einem beim Nutzer 
-gehosteten github genutzt werden. 
+gehosteten github Portal genutzt werden. 
 
-Auch sind eigene Anpassungen der Systematik an die besoneren Bedürfnisse des Nutzers möglich. 
+Auch sind eigene Anpassungen der Systematik an die besonderen Bedürfnisse des Nutzers möglich. 
 
 
 
