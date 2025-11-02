@@ -123,9 +123,9 @@
             </head>
             <body>
                 <h1>
-                    <xsl:text>Auswertung</xsl:text><br/>
+                    <xsl:text>Auswertung</xsl:text>
                     <xsl:if test="string($licenseName) != ''">
-                        <xsl:text>: </xsl:text>
+                        <br/>
                         <xsl:value-of select="$licenseName"/>
                     </xsl:if>
                 </h1>
