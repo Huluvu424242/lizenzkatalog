@@ -3,8 +3,6 @@ name: CI
 on:
   push:
     workflow_dispatch:
-#    branches: [ main, master ]
-  pull_request:
 
 jobs:
   build:
@@ -18,3 +16,8 @@ jobs:
         run: |
           mkdir -p docs
           python src/liz2standoff.py
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: docs/**
