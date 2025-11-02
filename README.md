@@ -169,12 +169,12 @@ Die Systematik untergliedert sich in folgende Bereiche( Allgemein, Nutzungsart, 
 ## Verzeichnisstruktur
 
 ```
-license-annotator/
+ospo-lizenzkatalog/
 ├─ README.md
-├─ requirements.txt
+├─ pyprojekt.toml
 ├─ .gitignore
 ├─ .github/workflows/ci.yml
-├─ examples/
+├─ lizenzkatalog/
 │  ├─ apache-2.0.liz
 │  └─ gpl-3.0.liz
 ├─ src/
@@ -187,31 +187,13 @@ license-annotator/
 ## Nutzung (lokal)
 
 ```bash
-python3 src/liz2standoff.py examples/apache-2.0.liz build/apache-2.0.txt build/apache-2.0.xml
-python3 src/liz2standoff.py examples/gpl-3.0.liz     build/gpl-3.0.txt     build/gpl-3.0.tei.xml
+python3 src/liz2standoff.py 
 ```
-
-Optional: Alle `*.liz` in `examples/` verarbeiten:
-```bash
-for f in examples/*.liz; do
-  base=$(basename "$f" .liz)
-  python3 src/liz2standoff.py "$f" "build/$base.txt" "build/$base.xml"
-done
-```
-
 ## Visualisierung
 
-Die Datei `src/xslt/standoff2table.xsl` ist ein **XSLT 2.0** Stylesheet.  
-Du kannst sie mit Saxon (CLI) anwenden oder mit Saxon-JS im Browser nutzen.
+Die Datei [`src/xslt/liz2table-style.xsl`](src/xslt/liz2table-style.xsl) ist
+ein **XSLT 1.0** Stylesheet. Diese kann direkt im Browser genutzt werden. 
 
-Beispiel (Saxon HE CLI):
-```bash
-# Apache 2.0
-java -jar saxon-he.jar -s:build/apache-2.0.xml -xsl:src/xslt/liz2table-style.xsl -o:build/apache-2.0.html
-
-# GPL
-java -jar saxon-he.jar -s:build/gpl-3.0.tei.xml -xsl:src/xslt/liz2table-style.xsl -o:build/gpl-3.0.html
-```
 
 ## Hinweise
 - Offsets sind 0-basiert und end-exklusiv.
