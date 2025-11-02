@@ -16,14 +16,16 @@ Auch sind eigene Anpassungen der Systematik an die besonderen Bedürfnisse des N
 
 
 
-Ein leichtgewichtiges Tooling, um **überlappende Annotationen** in Plaintext-Dateien (`*.liz`) zu erfassen,
-danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visualisieren.
+
 
 ## Idee
+Die Idee besteht in einem leichtgewichtiges Tooling, bei dem  **(auch überlappende) Annotationen** in 
+Plaintext-Dateien (`*.liz`) erfasst werden können. Danach werden **standoff-XML** Dateien generiert und 
+die Ergebnisse über **XSLT** im Browser visualisiert.
 
-Linzenz im Plaintext mit eigenen Markern:
+Beispiel Linzenz in Plaintext mit eigenen Markern:
 
-**Beispiel:** `odc_by_1.0_public_text.liz`
+**Datei:** `odc_by_1.0_public_text.liz`
 ```text title="odc_by_1.0_public_text.liz"
 # [[lic#name]]ODC Attribution License (ODC-By)[[/lic#name]]
 [[lic#spdx="ODC-By-1.0"]]
@@ -215,3 +217,6 @@ java -jar saxon-he.jar -s:build/gpl-3.0.tei.xml -xsl:src/xslt/liz2table-style.xs
 - Offsets sind 0-basiert und end-exklusiv.
 - Eingabetexte werden NFC-normalisiert, damit Offsets stabil bleiben.
 - IDs sind Pflicht bei überlappenden Spannen.
+
+# Mitarbeit / Contributions
+TODO noch festzulegen
