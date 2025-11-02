@@ -1,6 +1,6 @@
-                    GNU GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
-
+        [[lic#name]]GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007[[/lic#name]]
+[[lic#spdx=GPL-3.0]]
  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
@@ -80,7 +80,7 @@ works, such as semiconductor masks.
   "The Program" refers to any copyrightable work licensed under this
 License.  Each licensee is addressed as "you".  "Licensees" and
 "recipients" may be individuals or organizations.
-
+[[act#mod]]
   To "modify" a work means to copy from or adapt all or part of the work
 in a fashion requiring copyright permission, other than the making of an
 exact copy.  The resulting work is called a "modified version" of the
@@ -88,7 +88,7 @@ earlier work or a work "based on" the earlier work.
 
   A "covered work" means either the unmodified Program or a work based
 on the Program.
-
+[[act#mod]]
   To "propagate" a work means to do anything with it that, without
 permission, would make you directly or secondarily liable for
 infringement under applicable copyright law, except executing it on a
@@ -206,11 +206,11 @@ recipients a copy of this License along with the Program.
 and you may offer support or warranty protection for a fee.
 
   5. Conveying Modified Source Versions.
-
+[[act#der]]
   You may convey a work based on the Program, or the modifications to
 produce it from the Program, in the form of source code under the
 terms of section 4, provided that you also meet all of these conditions:
-
+[[/act#der]]
     a) The work must carry prominent notices stating that you modified
     it, and giving a relevant date.
 
@@ -218,7 +218,7 @@ terms of section 4, provided that you also meet all of these conditions:
     released under this License and any conditions added under section
     7.  This requirement modifies the requirement in section 4 to
     "keep intact all notices".
-
+[[act#der]]
     c) You must license the entire work, as a whole, under this
     License to anyone who comes into possession of a copy.  This
     License will therefore apply, along with any applicable section 7
@@ -226,7 +226,7 @@ terms of section 4, provided that you also meet all of these conditions:
     regardless of how they are packaged.  This License gives no
     permission to license the work in any other way, but it does not
     invalidate such permission if you have separately received it.
-
+[[/act#der]]
     d) If the work has interactive user interfaces, each must display
     Appropriate Legal Notices; however, if the Program has interactive
     interfaces that do not display Appropriate Legal Notices, your
@@ -587,7 +587,7 @@ author or copyright holder as a result of your choosing to follow a
 later version.
 
   15. Disclaimer of Warranty.
-
+[[rul#lia]]
   THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
 APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
 HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
@@ -596,9 +596,9 @@ THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
 IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
 ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
+[[/rul#lia]]
   16. Limitation of Liability.
-
+[[rul#lia]]
   IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
 WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
 THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
@@ -608,7 +608,7 @@ DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
 PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
 EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
-
+[[/rul#lia]]
   17. Interpretation of Sections 15 and 16.
 
   If the disclaimer of warranty and limitation of liability provided
