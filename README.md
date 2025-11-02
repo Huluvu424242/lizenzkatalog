@@ -23,9 +23,8 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
 
 Linzenz im Plaintext mit eigenen Markern:
 
-Beispiel:
-**Datei:** `odc_by_1.0_public_text.liz`
-```text filename="test.liz"
+**Beispiel:** `odc_by_1.0_public_text.liz`
+```text filename="odc_by_1.0_public_text.liz"
 # [[lic#name]]ODC Attribution License (ODC-By)[[/lic#name]]
 [[lic#spdx="ODC-By-1.0"]]
 ### Preamble
