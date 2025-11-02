@@ -363,6 +363,7 @@ even if the Licensor has been advised of the possibility of such
 damages.
 
 
+
 8.2 If liability may not be excluded by law, it is limited to actual and
 direct financial loss to the extent it is caused by proved negligence on
 the part of the Licensor.
@@ -438,7 +439,8 @@ terms of this License.
   </text>
   <notes>
     <note id="a1" type="lic#name" start="2" end="34"/>
-    <note id="a3" type="rul#nolia" start="16615" end="16788"/>
+    <note id="a3" type="rul#lia" start="15947" end="16614"/>
+    <note id="a4" type="rul#nolia" start="16616" end="16789"/>
     <note id="a2" type="lic#spdx" value="ODC-By-1.0"/>
   </notes>
 </annotation>
