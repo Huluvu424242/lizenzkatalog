@@ -123,22 +123,22 @@ Die Systematik untergliedert sich in folgende Bereiche( Allgemein, Nutzungsart, 
 
 ## Bewertung (eval):
 * grün: uneingeschränkt einsetzbar
-  ```[[eval#grün ]]```
+  ```[[eval#grün]]```
 * gelb: eingeschränkt einsetzbar
-  ```[[eval#gelb ]]```
+  ```[[eval#gelb]]```
 * rot: nicht einsetzbar
-  ```[[eval#rot ]]```
+  ```[[eval#rot]]```
 ## Umgebung (env):
 * Kommerzielle Unternehmen oder als kommerziell eingestufte juristische Personen (Orgs, Vereine etc.)
-  ```[[env#com ]]```
+  ```[[env#com]]```
 * Schulen, Bildung, Kinderbetreuung
-  ```[[env#edu ]]```
+  ```[[env#edu]]```
 * Forschung, Universitäten, Bibliotheken
-  ```[[env#sci ]]```
+  ```[[env#sci]]```
 * Private Nutzung
-  ```[[env#prv ]]```  
+  ```[[env#prv]]```  
 * OSS Umfeld (freie OSS Entwickler, unentgeltlich arbeitende Vereine)
-  ```[[env#oss ]]```
+  ```[[env#oss]]```
 
 # Annotationsbeispiele
 ## Analyse
