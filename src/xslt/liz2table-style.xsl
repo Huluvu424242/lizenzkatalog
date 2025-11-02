@@ -7,6 +7,9 @@
     <xsl:output method="html" encoding="UTF-8" indent="yes"/>
     <xsl:strip-space elements=""/>
 
+    <!-- Muenchian key: alle Spannen (mit Textbezug) nach @type gruppieren -->
+    <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
+
     <!-- ===== Label-Mapping (Typcode -> Anzeige) ===== -->
     <xsl:template name="label-for-type">
         <xsl:param name="t"/>
@@ -70,11 +73,15 @@
                     code { background: #f6f8fa; padding: .1rem .25rem; border-radius: 4px; }
                     pre { white-space: pre-wrap; background: #fafafa; border: 1px dashed #ddd; padding: .75rem; }
                     .muted { color: #777; }
+                    /* Farbpalette (8 Farben, rotiert per Modulo) */
                     .hl-1 { background-color: #fff3cd; }  /* gelb */
                     .hl-2 { background-color: #d1ecf1; }  /* cyan */
                     .hl-3 { background-color: #e2e3e5; }  /* grau */
                     .hl-4 { background-color: #f8d7da; }  /* rosa */
                     .hl-5 { background-color: #d4edda; }  /* grün */
+                    .hl-6 { background-color: #fde2e4; }  /* hellrot */
+                    .hl-7 { background-color: #e4d8f6; }  /* lila */
+                    .hl-8 { background-color: #f6e6b4; }  /* sand */
                     h1, h2 { margin: .2rem 0 .6rem 0; }
                 </style>
             </head>
@@ -83,7 +90,7 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- Tabelle 1: ohne Textbezug -->
+                <!-- ===== Tabelle 1: ohne Textbezug ===== -->
                 <h2>Annotationen ohne Textbezug</h2>
                 <table>
                     <tr>
@@ -113,7 +120,12 @@
                                     </xsl:call-template>
                                 </span>
                             </td>
-                            <td><xsl:choose><xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when><xsl:otherwise><span class="muted">–</span></xsl:otherwise></xsl:choose></td>
+                            <td>
+                                <xsl:choose>
+                                    <xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when>
+                                    <xsl:otherwise><span class="muted">–</span></xsl:otherwise>
+                                </xsl:choose>
+                            </td>
                             <td><xsl:value-of select="@id"/></td>
                         </tr>
                     </xsl:for-each>
@@ -122,7 +134,16 @@
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- Tabelle 2: mit Textbezug -->
+                <!-- ===== Tabelle 2: mit Textbezug ===== -->
+                <xsl:variable name="typeOrderRTF">
+                    <!-- EINMALIGE, SORTIERTE TYPENLISTE -->
+                    <xsl:for-each select="notes/note[@start and @end][generate-id() = generate-id(key('kType', @type)[1])]">
+                        <xsl:sort select="@type"/>
+                        <t type="{@type}"/>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:variable name="typeOrder" select="exsl:node-set($typeOrderRTF)/t"/>
+
                 <h2>Annotationen mit Textbezug</h2>
                 <table>
                     <tr>
@@ -134,13 +155,18 @@
                         <th>End Pos</th>
                     </tr>
                     <xsl:for-each select="notes/note[@start and @end]">
-                        <!-- WICHTIG: explizit numerisch sortieren -->
+                        <!-- Sortierung nach Position im Text -->
                         <xsl:sort select="@start" data-type="number" order="ascending"/>
                         <xsl:sort select="@end"   data-type="number" order="ascending"/>
                         <xsl:variable name="s" select="number(@start)"/>
                         <xsl:variable name="e" select="number(@end)"/>
                         <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
                         <xsl:variable name="tooltipSpan" select="concat('[[', @type, ']]...[[/', @type, ']]')"/>
+
+                        <!-- Typ-Index: Position des Typs in der eindeutigen Typenliste -->
+                        <xsl:variable name="typeIndex"
+                                      select="count($typeOrder[@type = current()/@type]/preceding-sibling::t) + 1"/>
+
                         <tr>
                             <td><a href="#frag-{@id}"><xsl:value-of select="position()"/></a></td>
                             <td>
@@ -161,34 +187,37 @@
                     <p class="muted">Keine Annotationen mit Textbezug vorhanden.</p>
                 </xsl:if>
 
-                <!-- Originaltext mit Hervorhebungen -->
+                <!-- ===== Originaltext mit typkonstanten Hervorhebungen ===== -->
                 <h2>Originaltext (mit Hervorhebungen)</h2>
-                <pre><xsl:call-template name="render-original"/></pre>
+                <pre><xsl:call-template name="render-original">
+                    <xsl:with-param name="typeOrder" select="$typeOrder"/>
+                </xsl:call-template></pre>
 
             </body>
         </html>
     </xsl:template>
 
-    <!-- Rendering des Originaltexts (explizit numerisch sortiert, ohne Extra-Whitespace) -->
+    <!-- Originaltext-Rendering: typbasierte Farben -->
     <xsl:template name="render-original">
+        <xsl:param name="typeOrder"/>
         <xsl:variable name="txt" select="string(/annotation/text)"/>
 
-        <!-- sortierte Spannen als RTF -->
+        <!-- sortierte Spannen als RTF (inkl. type-Attribut!) -->
         <xsl:variable name="sortedSpansRTF">
             <xsl:for-each select="/annotation/notes/note[@start and @end]">
                 <xsl:sort select="@start" data-type="number" order="ascending"/>
                 <xsl:sort select="@end"   data-type="number" order="ascending"/>
-                <span start="{@start}" end="{@end}" id="{@id}"/>
+                <span start="{@start}" end="{@end}" id="{@id}" type="{@type}"/>
             </xsl:for-each>
         </xsl:variable>
 
-        <!-- Node-Set (EXSLT); Fallback: keine Hervorhebung -->
         <xsl:variable name="nodes" select="exsl:node-set($sortedSpansRTF)/span"/>
         <xsl:choose>
             <xsl:when test="$nodes">
                 <xsl:call-template name="render-from">
                     <xsl:with-param name="txt" select="$txt"/>
                     <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="typeOrder" select="$typeOrder"/>
                     <xsl:with-param name="idx" select="1"/>
                     <xsl:with-param name="cursor" select="0"/>
                 </xsl:call-template>
@@ -199,10 +228,11 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- Rekursives Rendering -->
+    <!-- Rekursives Rendering (typbasierte Farbe) -->
     <xsl:template name="render-from">
         <xsl:param name="txt"/>
         <xsl:param name="nodes"/>
+        <xsl:param name="typeOrder"/>
         <xsl:param name="idx"/>
         <xsl:param name="cursor"/>
 
@@ -212,22 +242,31 @@
                 <xsl:variable name="s" select="number($n/@start)"/>
                 <xsl:variable name="e" select="number($n/@end)"/>
 
-                <!-- Unmarkiert bis s -->
+                <!-- Unmarkierter Text von cursor .. s -->
                 <xsl:if test="$s &gt; $cursor">
                     <xsl:value-of select="substring($txt, $cursor + 1, $s - $cursor)"/>
                 </xsl:if>
 
-                <!-- Markiert (inclusive Ende) -->
-                <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
+                <!-- Typindex aus $typeOrder -->
+                <xsl:variable name="typeIndex"
+                              select="count($typeOrder[@type = $n/@type]/preceding-sibling::t) + 1"/>
+
+                <!-- Farbklasse: 8er-Palette rotiert -->
                 <xsl:variable name="colorClass">
                     <xsl:choose>
-                        <xsl:when test="$idx mod 5 = 1">hl-1</xsl:when>
-                        <xsl:when test="$idx mod 5 = 2">hl-2</xsl:when>
-                        <xsl:when test="$idx mod 5 = 3">hl-3</xsl:when>
-                        <xsl:when test="$idx mod 5 = 4">hl-4</xsl:when>
-                        <xsl:otherwise>hl-5</xsl:otherwise>
+                        <xsl:when test="$typeIndex mod 8 = 1">hl-1</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 2">hl-2</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 3">hl-3</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 4">hl-4</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 5">hl-5</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 6">hl-6</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 7">hl-7</xsl:when>
+                        <xsl:otherwise>hl-8</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
+
+                <!-- Markierter Bereich (inclusive Ende) -->
+                <xsl:variable name="frag" select="substring($txt, $s + 1, $e - $s + 1)"/>
                 <span id="frag-{$n/@id}" class="{$colorClass}">
                     <xsl:value-of select="$frag"/>
                 </span>
@@ -236,6 +275,7 @@
                 <xsl:call-template name="render-from">
                     <xsl:with-param name="txt" select="$txt"/>
                     <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="typeOrder" select="$typeOrder"/>
                     <xsl:with-param name="idx" select="$idx + 1"/>
                     <xsl:with-param name="cursor">
                         <xsl:choose>
