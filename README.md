@@ -1,4 +1,20 @@
-# license-annotator
+![OSPOLizenkatalog-Logo](lizenzkatalog/img/ospolizenzkatalog.png){width=100px height=100px}]
+# OSPO Lizenzkatalog
+## Projektziel
+
+Das Projekt stellt ein erweiterbares und anpassbares System zur Analyse und Bewertung von Lizenzen 
+nebst eines Registers mit Bewertungen der gängigsten Lizenzen (Lizenzkatalog) 
+für den Einsatz im Umfeld einer OSPO (oder eines Nutzers) bereit. 
+
+Hiermit soll die OSPO (oder der Nutzer)
+Unterstützung bei der Analyse und Bewertung von Lizenzen im eigenen Umfeld erhalten.
+
+Das System ist frei einsetzbar und kann auch 1:1 on premise auf einem beim Nutzer 
+gehosteten github genutzt werden. 
+
+Auch sind eigene Anpassungen der Systematik an die besoneren Bedürfnisse des Nutzers möglich. 
+
+
 
 Ein leichtgewichtiges Tooling, um **überlappende Annotationen** in Plaintext-Dateien (`*.liz`) zu erfassen,
 danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visualisieren.
@@ -14,80 +30,105 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
    Goethe [[person#p1 ref="gnd:118540238"]]Johann W. v. Goethe[[/person#p1]]
    war ein [[relation#r1]]Freund von [[person#p2]]Schiller[[/person#p2]][[/relation#r1]].
    ```
-   
-   Annotationsmöglichkeiten
 
-   Allgemein (lic): 
-   * name: Name der Lizenz
-     ```[[lic#name]]...[[/lic#name]]```
-   * spdx: SPDX ID der Lizenz
-     ```[[lic#spdx=IDBezeichner]]```
-   * fsf: FSF Approved
-     ```[[lic#fsf]]```
-   * OSI: OSI Approved
-     ```[[lic#osi]]```
-   * c: Alle Rechte vorbehalten
-     ```[[lic#c]]```
-   * c0: Nutzung uneingeschränkt
-     ```[[lic#c0]]```
-   
-   Nutzungsarten (use): 
-   * doc:: Dokumentation
-     ```[[use#doc]]...[[/use#doc]]```
-   * lib: Softwarekomponente, Bibliothek als Abhängigkeit
-     ```[[use#lib]]...[[/use#lib]]```
-   * app: Eigenständige lokale Anwendung
-     ```[[use#app]]...[[/use#app]]```
-   * cld: Eigenständige Cloud Anwendung
-     ```[[use#cld]]...[[/use#cld]]```
+# Systematik
+Details der Systematik zur Annotierung von Lizenztexten um diese analysieren und bewerten zu können. 
+Die Systematik untergliedert sich in folgende Bereiche( Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Bewertung und Umgebung):
 
-   Begrenzung (lim)
-   * pc: Anzahl Rechner
-     ```[[lim#pc]]...[[/lim#pc]]```
-   * dev: Anzahl Geräte (Drucker etc.)
-     ```[[lim#dev]]...[[/lim#dev]]```
-   * srv: Anzahl Server
-     ```[[lim#srv]]...[[/lim#srv]]```
-   * cpu: Anzahl CPU
-     ```[[lim#cpu]]...[[/lim#cpu]]```
-   * krn: Anzahl Kerne
-     ```[[lim#krn]]...[[/lim#krn]]```
-   * usr: Anzahl Nutzer
-     ```[[lim#usr]]...[[/lim#usr]]```
+## Allgemein (lic): 
+* name: Name der Lizenz
+ ```[[lic#name]]...[[/lic#name]]```
+* spdx: SPDX ID der Lizenz
+ ```[[lic#spdx=IDBezeichner]]```
+* fsf: FSF Approved
+ ```[[lic#fsf]]```
+* OSI: OSI Approved
+ ```[[lic#osi]]```
+* c: Alle Rechte vorbehalten
+ ```[[lic#c]]```
+* c0: Nutzung uneingeschränkt
+ ```[[lic#c0]]```
 
-   Aktionen (act):
-   * cop: Vervielfältigung, Kopieren
-     ```[[act#cop]]...[[/act#cop]]```
-   * mod: Verändern, Modifikation
-     ```[[act#mod]]...[[/act#mod]]```
-   * mov: Verteilen, Verbreiten
-     ```[[act#mov]]...[[/act#mov]]```
-   * sel: Verkaufen
-     ```[[act#sel]]...[[/act#sel]]```
-   * der: Derive, Ableiten, Einbau in eigene Software
-     ```[[act#der]]...[[/act#der]]```
-   
-   Pflichten/Folgen (rul):
-   * nolia: Haftungsausschluss, Warranty Disclaimer
-     ```[[rul#nolia]]...[[/rul#nolia]]```
-   * by: Namensnennung
-     ```[[rul#by]]...[[/rul#by]]```
-   * sa: Weitergabe unter gleicher Lizenz
-     ```[[rul#sa]]...[[/rul#sa]]```
-   * nd: Keine Modifikation
-     ```[[rul#nd]]...[[/rul#nd]]```
-   * nodrm: Keine technischen Schutzmaßnahmen wie Kpierschutz erlaubt
-     ```[[rul#nodrm]]...[[/rul#nodrm]]```
-   * nomili: Keine Militärische Nutzung
-     ```[[rul#nomili]]...[[/rul#nomili]]```
-   * nc: Keine Kommerzielle Nutzung
-     ```[[rul#nc]]...[[/rul#nc]]```
-   * com: Kommerzielle Nutzung
-     ```[[rul#com]]...[[/rul#com]]```
-   * edu: Nutzung in Bildung oder Forschung
-     ```[[rul#edu]]...[[/rul#edu]]```
-   * psi: Nutzung in Behörden, Verwaltungen
-     ```[[rul#psi]]...[[/rul#psi]]```
+## Nutzungsart (use): 
+* doc:: Dokumentation
+ ```[[use#doc]]...[[/use#doc]]```
+* lib: Softwarekomponente, Bibliothek als Abhängigkeit
+ ```[[use#lib]]...[[/use#lib]]```
+* app: Eigenständige lokale Anwendung
+ ```[[use#app]]...[[/use#app]]```
+* cld: Eigenständige Cloud Anwendung
+ ```[[use#cld]]...[[/use#cld]]```
+
+## Begrenzung (lim)
+* pc: Anzahl Rechner
+ ```[[lim#pc]]...[[/lim#pc]]```
+* dev: Anzahl Geräte (Drucker etc.)
+ ```[[lim#dev]]...[[/lim#dev]]```
+* srv: Anzahl Server
+ ```[[lim#srv]]...[[/lim#srv]]```
+* cpu: Anzahl CPU
+ ```[[lim#cpu]]...[[/lim#cpu]]```
+* krn: Anzahl Kerne
+ ```[[lim#krn]]...[[/lim#krn]]```
+* usr: Anzahl Nutzer
+ ```[[lim#usr]]...[[/lim#usr]]```
+
+## Aktionen (act):
+* cop: Vervielfältigung, Kopieren
+ ```[[act#cop]]...[[/act#cop]]```
+* mod: Verändern, Modifikation
+ ```[[act#mod]]...[[/act#mod]]```
+* mov: Verteilen, Verbreiten
+ ```[[act#mov]]...[[/act#mov]]```
+* sel: Verkaufen
+ ```[[act#sel]]...[[/act#sel]]```
+* der: Derive, Ableiten, Einbau in eigene Software
+ ```[[act#der]]...[[/act#der]]```
+
+## Pflichten/Folgen (rul):
+* nolia: Haftungsausschluss, Warranty Disclaimer
+ ```[[rul#nolia]]...[[/rul#nolia]]```
+* by: Namensnennung
+ ```[[rul#by]]...[[/rul#by]]```
+* sa: Weitergabe unter gleicher Lizenz
+ ```[[rul#sa]]...[[/rul#sa]]```
+* nd: Keine Modifikation
+ ```[[rul#nd]]...[[/rul#nd]]```
+* nodrm: Keine technischen Schutzmaßnahmen wie Kpierschutz erlaubt
+ ```[[rul#nodrm]]...[[/rul#nodrm]]```
+* nomili: Keine Militärische Nutzung
+ ```[[rul#nomili]]...[[/rul#nomili]]```
+* nc: Keine Kommerzielle Nutzung
+ ```[[rul#nc]]...[[/rul#nc]]```
+* com: Kommerzielle Nutzung
+ ```[[rul#com]]...[[/rul#com]]```
+* edu: Nutzung in Bildung oder Forschung
+ ```[[rul#edu]]...[[/rul#edu]]```
+* psi: Nutzung in Behörden, Verwaltungen
+ ```[[rul#psi]]...[[/rul#psi]]```
+
+
+## Bewertung (eval):
+* grün: uneingeschränkt einsetzbar
+  ```[[eval#grün ]]```
+* gelb: eingeschränkt einsetzbar
+  ```[[eval#gelb ]]```
+* rot: nicht einsetzbar
+  ```[[eval#rot ]]```
+## Umgebung (env):
+* Kommerzielle Unternehmen oder als kommerziell eingestufte juristische Personen (Orgs, Vereine etc.)
+  ```[[env#com ]]```
+* Schulen, Bildung, Kinderbetreuung
+  ```[[env#edu ]]```
+* Forschung, Universitäten, Bibliotheken
+  ```[[env#sci ]]```
+* Private Nutzung
+  ```[[env#prv ]]```  
+* OSS Umfeld (freie OSS Entwickler, unentgeltlich arbeitende Vereine)
+  ```[[env#oss ]]```
+
+# Annotationsbeispiele
+## Analyse
 
   Beispiel Haftungsausschluss
   ```
@@ -100,7 +141,12 @@ danach **standoff-XML** zu generieren und die Ergebnisse mit **XSLT** zu visuali
   Goethe [[person#p1 ref="gnd:118540238"]]Johann W. v. Goethe[[/person#p1]]
   war ein [[relation#r1]]Freund von [[person#p2]]Schiller[[/person#p2]][[/relation#r1]].
   ```
+## Bewertung
 
+*
+* ```[[eval#grün ]]```
+
+# Projekt und Mitarbeit
 
 2. Python-Skript erzeugt
    - `output.txt` (reiner Text ohne Marker)
