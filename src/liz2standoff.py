@@ -71,33 +71,45 @@ ESCAPE_OPEN = r"\[\["
 ESCAPE_CLOSE = r"\]\]"
 
 
-def unquote_value(v: str) -> str:
-    if v is None:
+def endpos(content: str) -> int:
+    return len(content) - 1
+
+
+def last_char(content: str) -> str:
+    return content[-1]
+
+
+def first_char(content: str) -> str:
+    return content[0]
+
+
+def unquote_value(content: str) -> str:
+    if content is None:
         return ""
-    v = v.strip()
-    if len(v) >= 2 and v[0] == '"' and v[-1] == '"':
+    content = content.strip()
+    if len(content) >= 2 and first_char(content) == '"' and last_char(content) == '"':
         # einfache Un-Escapes für \" \\ \n \t \[ \]
-        s = []
-        i = 1
-        while i < len(v) - 1:
-            ch = v[i]
-            if ch == "\\" and i + 1 < len(v) - 1:
-                nx = v[i + 1]
-                if nx == "n":
-                    s.append("\n")
-                elif nx == "t":
-                    s.append("\t")
-                elif nx in ['"', "\\", "[", "]"]:
-                    s.append(nx)
+        unquoted_value: list = []
+        pos: int = 1
+        while pos < endpos(content):
+            cur = content[pos]
+            if cur == "\\" and pos + 1 < endpos(content):
+                nxt = content[pos + 1]
+                if nxt == "n":
+                    unquoted_value.append("\n")
+                elif nxt == "t":
+                    unquoted_value.append("\t")
+                elif nxt in ['"', "\\", "[", "]"]:
+                    unquoted_value.append(nxt)
                 else:
                     # unbekannter Escape — roh übernehmen
-                    s.append(nx)
-                i += 2
+                    unquoted_value.append(nxt)
+                pos += 2
             else:
-                s.append(ch)
-                i += 1
-        return "".join(s)
-    return v
+                unquoted_value.append(cur)
+                pos += 1
+        return "".join(unquoted_value)
+    return content
 
 
 def copy_text_file(src_dir: str, dst_dir: str) -> None:
