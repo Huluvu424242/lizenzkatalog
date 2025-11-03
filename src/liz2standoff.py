@@ -16,7 +16,6 @@ import html
 import re
 import shutil
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 from xml.sax.saxutils import quoteattr
 
 import unicodedata
@@ -117,14 +116,14 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     src = unicodedata.normalize("NFC", src_raw)
 
     pos_src = 0  # Position im Rohtext
-    out_buf: List[str] = []  # bereinigter Text (ohne Marker)
+    out_buf: list[str] = []  # bereinigter Text (ohne Marker)
     out_len = 0  # Länge des bereinigten Texts
 
     # Stacks für offene Bereiche je Tag (cat#name) — ermöglicht Überlappung
-    open_stacks: Dict[str, List[Dict]] = {}
+    open_stacks: dict[str, list[dict]] = {}
 
     # Ergebnisliste: sowohl Bereiche als auch Singletons
-    notes: List[Dict] = []
+    notes: list[dict] = []
 
     auto_seq = 0  # laufende ID-Vergabe
 
@@ -208,12 +207,12 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     print(f" --> {out_txt}")
 
     # XML schreiben
-    def xml_attr_pair(k: str, v: Optional[str]) -> Optional[str]:
+    def xml_attr_pair(k: str, v: str | None) -> str | None:
         if v is None:
             return None
         return f'{k}={quoteattr(str(v))}'
 
-    lines: List[str] = []
+    lines: list[str] = []
     lines.append('<?xml version="1.0" encoding="UTF-8" standalone="no"?>')
     lines.append('<!DOCTYPE annotation SYSTEM "annotation.dtd">')
     lines.append('<?xml-stylesheet type="text/xsl" href="style.xsl"?>')
@@ -225,8 +224,8 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     lines.append('  <notes>')
 
     # Sortierung: Bereiche zuerst nach (start, end), Singletons danach stabil
-    spans_sorted: List[Tuple[int, int, Dict]] = []
-    singletons: List[Dict] = []
+    spans_sorted: list[tuple[int, int, dict]] = []
+    singletons: list[dict] = []
     for n in notes:
         if "start" in n and "end" in n:
             spans_sorted.append((n["start"], n["end"], n))
