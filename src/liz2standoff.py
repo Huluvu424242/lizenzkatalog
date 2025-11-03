@@ -224,16 +224,11 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             return None
         return f'{k}={quoteattr(str(v))}'
 
-    lines: list[str] = []
-    lines.append('<?xml version="1.0" encoding="UTF-8" standalone="no"?>')
-    lines.append('<!DOCTYPE annotation SYSTEM "annotation.dtd">')
-    lines.append('<?xml-stylesheet type="text/xsl" href="style.xsl"?>')
-    lines.append('<?thomas-schubert document-status="draft" version="2.0"?>')
-    lines.append('<annotation>')
-    lines.append('  <text xml:space="preserve">')
-    lines.append(html.escape(plain_text))
-    lines.append('  </text>')
-    lines.append('  <notes>')
+    lines: list[str] = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+                        '<!DOCTYPE annotation SYSTEM "annotation.dtd">',
+                        '<?xml-stylesheet type="text/xsl" href="style.xsl"?>',
+                        '<?thomas-schubert document-status="draft" version="2.0"?>', '<annotation>',
+                        '  <text xml:space="preserve">', html.escape(plain_text), '  </text>', '  <notes>']
 
     # Sortierung: Bereiche zuerst nach (start, end), Singletons danach stabil
     spans_sorted: list[tuple[int, int, dict]] = []
