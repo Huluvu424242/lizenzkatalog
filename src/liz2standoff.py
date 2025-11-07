@@ -20,12 +20,12 @@ from xml.sax.saxutils import quoteattr
 
 import unicodedata
 
-CAT1 = "cat1"
-NAME1 = "name1"
-VAL = "val"
+OPEN_MARKER_CATEGORY = "cat1"
+OPEN_MARKER_NAME = "name1"
+OPEN_MARKER_WERT = "val"
 
-CAT2 = "cat2"
-NAME2 = "name2"
+CLOSE_MARKER_CATEGORY = "cat2"
+CLOSE_MARKER_NAME = "name2"
 
 CLOSE_MARKER = "]]"
 
@@ -44,17 +44,15 @@ SINGLETON_TAGS = {
     "lic#c0",
 }
 
-# --- Regex --------------------------------------------------------------------
-# [[ lic#name ]], [[ lic#name=VALUE ]], [[ /lic#name ]]
-# VALUE kann "…" (mit escapes) oder unquoted (bis zur schließenden ]]) sein.
-# --- Regex --------------------------------------------------------------------
-# Offene oder Singleton-Tags: [[ lic#name ]] oder [[ lic#name=VALUE ]]
+# noinspection RegExpRedundantEscape
+# noinspection RegExpDuplicateAlternationBranch
+# noinspection RegExpSimplifiable
 OPEN_OR_SINGLETON_REGEX = re.compile(
     rf"""\[\[\s*
-        (?P<{CAT1}>lic|use|lim|act|rul)
+        (?P<{OPEN_MARKER_CATEGORY}>lic|use|lim|act|rul)
         \#
-        (?P<{NAME1}>[A-Za-z0-9\-]+)
-        (?:=(?P<{VAL}>
+        (?P<{OPEN_MARKER_NAME}>[A-Za-z0-9\-]+)
+        (?:=(?P<{OPEN_MARKER_WERT}>
              "(?:\\.|[^"\\])*"         # quoted
              | [^\]\r\n]+              # or unquoted
         ))?
@@ -62,12 +60,14 @@ OPEN_OR_SINGLETON_REGEX = re.compile(
     re.VERBOSE,
 )
 
-# Schließende Tags: [[ /lic#name ]]
+# noinspection RegExpRedundantEscape
+# noinspection RegExpDuplicateAlternationBranch
+# noinspection RegExpSimplifiable
 CLOSE_REGEX = re.compile(
     rf"""\[\[\s*/\s*
-        (?P<{CAT2}>lic|use|lim|act|rul)
+        (?P<{CLOSE_MARKER_CATEGORY}>lic|use|lim|act|rul)
         \#
-        (?P<{NAME2}>[A-Za-z0-9\-]+)
+        (?P<{CLOSE_MARKER_NAME}>[A-Za-z0-9\-]+)
         \s*\]\]""",
     re.VERBOSE,
 )
@@ -182,9 +182,9 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
         # Match zerlegen: ist es ein Open/Singleton oder Close?
         mo_open = OPEN_OR_SINGLETON_REGEX.match(treffer.group(0))
         if mo_open:
-            cat = mo_open.group(CAT1)
-            name = mo_open.group(NAME1)
-            raw_val = mo_open.group(VAL)
+            cat = mo_open.group(OPEN_MARKER_CATEGORY)
+            name = mo_open.group(OPEN_MARKER_NAME)
+            raw_val = mo_open.group(OPEN_MARKER_WERT)
             val = unquote_value(raw_val) if raw_val is not None else None
 
             tag_key = f"{cat}#{name}"
@@ -216,8 +216,8 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             if not mo_close:
                 raise ValueError("Interner Parserfehler: Weder open/singleton noch close erkannt.")
 
-            cat = mo_close.group(CAT2)
-            name = mo_close.group(NAME2)
+            cat = mo_close.group(CLOSE_MARKER_CATEGORY)
+            name = mo_close.group(CLOSE_MARKER_NAME)
             tag_key = f"{cat}#{name}"
 
             stack = open_stacks.get(tag_key, [])
