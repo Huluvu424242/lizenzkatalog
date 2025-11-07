@@ -106,11 +106,6 @@ def is_string_part(content: str) -> bool:
             and last_char(content) == DOPPELTES_HOCHKOMMA)
 
 
-#
-# def exist_nextchar(nextpos: int, endpos: int) -> bool:
-#     return nextpos < endpos
-
-
 def unquote_value(content: str) -> str:
     if content is None:
         return ""
