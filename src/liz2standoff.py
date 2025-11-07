@@ -20,6 +20,12 @@ from xml.sax.saxutils import quoteattr
 
 import unicodedata
 
+CLOSE_MARKER = "]]"
+
+OPEN_MARKER = "[["
+
+DOPPELTES_HOCHKOMMA = '"'
+
 # --- Vokabular-Policy ---------------------------------------------------------
 # Welche Tags sind Singletons (benötigen kein schließendes Tag / keine Spanne)?
 # Du kannst diese Liste jederzeit erweitern/anpassen.
@@ -36,7 +42,7 @@ SINGLETON_TAGS = {
 # VALUE kann "…" (mit escapes) oder unquoted (bis zur schließenden ]]) sein.
 # --- Regex --------------------------------------------------------------------
 # Offene oder Singleton-Tags: [[ lic#name ]] oder [[ lic#name=VALUE ]]
-OPEN_OR_SINGLETON_RE = re.compile(
+OPEN_OR_SINGLETON_REGEX = re.compile(
     r"""\[\[\s*
         (?P<cat1>lic|use|lim|act|rul)
         \#
@@ -50,7 +56,7 @@ OPEN_OR_SINGLETON_RE = re.compile(
 )
 
 # Schließende Tags: [[ /lic#name ]]
-CLOSE_RE = re.compile(
+CLOSE_REGEX = re.compile(
     r"""\[\[\s*/\s*
         (?P<cat2>lic|use|lim|act|rul)
         \#
@@ -60,20 +66,22 @@ CLOSE_RE = re.compile(
 )
 
 # Kombinierte Suche (verschiedene Gruppennamen!)
-MASTER_RE = re.compile(
-    f"{OPEN_OR_SINGLETON_RE.pattern}|{CLOSE_RE.pattern}",
+MASTER_REGEX = re.compile(
+    f"{OPEN_OR_SINGLETON_REGEX.pattern}|{CLOSE_REGEX.pattern}",
     re.VERBOSE | re.DOTALL,
 )
 
 #
 # # Optional: ermöglicht literale [[ bzw. ]] im Text via Escape
-ESCAPE_OPEN = r"\[\["
-ESCAPE_CLOSE = r"\]\]"
+ESCAPED_OPEN_MARKER = r"\[\["
+ESCAPED_CLOSE_MARKER = r"\]\]"
 
 
-def endpos(content: str) -> int:
+def lastpos(content: str) -> int:
     return len(content) - 1
 
+def nextpos(pos:int)->int:
+    return pos+1
 
 def last_char(content: str) -> str:
     return content[-1]
@@ -83,31 +91,41 @@ def first_char(content: str) -> str:
     return content[0]
 
 
+def is_string_part(content: str) -> bool:
+    return (len(content) >= 2
+            and first_char(content) == DOPPELTES_HOCHKOMMA
+            and last_char(content) == DOPPELTES_HOCHKOMMA)
+
+#
+# def exist_nextchar(nextpos: int, endpos: int) -> bool:
+#     return nextpos < endpos
+
+
 def unquote_value(content: str) -> str:
     if content is None:
         return ""
     content = content.strip()
-    if len(content) >= 2 and first_char(content) == '"' and last_char(content) == '"':
+    if is_string_part(content):
         # einfache Un-Escapes für \" \\ \n \t \[ \]
         unquoted_value: list = []
         pos: int = 1
-        while pos < endpos(content):
-            cur = content[pos]
-            if cur == "\\" and pos + 1 < endpos(content):
-                nxt = content[pos + 1]
-                if nxt == "n":
-                    unquoted_value.append("\n")
-                elif nxt == "t":
-                    unquoted_value.append("\t")
-                elif nxt in ['"', "\\", "[", "]"]:
-                    unquoted_value.append(nxt)
+        while pos < lastpos(content):
+            cur_char = content[pos]
+            if cur_char == "\\" and nextpos(pos) < lastpos(content):
+                next_char = content[nextpos(pos)]
+                if next_char == "n":
+                    unquoted_value.append("\n") # quoted newline
+                elif next_char == "t":
+                    unquoted_value.append("\t") #quoted tab
+                elif next_char in [DOPPELTES_HOCHKOMMA, "\\", "[", "]"]:
+                    unquoted_value.append(next_char) # quoted qoute or bracket
                 else:
                     # unbekannter Escape — roh übernehmen
-                    unquoted_value.append(nxt)
+                    unquoted_value.append(next_char)
                 pos += 2
             else:
-                unquoted_value.append(cur)
-                pos += 1
+                unquoted_value.append(cur_char)
+                pos = nextpos(pos)
         return "".join(unquoted_value)
     return content
 
@@ -127,7 +145,7 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     # Normalisierung für stabile Offsets
     src = unicodedata.normalize("NFC", src_raw)
 
-    pos_src = 0  # Position im Rohtext
+    src_pos = 0  # Position im Rohtext
     out_buf: list[str] = []  # bereinigter Text (ohne Marker)
     out_len = 0  # Länge des bereinigten Texts
 
@@ -139,16 +157,16 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
 
     auto_seq = 0  # laufende ID-Vergabe
 
-    for m in MASTER_RE.finditer(src):
+    for m in MASTER_REGEX.finditer(src):
         # Text bis vor dem Tag in den bereinigten Puffer kopieren
-        chunk = src[pos_src:m.start()]
+        chunk = src[src_pos:m.start()]
         # Escape-Sequenzen für literale [[ / ]] im Text ersetzen
-        chunk = chunk.replace(ESCAPE_OPEN, "[[").replace(ESCAPE_CLOSE, "]]")
+        chunk = chunk.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
         out_buf.append(chunk)
         out_len += len(chunk)
 
         # Match zerlegen: ist es ein Open/Singleton oder Close?
-        mo_open = OPEN_OR_SINGLETON_RE.match(m.group(0))
+        mo_open = OPEN_OR_SINGLETON_REGEX.match(m.group(0))
         if mo_open:
             cat = mo_open.group("cat1")
             name = mo_open.group("name1")
@@ -180,7 +198,7 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
                 open_stacks.setdefault(tag_key, []).append(frame)
 
         else:
-            mo_close = CLOSE_RE.match(m.group(0))
+            mo_close = CLOSE_REGEX.match(m.group(0))
             if not mo_close:
                 raise ValueError("Interner Parserfehler: Weder open/singleton noch close erkannt.")
 
@@ -197,11 +215,11 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             frame["end"] = out_len
             notes.append(frame)
 
-        pos_src = m.end()
+        src_pos = m.end()
 
     # Resttext übernehmen
-    tail = src[pos_src:]
-    tail = tail.replace(ESCAPE_OPEN, "[[").replace(ESCAPE_CLOSE, "]]")
+    tail = src[src_pos:]
+    tail = tail.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
     out_buf.append(tail)
     out_len += len(tail)
 
