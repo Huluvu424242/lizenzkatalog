@@ -20,6 +20,13 @@ from xml.sax.saxutils import quoteattr
 
 import unicodedata
 
+CAT1 = "cat1"
+NAME1 = "name1"
+VAL = "val"
+
+CAT2 = "cat2"
+NAME2 = "name2"
+
 CLOSE_MARKER = "]]"
 
 OPEN_MARKER = "[["
@@ -43,11 +50,11 @@ SINGLETON_TAGS = {
 # --- Regex --------------------------------------------------------------------
 # Offene oder Singleton-Tags: [[ lic#name ]] oder [[ lic#name=VALUE ]]
 OPEN_OR_SINGLETON_REGEX = re.compile(
-    r"""\[\[\s*
-        (?P<cat1>lic|use|lim|act|rul)
+    rf"""\[\[\s*
+        (?P<{CAT1}>lic|use|lim|act|rul)
         \#
-        (?P<name1>[A-Za-z0-9\-]+)
-        (?:=(?P<val>
+        (?P<{NAME1}>[A-Za-z0-9\-]+)
+        (?:=(?P<{VAL}>
              "(?:\\.|[^"\\])*"         # quoted
              | [^\]\r\n]+              # or unquoted
         ))?
@@ -57,10 +64,10 @@ OPEN_OR_SINGLETON_REGEX = re.compile(
 
 # Schließende Tags: [[ /lic#name ]]
 CLOSE_REGEX = re.compile(
-    r"""\[\[\s*/\s*
-        (?P<cat2>lic|use|lim|act|rul)
+    rf"""\[\[\s*/\s*
+        (?P<{CAT2}>lic|use|lim|act|rul)
         \#
-        (?P<name2>[A-Za-z0-9\-]+)
+        (?P<{NAME2}>[A-Za-z0-9\-]+)
         \s*\]\]""",
     re.VERBOSE,
 )
@@ -80,8 +87,10 @@ ESCAPED_CLOSE_MARKER = r"\]\]"
 def lastpos(content: str) -> int:
     return len(content) - 1
 
-def nextpos(pos:int)->int:
-    return pos+1
+
+def nextpos(pos: int) -> int:
+    return pos + 1
+
 
 def last_char(content: str) -> str:
     return content[-1]
@@ -95,6 +104,7 @@ def is_string_part(content: str) -> bool:
     return (len(content) >= 2
             and first_char(content) == DOPPELTES_HOCHKOMMA
             and last_char(content) == DOPPELTES_HOCHKOMMA)
+
 
 #
 # def exist_nextchar(nextpos: int, endpos: int) -> bool:
@@ -114,11 +124,11 @@ def unquote_value(content: str) -> str:
             if cur_char == "\\" and nextpos(pos) < lastpos(content):
                 next_char = content[nextpos(pos)]
                 if next_char == "n":
-                    unquoted_value.append("\n") # quoted newline
+                    unquoted_value.append("\n")  # quoted newline
                 elif next_char == "t":
-                    unquoted_value.append("\t") #quoted tab
+                    unquoted_value.append("\t")  # quoted tab
                 elif next_char in [DOPPELTES_HOCHKOMMA, "\\", "[", "]"]:
-                    unquoted_value.append(next_char) # quoted qoute or bracket
+                    unquoted_value.append(next_char)  # quoted qoute or bracket
                 else:
                     # unbekannter Escape — roh übernehmen
                     unquoted_value.append(next_char)
@@ -139,13 +149,17 @@ def copy_text_file(src_dir: str, dst_dir: str) -> None:
     shutil.copy2(src_path, dst_path)
 
 
+def unquote_marker(text: str) -> str:
+    return text.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
+
+
 def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     print(f"Verarbeite: {inp}")
-    src_raw = Path(inp).read_text(encoding="utf-8")
+    text_raw = Path(inp).read_text(encoding="utf-8")
     # Normalisierung für stabile Offsets
-    src = unicodedata.normalize("NFC", src_raw)
+    text = unicodedata.normalize("NFC", text_raw)
 
-    src_pos = 0  # Position im Rohtext
+    cur_pos = 0  # Position im Rohtext
     out_buf: list[str] = []  # bereinigter Text (ohne Marker)
     out_len = 0  # Länge des bereinigten Texts
 
@@ -157,20 +171,20 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
 
     auto_seq = 0  # laufende ID-Vergabe
 
-    for m in MASTER_REGEX.finditer(src):
+    for treffer in MASTER_REGEX.finditer(text):
         # Text bis vor dem Tag in den bereinigten Puffer kopieren
-        chunk = src[src_pos:m.start()]
+        chunk = text[cur_pos:treffer.start()]
         # Escape-Sequenzen für literale [[ / ]] im Text ersetzen
-        chunk = chunk.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
+        chunk = unquote_marker(chunk)
         out_buf.append(chunk)
         out_len += len(chunk)
 
         # Match zerlegen: ist es ein Open/Singleton oder Close?
-        mo_open = OPEN_OR_SINGLETON_REGEX.match(m.group(0))
+        mo_open = OPEN_OR_SINGLETON_REGEX.match(treffer.group(0))
         if mo_open:
-            cat = mo_open.group("cat1")
-            name = mo_open.group("name1")
-            raw_val = mo_open.group("val")
+            cat = mo_open.group(CAT1)
+            name = mo_open.group(NAME1)
+            raw_val = mo_open.group(VAL)
             val = unquote_value(raw_val) if raw_val is not None else None
 
             tag_key = f"{cat}#{name}"
@@ -198,27 +212,27 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
                 open_stacks.setdefault(tag_key, []).append(frame)
 
         else:
-            mo_close = CLOSE_REGEX.match(m.group(0))
+            mo_close = CLOSE_REGEX.match(treffer.group(0))
             if not mo_close:
                 raise ValueError("Interner Parserfehler: Weder open/singleton noch close erkannt.")
 
-            cat = mo_close.group("cat2")
-            name = mo_close.group("name2")
+            cat = mo_close.group(CAT2)
+            name = mo_close.group(NAME2)
             tag_key = f"{cat}#{name}"
 
             stack = open_stacks.get(tag_key, [])
             if not stack:
                 raise ValueError(
-                    f"Ende für unbekannte/geschlossene Spanne {tag_key} bei Pos {m.start()} in {inp}"
+                    f"Ende für unbekannte/geschlossene Spanne {tag_key} bei Pos {treffer.start()} in {inp}"
                 )
             frame = stack.pop()  # LIFO – korrekt bei Verschachtelung gleicher Tags
             frame["end"] = out_len
             notes.append(frame)
 
-        src_pos = m.end()
+        cur_pos = treffer.end()
 
     # Resttext übernehmen
-    tail = src[src_pos:]
+    tail = text[cur_pos:]
     tail = tail.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
     out_buf.append(tail)
     out_len += len(tail)
