@@ -1,0 +1,54 @@
+[[lic#name]]GNU General Public License, Version 3 (GPL-3.0)[[/lic#name]]
+[[lic#spdx=GPL-3.0-only]] [[lic#fsf]] [[lic#osi]]
+[[cpy#strong]]
+
+Die GPL erlaubt [[act#cop]]Vervielfältigung[[/act#cop]], [[act#mod]]Modifikationen[[/act#mod]] und
+[[act#mov]]Weiterverbreitung[[/act#mov]] unter den in dieser Lizenz festgelegten Bedingungen.
+Beim [[act#der]]Ableiten / Einbau in eigene Software[[/act#der]] gelten die Copyleft-Pflichten.
+
+Pflichten (auszugsweise):
+[[rul#notice]] [[rul#lictxt]] [[rul#pat]] [[rul#patret]] [[rul#tivo]]
+[[rul#src]]vollständiger, korrespondierender Quellcode[[/rul#src]],
+[[rul#changes]]Änderungen kennzeichnen[[/rul#changes]],
+[[rul#nolia]]Haftungsausschluss[[/rul#nolia]].
+
+-- Beispielhafte Policies (manuell gepflegt) ----------------------------------
+
+# 1) Unternehmen (com): intern als Bibliothek, kein Client-Code
+[[env#com]]
+[[dst#internal]] [[dst#srv]]
+In diesem Szenario wird die Software [[use#lib]]als Bibliothek[[/use#lib]] intern genutzt.
+[[pol#if="env=com,use=lib,dst=internal+srv,cpy=strong"
+      then="grün"
+      because="Interner Einsatz ohne Distribution; Copyleft-Pflichten werden nicht ausgelöst."]]
+[[met#eval author="OSS-Board" date="2025-11-08" conf="0.95"]]
+
+# 2) Unternehmen (com): Bibliothek wird öffentlich verteilt
+[[dst#public]]
+Die Software wird [[use#lib]]als Bibliothek[[/use#lib]] mit ausgeliefert.
+[[pol#if="env=com,use=lib,dst=public,cpy=strong"
+      then="rot"
+      because="Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung ist nicht zulässig."]]
+[[met#eval author="Legal" date="2025-11-08" conf="0.9"]]
+
+# 2b) Öffentlich – zulässig, wenn Gesamtwerk unter GPL gestellt wird
+[[pol#if="env=com,use=lib,dst=public,cpy=strong"
+      then="gelb"
+      because="Zulässig, sofern das gesamte abgeleitete Werk unter GPL verbreitet wird und alle Pflichten erfüllt sind."]]
+[[met#eval author="Legal" date="2025-11-08" conf="0.85"]]
+
+# 3) Behörde/Verwaltung (gov): interne Endanwendung
+[[env#gov]] [[dst#internal]]
+Hier wird die Software [[use#app]]als Endanwendung[[/use#app]] intern genutzt.
+[[pol#if="env=gov,use=app,dst=internal,cpy=strong"
+      then="grün"
+      because="Interne Nutzung; Pflichten zur Quelloffenlegung greifen erst bei Weitergabe/Distribution."]]
+[[met#eval author="Gov-IT" date="2025-11-08" conf="0.9"]]
+
+# 4) Lose Kopplung via API (separater Prozess/Service)
+[[lnk#api]] [[dst#partners]] [[dst#srv]]
+Die eigene Lösung ist [[use#app]]eine getrennte Anwendung[[/use#app]], die nur per API koppelt.
+[[pol#if="env=com,use=app,lnk=api,dst=partners+srv,cpy=strong"
+      then="grün"
+      because="Lose Kopplung über API (kein Linken/Zusammenführen); typischerweise kein abgeleitetes Werk."]]
+[[met#eval author="Architecture" date="2025-11-08" conf="0.8"]]
