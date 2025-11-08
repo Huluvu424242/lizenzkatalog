@@ -43,102 +43,255 @@ the part of the Licensor.
 Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) oder speziell zum Beispiel hier 
 in der Auswertung zur [Lizenz ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/odc_by_1.0_public_text.tei.xml)
 
-
 # Systematik
-Details der Systematik zur Annotierung von Lizenztexten um diese analysieren und bewerten zu können. 
-Die Systematik untergliedert sich in folgende Bereiche( Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Bewertung und Umgebung):
 
-## Allgemein (lic): 
-* name: Name der Lizenz
- ```[[lic#name]]...[[/lic#name]]```
-* spdx: SPDX ID der Lizenz
- ```[[lic#spdx=IDBezeichner]]```  Quelle: https://spdx.org/licenses/licenses.json
-* fsf: FSF Approved
- ```[[lic#fsf]]```  Quelle: https://spdx.org/licenses/licenses.json
-* OSI: OSI Approved
- ```[[lic#osi]]```  Quelle: https://spdx.org/licenses/licenses.json
-* c: Alle Rechte vorbehalten
- ```[[lic#c]]```
-* c0: Nutzung uneingeschränkt
- ```[[lic#c0]]```
+Details der Systematik zur Annotierung von Lizenztexten, um diese analysieren und bewerten zu können.  
+Die Systematik untergliedert sich in folgende Bereiche:  
+**Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Kopyleft-Stärke, Verbreitungsmodus, Kopplung, Umgebung, Bewertung (Policy) und Metadaten.**
 
-## Nutzungsart (use): 
-* doc:: Dokumentation
- ```[[use#doc]]...[[/use#doc]]```
-* lib: Softwarekomponente, Bibliothek als Abhängigkeit
- ```[[use#lib]]...[[/use#lib]]```
-* app: Eigenständige lokale Anwendung
- ```[[use#app]]...[[/use#app]]```
-* cld: Eigenständige Cloud Anwendung
- ```[[use#cld]]...[[/use#cld]]```
+---
 
-## Begrenzung (lim)
-* pc: Anzahl Rechner
- ```[[lim#pc]]...[[/lim#pc]]```
-* dev: Anzahl Geräte (Drucker etc.)
- ```[[lim#dev]]...[[/lim#dev]]```
-* srv: Anzahl Server
- ```[[lim#srv]]...[[/lim#srv]]```
-* cpu: Anzahl CPU
- ```[[lim#cpu]]...[[/lim#cpu]]```
-* krn: Anzahl Kerne
- ```[[lim#krn]]...[[/lim#krn]]```
-* usr: Anzahl Nutzer
- ```[[lim#usr]]...[[/lim#usr]]```
+## Allgemein (`lic`)
 
-## Aktionen (act):
-* cop: Vervielfältigung, Kopieren
- ```[[act#cop]]...[[/act#cop]]```
-* mod: Verändern, Modifikation
- ```[[act#mod]]...[[/act#mod]]```
-* mov: Verteilen, Verbreiten
- ```[[act#mov]]...[[/act#mov]]```
-* sel: Verkaufen
- ```[[act#sel]]...[[/act#sel]]```
-* der: Derive, Ableiten, Einbau in eigene Software
- ```[[act#der]]...[[/act#der]]```
+Allgemeine Angaben zur Lizenz selbst.
 
-## Pflichten/Folgen (rul):
-* nolia: Haftungsausschluss, Warranty Disclaimer
- ```[[rul#nolia]]...[[/rul#nolia]]```
-* by: Namensnennung
- ```[[rul#by]]...[[/rul#by]]```
-* sa: Weitergabe unter gleicher Lizenz
- ```[[rul#sa]]...[[/rul#sa]]```
-* nd: Keine Modifikation
- ```[[rul#nd]]...[[/rul#nd]]```
-* nodrm: Keine technischen Schutzmaßnahmen wie Kpierschutz erlaubt
- ```[[rul#nodrm]]...[[/rul#nodrm]]```
-* nomili: Keine Militärische Nutzung
- ```[[rul#nomili]]...[[/rul#nomili]]```
-* nc: Keine Kommerzielle Nutzung
- ```[[rul#nc]]...[[/rul#nc]]```
-* com: Kommerzielle Nutzung
- ```[[rul#com]]...[[/rul#com]]```
-* edu: Nutzung in Bildung oder Forschung
- ```[[rul#edu]]...[[/rul#edu]]```
-* psi: Nutzung in Behörden, Verwaltungen
- ```[[rul#psi]]...[[/rul#psi]]```
+* **name**: Name der Lizenz  
+  ```[[lic#name]]...[[/lic#name]]```
 
+* **spdx**: SPDX-ID der Lizenz  
+  ```[[lic#spdx=IDBezeichner]]```  
+  Quelle: [https://spdx.org/licenses/licenses.json](https://spdx.org/licenses/licenses.json)
 
-## Bewertung (eval):
-* grün: uneingeschränkt einsetzbar
-  ```[[eval#grün]]```
-* gelb: eingeschränkt einsetzbar
-  ```[[eval#gelb]]```
-* rot: nicht einsetzbar
-  ```[[eval#rot]]```
-## Umgebung (env):
-* Kommerzielle Unternehmen oder als kommerziell eingestufte juristische Personen (Orgs, Vereine etc.)
+* **fsf**: FSF Approved  
+  ```[[lic#fsf]]```
+
+* **osi**: OSI Approved  
+  ```[[lic#osi]]```
+
+* **c**: Alle Rechte vorbehalten  
+  ```[[lic#c]]```
+
+* **c0**: Nutzung uneingeschränkt / Public Domain  
+  ```[[lic#c0]]```
+
+---
+
+## Nutzungsart (`use`)
+
+Beschreibt, in welcher Form die Software verwendet wird.
+
+* **doc**: Dokumentation  
+  ```[[use#doc]]...[[/use#doc]]```
+
+* **lib**: Softwarekomponente oder Bibliothek als Abhängigkeit  
+  ```[[use#lib]]...[[/use#lib]]```
+
+* **app**: Eigenständige lokale Anwendung  
+  ```[[use#app]]...[[/use#app]]```
+
+* **cld**: Eigenständige Cloud-Anwendung  
+  ```[[use#cld]]...[[/use#cld]]```
+
+---
+
+## Begrenzung (`lim`)
+
+Definiert quantitative Nutzungseinschränkungen.
+
+* **pc**: Anzahl Rechner  
+  ```[[lim#pc]]...[[/lim#pc]]```
+
+* **dev**: Anzahl Geräte (Drucker etc.)  
+  ```[[lim#dev]]...[[/lim#dev]]```
+
+* **srv**: Anzahl Server  
+  ```[[lim#srv]]...[[/lim#srv]]```
+
+* **cpu**: Anzahl CPUs  
+  ```[[lim#cpu]]...[[/lim#cpu]]```
+
+* **krn**: Anzahl CPU-Kerne  
+  ```[[lim#krn]]...[[/lim#krn]]```
+
+* **usr**: Anzahl Nutzer  
+  ```[[lim#usr]]...[[/lim#usr]]```
+
+---
+
+## Aktionen (`act`)
+
+Beschreibt, welche Handlungen mit der Software erlaubt oder untersagt sind.
+
+* **cop**: Kopieren / Vervielfältigung  
+  ```[[act#cop]]...[[/act#cop]]```
+
+* **mod**: Modifikation / Veränderung  
+  ```[[act#mod]]...[[/act#mod]]```
+
+* **mov**: Verteilen / Verbreiten  
+  ```[[act#mov]]...[[/act#mov]]```
+
+* **sel**: Verkauf / kommerzielle Weitergabe  
+  ```[[act#sel]]...[[/act#sel]]```
+
+* **der**: Ableiten / Integration in eigene Software  
+  ```[[act#der]]...[[/act#der]]```
+
+---
+
+## Pflichten / Folgen (`rul`)
+
+Kennzeichnet rechtliche oder praktische Pflichten, Einschränkungen und Folgen.
+
+* **nolia**: Haftungsausschluss / Warranty Disclaimer  
+  ```[[rul#nolia]]...[[/rul#nolia]]```
+
+* **by**: Namensnennung erforderlich  
+  ```[[rul#by]]...[[/rul#by]]```
+
+* **sa**: Weitergabe unter gleicher Lizenz (Share-Alike)  
+  ```[[rul#sa]]...[[/rul#sa]]```
+
+* **nd**: Keine Modifikation erlaubt (No Derivatives)  
+  ```[[rul#nd]]...[[/rul#nd]]```
+
+* **nodrm**: Keine technischen Schutzmaßnahmen (DRM)  
+  ```[[rul#nodrm]]...[[/rul#nodrm]]```
+
+* **nomili**: Keine militärische Nutzung  
+  ```[[rul#nomili]]...[[/rul#nomili]]```
+
+* **nc**: Keine kommerzielle Nutzung  
+  ```[[rul#nc]]...[[/rul#nc]]```
+
+* **com**: Kommerzielle Nutzung erlaubt  
+  ```[[rul#com]]...[[/rul#com]]```
+
+* **edu**: Nutzung in Bildung und Forschung erlaubt oder vorgesehen  
+  ```[[rul#edu]]...[[/rul#edu]]```
+
+* **psi**: Nutzung in Behörden und öffentlicher Verwaltung erlaubt oder vorgesehen  
+  ```[[rul#psi]]...[[/rul#psi]]```
+
+* **src**: Bereitstellung des Quellcodes erforderlich  
+  ```[[rul#src]]...[[/rul#src]]```
+
+* **notice**: Beifügung von Copyright- und Lizenzhinweisen erforderlich  
+  ```[[rul#notice]]```
+
+* **lictxt**: Beifügung des Lizenztextes erforderlich  
+  ```[[rul#lictxt]]```
+
+* **changes**: Änderungen müssen kenntlich gemacht werden  
+  ```[[rul#changes]]```
+
+* **pat**: Patentlizenz wird gewährt  
+  ```[[rul#pat]]```
+
+* **patret**: Patentretaliation-Klausel (Widerruf bei Klage)  
+  ```[[rul#patret]]```
+
+* **tivo**: Anti-Tivoization (kein Lock-down der Hardware zulässig)  
+  ```[[rul#tivo]]```
+
+---
+
+## Kopyleft-Stärke (`cpy`)
+
+Definiert, ab wann und in welcher Form die Copyleft-Pflichten greifen.
+
+* **none** – kein Copyleft (z. B. MIT, BSD)  
+  ```[[cpy#none]]```
+
+* **weak** – schwaches Copyleft (z. B. LGPL)  
+  ```[[cpy#weak]]```
+
+* **strong** – starkes Copyleft (z. B. GPL)  
+  ```[[cpy#strong]]```
+
+* **network** – Netzwerkkopyleft (z. B. AGPL)  
+  ```[[cpy#network]]```
+
+---
+
+## Verbreitungsmodus (`dst`)
+
+Beschreibt, ob und wie die Software oder Teile davon weitergegeben werden.
+
+* **none** – keine Weitergabe  
+  ```[[dst#none]]```
+
+* **internal** – interne Nutzung / Verteilung innerhalb des Unternehmens  
+  ```[[dst#internal]]```
+
+* **partners** – Weitergabe an Partner oder Kunden unter Auflagen  
+  ```[[dst#partners]]```
+
+* **public** – öffentliche Verteilung (z. B. Download, App-Store, Website)  
+  ```[[dst#public]]```
+
+* **srv** – ausschließlich Server-seitige Nutzung, kein Client-Code  
+  ```[[dst#srv]]```
+
+* **cli** – Client-Code wird an Dritte übertragen (z. B. JavaScript, Mobile-App)  
+  ```[[dst#cli]]```
+
+---
+
+## Kopplungsart (`lnk`)
+
+Beschreibt die technische Kopplung zwischen lizenzierter und eigener Software.
+
+* **api** – lose Kopplung über API / Netzwerk / IPC  
+  ```[[lnk#api]]```
+
+* **dyn** – dynamisches Linken / Plug-in  
+  ```[[lnk#dyn]]```
+
+* **sta** – statisches Linken / Zusammenführen im Binary  
+  ```[[lnk#sta]]```
+
+---
+
+## Umgebung (`env`)
+
+Gibt an, in welchem Nutzungskontext die Bewertung erfolgt.
+
+* **com** – kommerzielle Unternehmen oder Organisationen  
   ```[[env#com]]```
-* Schulen, Bildung, Kinderbetreuung
+
+* **edu** – Schulen, Bildung, Kinderbetreuung  
   ```[[env#edu]]```
-* Forschung, Universitäten, Bibliotheken
+
+* **sci** – Forschung, Universitäten, Bibliotheken  
   ```[[env#sci]]```
-* Private Nutzung
-  ```[[env#prv]]```  
-* OSS Umfeld (freie OSS Entwickler, unentgeltlich arbeitende Vereine)
+
+* **prv** – private Nutzung  
+  ```[[env#prv]]```
+
+* **oss** – OSS-Umfeld (freie Entwickler, gemeinnützige Vereine)  
   ```[[env#oss]]```
+
+* **psi** – öffentliche Verwaltung / Behörden  
+  ```[[env#psi]]```
+
+* *(optional)* **ngo** – gemeinnützige Organisationen  
+  ```[[env#ngo]]```
+
+---
+
+## Bewertung / Policy (`pol`)
+
+Stellt eine manuell gepflegte Bewertung oder Richtlinie dar,  
+die den Einsatz einer Lizenz unter bestimmten Bedingungen beschreibt.
+
+**Syntax:**
+```text
+[[pol#if="env=com,use=lib,dst=internal+srv,cpy=network"
+      then="gelb"
+      because="AGPL intern ok; kein Client-Code an Dritte."
+      scope="license"
+      span="rul:src+cpy:network"]]
 
 # Annotationsbeispiele
 ## Analyse
