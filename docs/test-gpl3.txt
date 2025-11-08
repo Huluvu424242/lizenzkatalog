@@ -1,0 +1,54 @@
+GNU General Public License, Version 3 (GPL-3.0)
+  
+
+
+Die GPL erlaubt Vervielfältigung, Modifikationen und
+Weiterverbreitung unter den in dieser Lizenz festgelegten Bedingungen.
+Beim Ableiten / Einbau in eigene Software gelten die Copyleft-Pflichten.
+
+Pflichten (auszugsweise):
+    
+vollständiger, korrespondierender Quellcode,
+Änderungen kennzeichnen,
+Haftungsausschluss.
+
+-- Beispielhafte Policies (manuell gepflegt) ----------------------------------
+
+# 1) Unternehmen (com): intern als Bibliothek, kein Client-Code
+
+ 
+In diesem Szenario wird die Software als Bibliothek intern genutzt.
+[[pol#if="env=com,use=lib,dst=internal+srv,cpy=strong"
+      then="grün"
+      because="Interner Einsatz ohne Distribution; Copyleft-Pflichten werden nicht ausgelöst."]]
+[[met#eval author="OSS-Board" date="2025-11-08" conf="0.95"]]
+
+# 2) Unternehmen (com): Bibliothek wird öffentlich verteilt
+
+Die Software wird als Bibliothek mit ausgeliefert.
+[[pol#if="env=com,use=lib,dst=public,cpy=strong"
+      then="rot"
+      because="Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung ist nicht zulässig."]]
+[[met#eval author="Legal" date="2025-11-08" conf="0.9"]]
+
+# 2b) Öffentlich – zulässig, wenn Gesamtwerk unter GPL gestellt wird
+[[pol#if="env=com,use=lib,dst=public,cpy=strong"
+      then="gelb"
+      because="Zulässig, sofern das gesamte abgeleitete Werk unter GPL verbreitet wird und alle Pflichten erfüllt sind."]]
+[[met#eval author="Legal" date="2025-11-08" conf="0.85"]]
+
+# 3) Behörde/Verwaltung (gov): interne Endanwendung
+ 
+Hier wird die Software als Endanwendung intern genutzt.
+[[pol#if="env=gov,use=app,dst=internal,cpy=strong"
+      then="grün"
+      because="Interne Nutzung; Pflichten zur Quelloffenlegung greifen erst bei Weitergabe/Distribution."]]
+[[met#eval author="Gov-IT" date="2025-11-08" conf="0.9"]]
+
+# 4) Lose Kopplung via API (separater Prozess/Service)
+  
+Die eigene Lösung ist eine getrennte Anwendung, die nur per API koppelt.
+[[pol#if="env=com,use=app,lnk=api,dst=partners+srv,cpy=strong"
+      then="grün"
+      because="Lose Kopplung über API (kein Linken/Zusammenführen); typischerweise kein abgeleitetes Werk."]]
+[[met#eval author="Architecture" date="2025-11-08" conf="0.8"]]

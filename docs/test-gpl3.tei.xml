@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
+<annotation>
+  <text xml:space="preserve">
+GNU General Public License, Version 3 (GPL-3.0)
+  
+
+
+Die GPL erlaubt Vervielfältigung, Modifikationen und
+Weiterverbreitung unter den in dieser Lizenz festgelegten Bedingungen.
+Beim Ableiten / Einbau in eigene Software gelten die Copyleft-Pflichten.
+
+Pflichten (auszugsweise):
+    
+vollständiger, korrespondierender Quellcode,
+Änderungen kennzeichnen,
+Haftungsausschluss.
+
+-- Beispielhafte Policies (manuell gepflegt) ----------------------------------
+
+# 1) Unternehmen (com): intern als Bibliothek, kein Client-Code
+
+ 
+In diesem Szenario wird die Software als Bibliothek intern genutzt.
+[[pol#if=&quot;env=com,use=lib,dst=internal+srv,cpy=strong&quot;
+      then=&quot;grün&quot;
+      because=&quot;Interner Einsatz ohne Distribution; Copyleft-Pflichten werden nicht ausgelöst.&quot;]]
+[[met#eval author=&quot;OSS-Board&quot; date=&quot;2025-11-08&quot; conf=&quot;0.95&quot;]]
+
+# 2) Unternehmen (com): Bibliothek wird öffentlich verteilt
+
+Die Software wird als Bibliothek mit ausgeliefert.
+[[pol#if=&quot;env=com,use=lib,dst=public,cpy=strong&quot;
+      then=&quot;rot&quot;
+      because=&quot;Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung ist nicht zulässig.&quot;]]
+[[met#eval author=&quot;Legal&quot; date=&quot;2025-11-08&quot; conf=&quot;0.9&quot;]]
+
+# 2b) Öffentlich – zulässig, wenn Gesamtwerk unter GPL gestellt wird
+[[pol#if=&quot;env=com,use=lib,dst=public,cpy=strong&quot;
+      then=&quot;gelb&quot;
+      because=&quot;Zulässig, sofern das gesamte abgeleitete Werk unter GPL verbreitet wird und alle Pflichten erfüllt sind.&quot;]]
+[[met#eval author=&quot;Legal&quot; date=&quot;2025-11-08&quot; conf=&quot;0.85&quot;]]
+
+# 3) Behörde/Verwaltung (gov): interne Endanwendung
+ 
+Hier wird die Software als Endanwendung intern genutzt.
+[[pol#if=&quot;env=gov,use=app,dst=internal,cpy=strong&quot;
+      then=&quot;grün&quot;
+      because=&quot;Interne Nutzung; Pflichten zur Quelloffenlegung greifen erst bei Weitergabe/Distribution.&quot;]]
+[[met#eval author=&quot;Gov-IT&quot; date=&quot;2025-11-08&quot; conf=&quot;0.9&quot;]]
+
+# 4) Lose Kopplung via API (separater Prozess/Service)
+  
+Die eigene Lösung ist eine getrennte Anwendung, die nur per API koppelt.
+[[pol#if=&quot;env=com,use=app,lnk=api,dst=partners+srv,cpy=strong&quot;
+      then=&quot;grün&quot;
+      because=&quot;Lose Kopplung über API (kein Linken/Zusammenführen); typischerweise kein abgeleitetes Werk.&quot;]]
+[[met#eval author=&quot;Architecture&quot; date=&quot;2025-11-08&quot; conf=&quot;0.8&quot;]]
+
+  </text>
+  <notes>
+    <note id="a1" type="lic#name" start="0" end="47"/>
+    <note id="a6" type="act#cop" start="69" end="85"/>
+    <note id="a7" type="act#mod" start="87" end="101"/>
+    <note id="a8" type="act#mov" start="106" end="123"/>
+    <note id="a9" type="act#der" start="182" end="218"/>
+    <note id="a15" type="rul#src" start="282" end="325"/>
+    <note id="a16" type="rul#changes" start="327" end="350"/>
+    <note id="a17" type="rul#nolia" start="352" end="370"/>
+    <note id="a21" type="use#lib" start="558" end="572"/>
+    <note id="a23" type="use#lib" start="901" end="915"/>
+    <note id="a26" type="use#app" start="1561" end="1577"/>
+    <note id="a30" type="use#app" start="1910" end="1934"/>
+    <note id="a2" type="lic#spdx" value="GPL-3.0-only"/>
+    <note id="a3" type="lic#fsf"/>
+    <note id="a4" type="lic#osi"/>
+    <note id="a5" type="cpy#strong"/>
+    <note id="a10" type="rul#notice"/>
+    <note id="a11" type="rul#lictxt"/>
+    <note id="a12" type="rul#pat"/>
+    <note id="a13" type="rul#patret"/>
+    <note id="a14" type="rul#tivo"/>
+    <note id="a18" type="env#com"/>
+    <note id="a19" type="dst#internal"/>
+    <note id="a20" type="dst#srv"/>
+    <note id="a22" type="dst#public"/>
+    <note id="a24" type="env#gov"/>
+    <note id="a25" type="dst#internal"/>
+    <note id="a27" type="lnk#api"/>
+    <note id="a28" type="dst#partners"/>
+    <note id="a29" type="dst#srv"/>
+  </notes>
+</annotation>
