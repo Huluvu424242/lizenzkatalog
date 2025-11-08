@@ -5,20 +5,22 @@
 # 1) reinen Text (Marker entfernt) und
 # 2) ein Standoff-XML mit <note type="cat#name" id="…" [start="…"] [end="…"] [value="…"] …/>
 #
-# Neue Marker-Syntax (kompatibel mit deinem Schema):
-#   [[cat#name]] ... [[/cat#name]]         -> Bereiche-Annotation (verschachtelt/überlappend erlaubt)
-#   [[cat#name=VALUE]]                     -> Singleton-Annotation (ohne Textbezug)
-#   [[lic#fsf]] / [[lic#osi]] / [[lic#c]] / [[lic#c0]] -> Singletons ohne Wert
+# Erweiterungen:
+# - Inline-`pol`-Annotationen verstehen key="value"-Paare (if/then/because/…)
+# - Aus 'then' wird ein Ampel-Status (green/yellow/red) normalisiert
+# - Tooltip wird aus because/grund/why zu title
+# - Es wird automatisch eine pol#_section-Note erzeugt, falls irgendeine pol-Note existiert
 #
 # Offsets sind 0-basiert, end-exklusiv, gemessen im reinen Text nach Entfernen der Marker.
+
+from __future__ import annotations
 
 import html
 import re
 import shutil
+import unicodedata
 from pathlib import Path
 from xml.sax.saxutils import quoteattr
-
-import unicodedata
 
 OPEN_MARKER_CATEGORY = "cat1"
 OPEN_MARKER_NAME = "name1"
@@ -28,14 +30,12 @@ CLOSE_MARKER_CATEGORY = "cat2"
 CLOSE_MARKER_NAME = "name2"
 
 CLOSE_MARKER = "]]"
-
 OPEN_MARKER = "[["
 
 DOPPELTES_HOCHKOMMA = '"'
 
 # --- Vokabular-Policy ---------------------------------------------------------
 # Kategorien, die IMMER Singletons sind (kein schließendes Tag, keine Spanne).
-# Diese sind status-/kontextartig und nicht textstellengebunden.
 SINGLETON_CATEGORIES: set[str] = {
     "env",  # env#com|edu|sci|prv|oss|gov|ngo ...
     "cpy",  # cpy#none|weak|strong|network
@@ -43,11 +43,10 @@ SINGLETON_CATEGORIES: set[str] = {
     "lnk",  # lnk#api|dyn|sta
     "pol",  # pol#if="..." then="..." because="..." ...
     "met",  # met#eval author="..." date="..." conf="..."
-    "use",  # lizenz ist nur sinnvoll anwendbar auf doc oder lib oder app etc.
+    "use",  # use#doc|lib|app|...
 }
 
 # Konkrete Singleton-Tags (feiner als Kategorie, z. B. einzelne lic/rul-Flags)
-# Nur aufnehmen, was NICHT als Bereich genutzt werden soll.
 SINGLETON_TAGS: set[str] = {
     # lic
     "lic#spdx",
@@ -56,28 +55,23 @@ SINGLETON_TAGS: set[str] = {
     "lic#c",
     "lic#c0",
 
-    # rul – reine Beifügungs-/Status-Flags, typischerweise ohne konkrete Textstelle
-    "rul#notice",   # License/Copyright-Notice beilegen
-    "rul#lictxt",   # Lizenztext beilegen
-    "rul#pat",      # Patentlizenz vorhanden
-    "rul#patret",   # Patentretaliation-Klausel
-    "rul#tivo",     # Anti-Tivoization
+    # rul – status-/beifügungs-Flags
+    "rul#notice",
+    "rul#lictxt",
+    "rul#pat",
+    "rul#patret",
+    "rul#tivo",
 }
 
 # Hinweise:
 # - NICHT in SINGLETON_TAGS (weil meist als Span verwendet):
-#   rul#nolia, rul#by, rul#sa, rul#nd, rul#nodrm, rul#nomili,
-#   rul#nc, rul#com, rul#edu, rul#gov, rul#src, rul#changes
-#   --> Diese sollen die konkrete Stelle im Lizenztext belegen: [[rul#...]]...[[/rul#...]]
-#
+#   rul#nolia, rul#by, rul#sa, rul#nd, rul#nodrm, rul#nomili, rul#nc, rul#com, rul#edu,
+#   rul#gov, rul#src, rul#changes
 # - Singletons entstehen außerdem automatisch, wenn ein VALUE angegeben ist:
-#   [[cat#name=...]] -> wird als Singleton behandelt (dein Code: is_singleton_by_value)
-#
-# - Kategorien env/cpy/dst/lnk/pol/met sind IMMER Singletons (per SINGLETON_CATEGORIES).
+#   [[cat#name=...]] -> wird als Singleton behandelt (is_singleton_by_value)
 
-# noinspection RegExpRedundantEscape
-# noinspection RegExpDuplicateAlternationBranch
-# noinspection RegExpSimplifiable
+# --- Reguläre Ausdrücke -------------------------------------------------------
+
 OPEN_OR_SINGLETON_REGEX = re.compile(
     rf"""\[\[\s*
         (?P<{OPEN_MARKER_CATEGORY}>lic|use|lim|act|rul|cpy|dst|lnk|env|pol|met)
@@ -91,9 +85,6 @@ OPEN_OR_SINGLETON_REGEX = re.compile(
     re.VERBOSE,
 )
 
-# noinspection RegExpRedundantEscape
-# noinspection RegExpDuplicateAlternationBranch
-# noinspection RegExpSimplifiable
 CLOSE_REGEX = re.compile(
     rf"""\[\[\s*/\s*
         (?P<{CLOSE_MARKER_CATEGORY}>lic|use|lim|act|rul|cpy|dst|lnk|env|pol|met)
@@ -107,12 +98,13 @@ CLOSE_REGEX = re.compile(
 MASTER_REGEX = re.compile(
     f"{OPEN_OR_SINGLETON_REGEX.pattern}|{CLOSE_REGEX.pattern}",
     re.VERBOSE | re.DOTALL,
-)
+    )
 
-#
-# # Optional: ermöglicht literale [[ bzw. ]] im Text via Escape
+# Optional: ermöglicht literale [[ bzw. ]] im Text via Escape
 ESCAPED_OPEN_MARKER = r"\[\["
 ESCAPED_CLOSE_MARKER = r"\]\]"
+
+# --- Hilfsfunktionen für Strings/Unquoting -----------------------------------
 
 
 def lastpos(content: str) -> int:
@@ -137,13 +129,13 @@ def is_string_part(content: str) -> bool:
             and last_char(content) == DOPPELTES_HOCHKOMMA)
 
 
-def unquote_value(content: str) -> str:
+def unquote_value(content: str | None) -> str:
     if content is None:
         return ""
     content = content.strip()
     if is_string_part(content):
         # einfache Un-Escapes für \" \\ \n \t \[ \]
-        unquoted_value: list = []
+        unquoted_value: list[str] = []
         pos: int = 1
         while pos < lastpos(content):
             cur_char = content[pos]
@@ -154,7 +146,7 @@ def unquote_value(content: str) -> str:
                 elif next_char == "t":
                     unquoted_value.append("\t")  # quoted tab
                 elif next_char in [DOPPELTES_HOCHKOMMA, "\\", "[", "]"]:
-                    unquoted_value.append(next_char)  # quoted qoute or bracket
+                    unquoted_value.append(next_char)  # quoted quote or bracket
                 else:
                     # unbekannter Escape — roh übernehmen
                     unquoted_value.append(next_char)
@@ -166,8 +158,68 @@ def unquote_value(content: str) -> str:
     return content
 
 
+def unquote_marker(text: str) -> str:
+    return text.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
+
+
+# --- pol: key="value"-Parsing + Status-Normalisierung -------------------------
+
+_KV_PAIR_RE = re.compile(
+    r"""
+    \s*([A-Za-z_][A-Za-z0-9_\-]*)\s*=\s*
+    (?:
+        "((?:\\.|[^"\\])*)"   # quoted
+      | ([^\s;]+)             # unquoted (bis Semikolon/Whitespace)
+    )\s*;?                    # optionales Semikolon
+    """,
+    re.VERBOSE,
+)
+
+
+def parse_kv_attributes(s: str) -> dict[str, str]:
+    """Parst Strings wie: if="…" then="…" because="…" scope=app; link=https://…"""
+    if not s:
+        return {}
+    out: dict[str, str] = {}
+    # zuerst evtl. Gesamtsring unquoten (\" etc.)
+    s = unquote_value(s)
+    pos = 0
+    while pos < len(s):
+        m = _KV_PAIR_RE.match(s, pos)
+        if not m:
+            break
+        key = m.group(1)
+        val = m.group(2) if m.group(2) is not None else m.group(3)
+        if val is None:
+            val = ""
+        out[key] = val
+        pos = m.end()
+    return out
+
+
+def normalize_then_to_status(then_val: str | None) -> str | None:
+    """Leitet aus then-Wert eine Ampelfarbe ab."""
+    if not then_val:
+        return None
+    t = then_val.strip().lower()
+    # grün
+    if t in {"allow", "allowed", "permit", "permitted", "yes", "ok", "green", "gruen", "grün"}:
+        return "green"
+    # rot
+    if t in {"deny", "denied", "forbid", "forbidden", "block", "no", "red", "rot"}:
+        return "red"
+    # gelb (default für bedingt/unklar)
+    if t in {"conditional", "maybe", "depends", "it-depends", "yellow", "gelb"}:
+        return "yellow"
+    # Fallback
+    return "yellow"
+
+
+# --- Dateihilfen --------------------------------------------------------------
+
+
 def copy_text_file(src_dir: str, dst_dir: str) -> None:
-    """Kopiert eine Textdatei von src_dir nach dst_dir."""
+    """Kopiert eine Datei von src_dir nach dst_dir."""
     src_path = Path(src_dir)
     dst_path = Path(dst_dir)
     print(f"Von: {src_path} Nach: {dst_path}")
@@ -175,11 +227,10 @@ def copy_text_file(src_dir: str, dst_dir: str) -> None:
     shutil.copy2(src_path, dst_path)
 
 
-def unquote_marker(text: str) -> str:
-    return text.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
+# --- Hauptkonvertierung -------------------------------------------------------
 
 
-def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
+def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: str = "output.xml") -> None:
     print(f"Verarbeite: {inp}")
     text_raw = Path(inp).read_text(encoding="utf-8")
     # Normalisierung für stabile Offsets
@@ -220,12 +271,29 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             if is_singleton_by_vocab or is_singleton_by_value:
                 # -> Singleton: sofort Note emittieren, kein Start/Ende
                 auto_seq += 1
-                note = {
+                note: dict = {
                     "id": f"a{auto_seq}",
                     "type": tag_key,
                     "value": val,
-                    # Singletons haben bewusst kein start/end
                 }
+
+                # pol: Value als KV-Paare interpretieren und Attribute beifügen
+                if cat == "pol":
+                    attrs = parse_kv_attributes(raw_val or "")
+                    # Status aus 'then' ableiten, falls nicht explizit gesetzt
+                    status = attrs.get("status") or normalize_then_to_status(attrs.get("then"))
+                    if status:
+                        attrs["status"] = status  # green|yellow|red
+                    # Tooltip-Text: because/grund/why -> title
+                    tooltip = attrs.get("because") or attrs.get("grund") or attrs.get("why")
+                    if tooltip:
+                        attrs["title"] = tooltip
+                    # Label aus if ableiten (falls nicht gesetzt)
+                    if "if" in attrs and "label" not in attrs:
+                        attrs["label"] = attrs["if"]
+                    if attrs:
+                        note["attrs"] = attrs
+
                 notes.append(note)
             else:
                 # -> Open-Span: auf den Stack
@@ -264,12 +332,22 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
     out_len += len(tail)
 
     # Nicht geschlossene Bereiche melden
-    dangling = []
+    dangling: list[str] = []
     for tag_key, stack in open_stacks.items():
         for fr in stack:
             dangling.append(f'{tag_key} (id={fr["id"]}, start={fr["start"]})')
     if dangling:
         raise ValueError("Nicht geschlossene Bereiche: " + ", ".join(dangling) + f" in {inp}")
+
+    # --- NEU: Abschnittsanker für pol erzeugen, falls vorhanden ---------------
+    has_pol = any(n.get("type", "").startswith("pol#") for n in notes)
+    if has_pol:
+        auto_seq += 1
+        notes.append({
+            "id": f"a{auto_seq}",
+            "type": "pol#_section",
+            "attrs": {"present": "true"},
+        })
 
     # Plaintext schreiben
     plain_text = "".join(out_buf)
@@ -282,11 +360,17 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             return None
         return f'{k}={quoteattr(str(v))}'
 
-    lines: list[str] = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-                        '<!DOCTYPE annotation SYSTEM "annotation.dtd">',
-                        '<?xml-stylesheet type="text/xsl" href="style.xsl"?>',
-                        '<?thomas-schubert document-status="draft" version="2.0"?>', '<annotation>',
-                        '  <text xml:space="preserve">', html.escape(plain_text), '  </text>', '  <notes>']
+    lines: list[str] = [
+        '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+        '<!DOCTYPE annotation SYSTEM "annotation.dtd">',
+        '<?xml-stylesheet type="text/xsl" href="style.xsl"?>',
+        '<?thomas-schubert document-status="draft" version="2.0"?>',
+        '<annotation>',
+        '  <text xml:space="preserve">',
+        html.escape(plain_text),
+        '  </text>',
+        '  <notes>',
+    ]
 
     # Sortierung: Bereiche zuerst nach (start, end), Singletons danach stabil
     spans_sorted: list[tuple[int, int, dict]] = []
@@ -306,9 +390,12 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             xml_attr_pair("start", sp.get("start")),
             xml_attr_pair("end", sp.get("end")),
         ]
-        # Falls später Werte in Bereiche benutzt werden sollen:
+        # Falls später Werte in Bereichen benutzt werden sollen:
         if "value" in sp and sp["value"] is not None:
             attrs.append(xml_attr_pair("value", sp["value"]))
+        # generische Zusatzattribute
+        for k, v in (sp.get("attrs") or {}).items():
+            attrs.append(xml_attr_pair(k, v))
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
@@ -320,6 +407,9 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
         ]
         if sg.get("value") is not None:
             attrs.append(xml_attr_pair("value", sg["value"]))
+        # generische Zusatzattribute
+        for k, v in (sg.get("attrs") or {}).items():
+            attrs.append(xml_attr_pair(k, v))
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
@@ -346,6 +436,7 @@ if __name__ == "__main__":
     copy_text_file(f"{site_folder}/index.html", f"{dst_folder}/index.html")
     copy_text_file(f"{site_folder}/content.js", f"{dst_folder}/content.js")
     copy_text_file(f"{img_folder}/ospolizenzkatalog.svg", f"{dst_folder}/ospolizenzkatalog.svg")
+
     xmlfilenames: list[str] = []
     for license_name in liz_dateien:
         inp = f"{src_folder}/{license_name}.liz"
@@ -353,4 +444,5 @@ if __name__ == "__main__":
         out_xml = f"{dst_folder}/{license_name}.tei.xml"
         konvertiere(inp, out_txt, out_xml)
         xmlfilenames.append(f"{license_name}")
+
     Path(f"{dst_folder}/content.txt").write_text("\n".join(xmlfilenames), encoding="utf-8")
