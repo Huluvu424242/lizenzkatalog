@@ -34,27 +34,58 @@ OPEN_MARKER = "[["
 DOPPELTES_HOCHKOMMA = '"'
 
 # --- Vokabular-Policy ---------------------------------------------------------
-# Welche Tags sind Singletons (benötigen kein schließendes Tag / keine Spanne)?
-# Du kannst diese Liste jederzeit erweitern/anpassen.
-SINGLETON_TAGS = {
+# Kategorien, die IMMER Singletons sind (kein schließendes Tag, keine Spanne).
+# Diese sind status-/kontextartig und nicht textstellengebunden.
+SINGLETON_CATEGORIES: set[str] = {
+    "env",  # env#com|edu|sci|prv|oss|gov|ngo ...
+    "cpy",  # cpy#none|weak|strong|network
+    "dst",  # dst#none|internal|partners|public|srv|cli
+    "lnk",  # lnk#api|dyn|sta
+    "pol",  # pol#if="..." then="..." because="..." ...
+    "met",  # met#eval author="..." date="..." conf="..."
+}
+
+# Konkrete Singleton-Tags (feiner als Kategorie, z. B. einzelne lic/rul-Flags)
+# WICHTIG: Nur Tags hier aufnehmen, die NICHT als Span benutzt werden sollen.
+SINGLETON_TAGS: set[str] = {
+    # lic
     "lic#spdx",
     "lic#fsf",
     "lic#osi",
     "lic#c",
     "lic#c0",
+
+    # rul – reine Beifügungs-/Status-Flags, typischerweise ohne konkrete Textstelle
+    # KEINE Span-Pflichten hier aufnehmen!
+    "rul#notice",   # License/Copyright-Notice beilegen
+    "rul#lictxt",   # Lizenztext beilegen
+    "rul#pat",      # Patentlizenz vorhanden
+    "rul#patret",   # Patentretaliation-Klausel
+    "rul#tivo",     # Anti-Tivoization
 }
+
+# Hinweise:
+# - NICHT in SINGLETON_TAGS (weil meist als Span verwendet):
+#   rul#nolia, rul#by, rul#sa, rul#nd, rul#nodrm, rul#nomili,
+#   rul#nc, rul#com, rul#edu, rul#gov, rul#src, rul#changes
+#   --> Diese sollen die konkrete Stelle im Lizenztext belegen: [[rul#...]]...[[/rul#...]]
+#
+# - Singletons entstehen außerdem automatisch, wenn ein VALUE angegeben ist:
+#   [[cat#name=...]] -> wird als Singleton behandelt (dein Code: is_singleton_by_value)
+#
+# - Kategorien env/cpy/dst/lnk/pol/met sind IMMER Singletons (per SINGLETON_CATEGORIES).
 
 # noinspection RegExpRedundantEscape
 # noinspection RegExpDuplicateAlternationBranch
 # noinspection RegExpSimplifiable
 OPEN_OR_SINGLETON_REGEX = re.compile(
     rf"""\[\[\s*
-        (?P<{OPEN_MARKER_CATEGORY}>lic|use|lim|act|rul)
+        (?P<{OPEN_MARKER_CATEGORY}>lic|use|lim|act|rul|cpy|dst|lnk|env|pol|met)
         \#
         (?P<{OPEN_MARKER_NAME}>[A-Za-z0-9\-]+)
         (?:=(?P<{OPEN_MARKER_WERT}>
-             "(?:\\.|[^"\\])*"         # quoted
-             | [^\]\r\n]+              # or unquoted
+             "(?:\\.|[^"\\])*"         # quoted (erlaubt auch Leerzeichen, =, , etc.)
+             | [^\]\r\n]+              # oder unquoted (bis zu ] oder Zeilenende)
         ))?
         \s*\]\]""",
     re.VERBOSE,
@@ -65,7 +96,7 @@ OPEN_OR_SINGLETON_REGEX = re.compile(
 # noinspection RegExpSimplifiable
 CLOSE_REGEX = re.compile(
     rf"""\[\[\s*/\s*
-        (?P<{CLOSE_MARKER_CATEGORY}>lic|use|lim|act|rul)
+        (?P<{CLOSE_MARKER_CATEGORY}>lic|use|lim|act|rul|cpy|dst|lnk|env|pol|met)
         \#
         (?P<{CLOSE_MARKER_NAME}>[A-Za-z0-9\-]+)
         \s*\]\]""",
@@ -183,7 +214,7 @@ def konvertiere(inp="input.liz", out_txt="output.txt", out_xml="output.xml"):
             val = unquote_value(raw_val) if raw_val is not None else None
 
             tag_key = f"{cat}#{name}"
-            is_singleton_by_vocab = tag_key in SINGLETON_TAGS
+            is_singleton_by_vocab = (tag_key in SINGLETON_TAGS) or (cat in SINGLETON_CATEGORIES)
             is_singleton_by_value = (val is not None)
 
             if is_singleton_by_vocab or is_singleton_by_value:
