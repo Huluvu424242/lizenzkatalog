@@ -10,8 +10,8 @@ für den Einsatz im Umfeld einer [OSPO](https://de.wikipedia.org/wiki/Open_Sourc
 Hiermit soll die [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) (oder der Nutzer)
 Unterstützung bei der Analyse und Bewertung von Lizenzen im eigenen Umfeld erhalten.
 
-Das System ist frei einsetzbar und kann auch 1:1 on premise auf einem beim Nutzer 
-gehosteten github Portal genutzt werden. 
+Das System ist frei einsetzbar und kann auch 1:1 on premise beim Nutzer 
+gehostet werden z.B. auf einem eigenem github Portal. 
 
 Auch sind eigene Anpassungen der Systematik an die besonderen Bedürfnisse des Nutzers möglich. 
 
@@ -20,11 +20,11 @@ Auch sind eigene Anpassungen der Systematik an die besonderen Bedürfnisse des N
 
 
 ## Idee
-Die Idee besteht in einem leichtgewichtiges Tooling, bei dem  **(auch überlappende) Annotationen** in 
+Die Idee besteht in einem leichtgewichtigen Tooling, bei dem  **(auch überlappende) Annotationen** in 
 Plaintext-Dateien (`*.liz`) erfasst werden können. Danach werden **standoff-XML** Dateien generiert und 
 die Ergebnisse über **XSLT** im Browser visualisiert.
 
-Beispiel Linzenz in Plaintext mit eigenen Markern:
+Beispiel Linzenz in Plaintext mit Inline Annotationen:
 
 **Datei:** `odc_by_1.0_public_text.liz`
 ```text title="odc_by_1.0_public_text.liz"
@@ -41,7 +41,7 @@ the part of the Licensor.
 
 ```
 Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) oder speziell zum Beispiel hier 
-in der Auswertung zur [Lizenz ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/odc_by_1.0_public_text.tei.xml)
+in der Auswertung zur [Lizenz ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/ODC-By-1.0.tei.xml)
 
 # Systematik
 
