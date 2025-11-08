@@ -164,7 +164,7 @@
                     .hl-8 { background-color: #f6e6b4; }  /* sand */
                     h1, h2 { margin: .2rem 0 .6rem 0; }
 
-                    /* Badges & Pills */
+                    /* Badges and Pills */
                     .badges { display:flex; flex-wrap:wrap; gap:.35rem; margin:.35rem 0 1rem; }
                     .badge { display:inline-block; padding:.2rem .5rem; border-radius:999px; border:1px solid #ddd; background:#f7f7f7; font-size:.85rem; }
                     .badge.env { background:#f6f2ff; border-color:#e0d7ff; }
