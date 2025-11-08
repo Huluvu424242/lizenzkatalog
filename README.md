@@ -101,7 +101,7 @@ Definiert quantitative Nutzungseinschränkungen.
 * **pc**: Anzahl Rechner  
   ```[[lim#pc]]...[[/lim#pc]]```
 
-* **dev**: Anzahl Geräte (Drucker etc.)  
+* **dev**: Anzahl Geräte (z. B. Drucker)  
   ```[[lim#dev]]...[[/lim#dev]]```
 
 * **srv**: Anzahl Server  
@@ -170,8 +170,8 @@ Kennzeichnet rechtliche oder praktische Pflichten, Einschränkungen und Folgen.
 * **edu**: Nutzung in Bildung und Forschung erlaubt oder vorgesehen  
   ```[[rul#edu]]...[[/rul#edu]]```
 
-* **psi**: Nutzung in Behörden und öffentlicher Verwaltung erlaubt oder vorgesehen  
-  ```[[rul#psi]]...[[/rul#psi]]```
+* **gov**: Nutzung in Behörden und Verwaltungen erlaubt oder vorgesehen  
+  ```[[rul#gov]]...[[/rul#gov]]```
 
 * **src**: Bereitstellung des Quellcodes erforderlich  
   ```[[rul#src]]...[[/rul#src]]```
@@ -198,7 +198,7 @@ Kennzeichnet rechtliche oder praktische Pflichten, Einschränkungen und Folgen.
 
 ## Kopyleft-Stärke (`cpy`)
 
-Definiert, ab wann und in welcher Form die Copyleft-Pflichten greifen.
+Definiert, ab wann und in welcher Form Copyleft-Pflichten greifen.
 
 * **none** – kein Copyleft (z. B. MIT, BSD)  
   ```[[cpy#none]]```
@@ -216,7 +216,7 @@ Definiert, ab wann und in welcher Form die Copyleft-Pflichten greifen.
 
 ## Verbreitungsmodus (`dst`)
 
-Beschreibt, ob und wie die Software oder Teile davon weitergegeben werden.
+Beschreibt, ob und wie Software oder Teile davon weitergegeben werden.
 
 * **none** – keine Weitergabe  
   ```[[dst#none]]```
@@ -230,7 +230,7 @@ Beschreibt, ob und wie die Software oder Teile davon weitergegeben werden.
 * **public** – öffentliche Verteilung (z. B. Download, App-Store, Website)  
   ```[[dst#public]]```
 
-* **srv** – ausschließlich Server-seitige Nutzung, kein Client-Code  
+* **srv** – ausschließlich serverseitige Nutzung, kein Client-Code  
   ```[[dst#srv]]```
 
 * **cli** – Client-Code wird an Dritte übertragen (z. B. JavaScript, Mobile-App)  
@@ -272,8 +272,8 @@ Gibt an, in welchem Nutzungskontext die Bewertung erfolgt.
 * **oss** – OSS-Umfeld (freie Entwickler, gemeinnützige Vereine)  
   ```[[env#oss]]```
 
-* **psi** – öffentliche Verwaltung / Behörden  
-  ```[[env#psi]]```
+* **gov** – Behörden, Verwaltungen, staatliche Einrichtungen  
+  ```[[env#gov]]```
 
 * *(optional)* **ngo** – gemeinnützige Organisationen  
   ```[[env#ngo]]```
