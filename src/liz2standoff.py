@@ -43,10 +43,11 @@ SINGLETON_CATEGORIES: set[str] = {
     "lnk",  # lnk#api|dyn|sta
     "pol",  # pol#if="..." then="..." because="..." ...
     "met",  # met#eval author="..." date="..." conf="..."
+    "use",  # lizenz ist nur sinnvoll anwendbar auf doc oder lib oder app etc.
 }
 
 # Konkrete Singleton-Tags (feiner als Kategorie, z. B. einzelne lic/rul-Flags)
-# WICHTIG: Nur Tags hier aufnehmen, die NICHT als Span benutzt werden sollen.
+# Nur aufnehmen, was NICHT als Bereich genutzt werden soll.
 SINGLETON_TAGS: set[str] = {
     # lic
     "lic#spdx",
@@ -56,7 +57,6 @@ SINGLETON_TAGS: set[str] = {
     "lic#c0",
 
     # rul – reine Beifügungs-/Status-Flags, typischerweise ohne konkrete Textstelle
-    # KEINE Span-Pflichten hier aufnehmen!
     "rul#notice",   # License/Copyright-Notice beilegen
     "rul#lictxt",   # Lizenztext beilegen
     "rul#pat",      # Patentlizenz vorhanden
