@@ -4,47 +4,59 @@
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text xml:space="preserve">
-GNU General Public License, Version 3 (GPL-3.0)
-  
 
-
-Pflichten (auszugsweise):
-    
-vollständiger, korrespondierender Quellcode,
-Änderungen kennzeichnen,
-Haftungsausschluss.
-
--- Policies --------------------------------------------------------------------
 
    
-[[pol#if=&quot;env=com,use=lib,dst=internal+srv,cpy=strong&quot;
-      then=&quot;grün&quot;
-      because=&quot;Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst.&quot;]]
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc.
+&lt;https://fsf.org/&gt;
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+
+                            Preamble
+
+The GNU General Public License is a free, copyleft license for
+software and other kinds of works.
 
 
-[[pol#if=&quot;env=com,use=lib,dst=public,cpy=strong&quot;
-      then=&quot;rot&quot;
-      because=&quot;Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig.&quot;]]
+[[pol#distribution if=&quot;Distribution of modified versions&quot; then=&quot;allow&quot; because=&quot;Copyleft ensures user freedoms are preserved&quot;]]
+
+To protect your rights, we need to prevent others from denying you
+these rights or asking you to surrender the rights. Therefore, you
+have certain responsibilities if you distribute copies of the software,
+or if you modify it: responsibilities to respect the freedom of others.
+
+
+
+
+
+
+
+
+
+
 
   </text>
   <notes>
-    <note id="a1" type="lic#name" start="0" end="47"/>
-    <note id="a11" type="rul#src" start="84" end="127"/>
-    <note id="a12" type="rul#changes" start="129" end="152"/>
-    <note id="a13" type="rul#nolia" start="154" end="172"/>
+    <note id="a7" type="rul#nolia" start="59" end="246"/>
+    <note id="a1" type="lic#name" value="GNU General Public License v3.0"/>
     <note id="a2" type="lic#spdx" value="GPL-3.0-only"/>
     <note id="a3" type="lic#fsf"/>
     <note id="a4" type="lic#osi"/>
-    <note id="a5" type="cpy#strong"/>
-    <note id="a6" type="rul#notice"/>
-    <note id="a7" type="rul#lictxt"/>
-    <note id="a8" type="rul#pat"/>
-    <note id="a9" type="rul#patret"/>
-    <note id="a10" type="rul#tivo"/>
-    <note id="a14" type="env#com"/>
-    <note id="a15" type="use#lib"/>
-    <note id="a16" type="dst#internal"/>
-    <note id="a17" type="dst#srv"/>
-    <note id="a18" type="dst#public"/>
+    <note id="a5" type="rul#notice"/>
+    <note id="a6" type="rul#lictxt"/>
+    <note id="a8" type="use#app"/>
+    <note id="a9" type="pol#distribution" value='if="Distribution of modified versions" then="allow" because="Copyleft ensures user freedoms are preserved"' if="Distribution of modified versions" then="allow" because="Copyleft ensures user freedoms are preserved" status="green" title="Copyleft ensures user freedoms are preserved" label="Distribution of modified versions"/>
+    <note id="a10" type="pol#linking" value='if="Static linking with proprietary software" then="deny" because="GPLv3 requires derivative works to be GPL-compatible"' if="Static linking with proprietary software" then="deny" because="GPLv3 requires derivative works to be GPL-compatible" status="red" title="GPLv3 requires derivative works to be GPL-compatible" label="Static linking with proprietary software"/>
+    <note id="a11" type="pol#tivoization" value='if="Use in locked-down hardware" then="deny" because="Tivoization clause forbids denial of user modification freedom"' if="Use in locked-down hardware" then="deny" because="Tivoization clause forbids denial of user modification freedom" status="red" title="Tivoization clause forbids denial of user modification freedom" label="Use in locked-down hardware"/>
+    <note id="a12" type="pol#patent" value='if="Patent retaliation" then="allow" because="GPLv3 includes explicit patent-retaliation protection"' if="Patent retaliation" then="allow" because="GPLv3 includes explicit patent-retaliation protection" status="green" title="GPLv3 includes explicit patent-retaliation protection" label="Patent retaliation"/>
+    <note id="a13" type="pol#network" value='if="Network use (SaaS)" then="conditional" because="AGPL required for network copyleft; GPLv3 itself is silent"' if="Network use (SaaS)" then="conditional" because="AGPL required for network copyleft; GPLv3 itself is silent" status="yellow" title="AGPL required for network copyleft; GPLv3 itself is silent" label="Network use (SaaS)"/>
+    <note id="a14" type="pol#warranty" value='if="Warranty disclaimer" then="allow" because="GPLv3 permits distribution without warranty provided the disclaimer is kept intact"' if="Warranty disclaimer" then="allow" because="GPLv3 permits distribution without warranty provided the disclaimer is kept intact" status="green" title="GPLv3 permits distribution without warranty provided the disclaimer is kept intact" label="Warranty disclaimer"/>
+    <note id="a15" type="pol#notice" value='if="License text inclusion" then="allow" because="GPLv3 requires full license text to be included with distribution"' if="License text inclusion" then="allow" because="GPLv3 requires full license text to be included with distribution" status="green" title="GPLv3 requires full license text to be included with distribution" label="License text inclusion"/>
+    <note id="a16" type="pol#source" value='if="Providing source code" then="allow" because="GPLv3 mandates corresponding source for distributed binaries"' if="Providing source code" then="allow" because="GPLv3 mandates corresponding source for distributed binaries" status="green" title="GPLv3 mandates corresponding source for distributed binaries" label="Providing source code"/>
+    <note id="a17" type="pol#_section" present="true"/>
   </notes>
 </annotation>
