@@ -4,7 +4,7 @@
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text xml:space="preserve">
-GNU General Public License, Version 3 (GPL-3.0)
+Testlizenz - GNU General Public License, Version 3 (GPL-3.0)
   
 
 
@@ -24,10 +24,10 @@ Haftungsausschluss.
 
   </text>
   <notes>
-    <note id="a1" type="lic#name" start="0" end="47"/>
-    <note id="a11" type="rul#src" start="84" end="127"/>
-    <note id="a12" type="rul#changes" start="129" end="152"/>
-    <note id="a13" type="rul#nolia" start="154" end="172"/>
+    <note id="a1" type="lic#name" start="0" end="60"/>
+    <note id="a11" type="rul#src" start="97" end="140"/>
+    <note id="a12" type="rul#changes" start="142" end="165"/>
+    <note id="a13" type="rul#nolia" start="167" end="185"/>
     <note id="a2" type="lic#spdx" value="GPL-3.0-only"/>
     <note id="a3" type="lic#fsf"/>
     <note id="a4" type="lic#osi"/>

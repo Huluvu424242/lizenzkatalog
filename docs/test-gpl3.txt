@@ -1,4 +1,4 @@
-GNU General Public License, Version 3 (GPL-3.0)
+Testlizenz - GNU General Public License, Version 3 (GPL-3.0)
   
 
 
