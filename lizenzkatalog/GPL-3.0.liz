@@ -679,4 +679,4 @@ then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne
 [[pol#if if="env=com,use=lib,dst=partners,cpy=strong"
 then="rot"  because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
 [[pol#if if="env=com,use=lib,dst=internal,cpy=strong"
-then="grün"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
+then="grün"  because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich."]]
