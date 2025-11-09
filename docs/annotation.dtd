@@ -12,4 +12,11 @@
           type   CDATA  #REQUIRED
           start  CDATA  #IMPLIED
           end    CDATA  #IMPLIED
+          if    CDATA  #IMPLIED
+          then    CDATA  #IMPLIED
+          because    CDATA  #IMPLIED
+          status    CDATA  #IMPLIED
+          title    CDATA  #IMPLIED
+          label    CDATA  #IMPLIED
+          present    CDATA  #IMPLIED
           value  CDATA  #IMPLIED>
