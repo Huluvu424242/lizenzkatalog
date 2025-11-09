@@ -16,7 +16,7 @@
   - [3. Begrenzung (lim)](#3-begrenzung-lim)
   - [4. Aktionen (act)](#4-aktionen-act)
   - [5. Pflichten / Folgen (rul)](#5-pflichten--folgen-rul)
-  - [6. Kopyleft‑Stärke (cpy)](#6-kopyleftstärke-cpy)
+  - [6. Copyleft‑Stärke (cpy)](#6-copyleftstärke-cpy)
   - [7. Verbreitungsmodus (dst)](#7-verbreitungsmodus-dst)
   - [8. Kopplung (lnk)](#8-kopplung-lnk)
   - [9. Umgebung (env)](#9-umgebung-env)
@@ -81,7 +81,7 @@ Die Annotationen lassen sich den folgenden Themenbereichen zuordnen.
 
 Die Bereiche:
 
-- **Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Kopyleft‑Stärke, Verbreitungsmodus, Kopplung, Umgebung, Bewertung (Policy), Metadaten**
+- **Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Copyleft‑Stärke, Verbreitungsmodus, Kopplung, Umgebung, Bewertung (Policy), Metadaten**
 
 ---
 
@@ -169,16 +169,16 @@ In der Lizenz werden aufgeführte Pflichten und Folgen beschrieben.
 
 ---
 
-## 6. Kopyleft‑Stärke (`cpy`)
+## 6. Copyleft‑Stärke (`cpy`)
 
 Quantifizierung der Stärke des durch die Lizenz geforderten Copylefts.
 
-| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
-|---|---|---|---|
-| `none` | Kein Copyleft | **Single** | `[[cpy#none]]` |
+| Schlüssel | Bedeutung          | Tag‑Typ | Beispiel |
+|---|--------------------|---|---|
+| `none` | Kein Copyleft      | **Single** | `[[cpy#none]]` |
 | `weak` | Schwaches Copyleft | **Single** | `[[cpy#weak]]` |
-| `strong` | Starkes Copyleft | **Single** | `[[cpy#strong]]` |
-| `network` | Netzwerkkopyleft | **Single** | `[[cpy#network]]` |
+| `strong` | Starkes Copyleft   | **Single** | `[[cpy#strong]]` |
+| `network` | Netzwerk-Copyleft  | **Single** | `[[cpy#network]]` |
 
 ---
 
