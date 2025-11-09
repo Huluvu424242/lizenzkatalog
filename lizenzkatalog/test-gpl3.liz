@@ -1,34 +1,17 @@
-[[lic#name="GNU General Public License v3.0"]]
-[[lic#spdx="GPL-3.0-only"]]
-[[lic#fsf]] [[lic#osi]] [[rul#notice]] [[rul#lictxt]]
+[[lic#name]]GNU General Public License, Version 3 (GPL-3.0)[[/lic#name]]
+[[lic#spdx=GPL-3.0-only]] [[lic#fsf]] [[lic#osi]]
+[[cpy#strong]]
 
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
+Pflichten (auszugsweise):
+[[rul#notice]] [[rul#lictxt]] [[rul#pat]] [[rul#patret]] [[rul#tivo]]
+[[rul#src]]vollständiger, korrespondierender Quellcode[[/rul#src]],
+[[rul#changes]]Änderungen kennzeichnen[[/rul#changes]],
+[[rul#nolia]]Haftungsausschluss[[/rul#nolia]].
 
-[[rul#nolia]]Copyright (C) 2007 Free Software Foundation, Inc.
-<https://fsf.org/>
-Everyone is permitted to copy and distribute verbatim copies
-of this license document, but changing it is not allowed.[[/rul#nolia]]
+-- Policies --------------------------------------------------------------------
 
-                            Preamble
+[[env#com]] [[use#lib]] [[dst#internal]] [[dst#srv]]
+[[pol#if if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst."]]
 
-The GNU General Public License is a free, copyleft license for
-software and other kinds of works.
-
-[[use#app]]
-[[pol#distribution if="Distribution of modified versions" then="allow" because="Copyleft ensures user freedoms are preserved"]]
-
-To protect your rights, we need to prevent others from denying you
-these rights or asking you to surrender the rights. Therefore, you
-have certain responsibilities if you distribute copies of the software,
-or if you modify it: responsibilities to respect the freedom of others.
-
-
-[[pol#distribution=if="Distribution of modified versions" then="allow" because="Copyleft ensures user freedoms are preserved"]]
-[[pol#linking=if="Static linking with proprietary software" then="deny" because="GPLv3 requires derivative works to be GPL-compatible"]]
-[[pol#tivoization=if="Use in locked-down hardware" then="deny" because="Tivoization clause forbids denial of user modification freedom"]]
-[[pol#patent=if="Patent retaliation" then="allow" because="GPLv3 includes explicit patent-retaliation protection"]]
-[[pol#network=if="Network use (SaaS)" then="conditional" because="AGPL required for network copyleft; GPLv3 itself is silent"]]
-[[pol#warranty=if="Warranty disclaimer" then="allow" because="GPLv3 permits distribution without warranty provided the disclaimer is kept intact"]]
-[[pol#notice=if="License text inclusion" then="allow" because="GPLv3 requires full license text to be included with distribution"]]
-[[pol#source=if="Providing source code" then="allow" because="GPLv3 mandates corresponding source for distributed binaries"]]
+[[dst#public]]
+[[pol#if if="env=com,use=lib,dst=public,cpy=strong"       then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
