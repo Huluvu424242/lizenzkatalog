@@ -41,9 +41,9 @@ Haftungsausschluss.
     <note id="a15" type="use#lib"/>
     <note id="a16" type="dst#internal"/>
     <note id="a17" type="dst#srv"/>
-    <note id="a18" type="pol#if" value='if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst."' if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="env=com,use=lib,dst=internal+srv,cpy=strong"/>
+    <note id="a18" type="pol#if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="env=com,use=lib,dst=internal+srv,cpy=strong"/>
     <note id="a19" type="dst#public"/>
-    <note id="a20" type="pol#if" value='if="env=com,use=lib,dst=public,cpy=strong"       then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."' if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="env=com,use=lib,dst=public,cpy=strong"/>
+    <note id="a20" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="env=com,use=lib,dst=public,cpy=strong"/>
     <note id="a21" type="pol#_section" present="true"/>
   </notes>
 </annotation>
