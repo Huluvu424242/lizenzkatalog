@@ -72,20 +72,30 @@ CLOSE_REGEX = re.compile(
 MASTER_REGEX = re.compile(
     OPEN_OR_SINGLETON_REGEX.pattern + r"|" + CLOSE_REGEX.pattern,
     re.DOTALL,
-    )
+)
 
 # Literal [[ bzw. ]] im Text (escaped)
 ESCAPED_OPEN_MARKER = r"\[\["
 ESCAPED_CLOSE_MARKER = r"\]\]"
 
+
 # -------------------- String-Helfer ------------------------------------------
 def lastpos(content: str) -> int: return len(content) - 1
+
+
 def nextpos(pos: int) -> int: return pos + 1
+
+
 def last_char(content: str) -> str: return content[-1]
+
+
 def first_char(content: str) -> str: return content[0]
 
+
 def is_string_part(content: str) -> bool:
-    return (len(content) >= 2 and first_char(content) == DOPPELTES_HOCHKOMMA and last_char(content) == DOPPELTES_HOCHKOMMA)
+    return (len(content) >= 2 and first_char(content) == DOPPELTES_HOCHKOMMA and last_char(
+        content) == DOPPELTES_HOCHKOMMA)
+
 
 def unquote_value(content: str | None) -> str:
     if content is None:
@@ -113,13 +123,16 @@ def unquote_value(content: str | None) -> str:
         return "".join(unquoted_value)
     return content
 
+
 def unquote_marker(text: str) -> str:
     return text.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
+
 
 # -------------------- pol: KV-Parsing + Status -------------------------------
 _KV_PAIR_RE = re.compile(
     r"\s*([A-Za-z_][A-Za-z0-9_\-]*)\s*=\s*(?:\"((?:\\.|[^\"\\])*)\"|([^\s;]+))\s*;?"
 )
+
 
 def parse_kv_attributes(s: str) -> dict[str, str]:
     if not s:
@@ -139,6 +152,7 @@ def parse_kv_attributes(s: str) -> dict[str, str]:
         pos = m.end()
     return out
 
+
 def normalize_then_to_status(then_val: str | None) -> str | None:
     if not then_val:
         return None
@@ -151,6 +165,7 @@ def normalize_then_to_status(then_val: str | None) -> str | None:
         return "yellow"
     return "yellow"
 
+
 # -------------------- Dateien kopieren ---------------------------------------
 def copy_text_file(src_dir: str, dst_dir: str) -> None:
     src_path = Path(src_dir)
@@ -158,6 +173,7 @@ def copy_text_file(src_dir: str, dst_dir: str) -> None:
     print(f"Von: {src_path} Nach: {dst_path}")
     dst_path.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src_path, dst_path)
+
 
 # -------------------- Hauptkonvertierung -------------------------------------
 def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: str = "output.xml") -> None:
@@ -221,7 +237,8 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             tag_key = f"{cat}#{name}"
             stack = open_stacks.get(tag_key, [])
             if not stack:
-                raise ValueError(f"Ende für unbekannte/geschlossene Spanne {tag_key} bei Pos {treffer.start()} in {inp}")
+                raise ValueError(
+                    f"Ende für unbekannte/geschlossene Spanne {tag_key} bei Pos {treffer.start()} in {inp}")
             frame = stack.pop()
             frame["end"] = out_len
             notes.append(frame)
@@ -304,11 +321,11 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
-
     lines.append('  </notes>')
     lines.append('</annotation>')
     Path(out_xml).write_text("\n".join(lines), encoding="utf-8")
     print(f" --> {out_xml}")
+
 
 if __name__ == "__main__":
     src_folder: str = "lizenzkatalog"
