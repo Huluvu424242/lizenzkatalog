@@ -176,6 +176,10 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
+                <!-- ===== Policies (direkt über Attribute) ===== -->
+                <h2>Policies (manuelle Bewertungen)</h2>
+                <xsl:call-template name="render-policies"/>
+
                 <!-- ===== Tabelle 1: ohne Textbezug (Singletons) ===== -->
                 <h2>
                     <img src="ospolizenzkatalog.svg"
@@ -272,10 +276,6 @@
                 <xsl:if test="not(notes/note[@start and @end])">
                     <p class="muted">Keine Annotationen mit Textbezug vorhanden.</p>
                 </xsl:if>
-
-                <!-- ===== Policies (direkt über Attribute) ===== -->
-                <h2>Policies (manuelle Bewertungen)</h2>
-                <xsl:call-template name="render-policies"/>
 
                 <!-- ===== Originaltext ===== -->
                 <h2>Originaltext (mit Hervorhebungen)</h2>
