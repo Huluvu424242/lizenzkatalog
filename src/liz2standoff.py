@@ -204,11 +204,18 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
 
             tag_key = f"{cat}#{name}"
             is_singleton_by_vocab = (tag_key in SINGLETON_TAGS) or (cat in SINGLETON_CATEGORIES)
-            is_singleton_by_value = (val is not None)
+            is_singleton_with_label = (val is not None)
 
-            if is_singleton_by_vocab or is_singleton_by_value:
+            # vorher:
+            # if is_singleton_by_vocab or is_singleton_by_value:
+            #     auto_seq += 1
+            #     note: dict = {"id": f"a{auto_seq}", "type": tag_key, "value": val}
+
+            # nachher:
+            if is_singleton_by_vocab or is_singleton_with_label:  # Variablennamen gern anpassen
                 auto_seq += 1
-                note: dict = {"id": f"a{auto_seq}", "type": tag_key, "value": val}
+                note: dict = {"id": f"a{auto_seq}", "type": tag_key, "label": val}
+
 
                 if cat == "pol":
                     attrs = parse_kv_attributes(raw_val or "")
@@ -314,10 +321,13 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("id", sg.get("id")),
             xml_attr_pair("type", sg.get("type")),
         ]
-        if ("attrs" not in sg or not sg["attrs"]) and sg.get("value") is not None:
-            attrs.append(xml_attr_pair("value", sg["value"]))
+        # Früher: if ("attrs" not in sg or not sg["attrs"]) and sg.get("value") is not None:
+        if ("attrs" not in sg or not sg["attrs"]) and sg.get("label") is not None:
+            attrs.append(xml_attr_pair("label", sg["label"]))
+
         for k, v in (sg.get("attrs") or {}).items():
             attrs.append(xml_attr_pair(k, v))
+
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
