@@ -275,6 +275,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             singletons.append(n)
     spans_sorted.sort(key=lambda t: (t[0], t[1]))
 
+    # Bereiche ausgeben
     for _, _, sp in spans_sorted:
         attrs = [
             xml_attr_pair("id", sp.get("id")),
@@ -282,24 +283,27 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("start", sp.get("start")),
             xml_attr_pair("end", sp.get("end")),
         ]
-        if "value" in sp and sp["value"] is not None:
+        # value nur ausgeben, wenn KEINE Zusatzattribute existieren
+        if ("attrs" not in sp or not sp["attrs"]) and sp.get("value") is not None:
             attrs.append(xml_attr_pair("value", sp["value"]))
         for k, v in (sp.get("attrs") or {}).items():
             attrs.append(xml_attr_pair(k, v))
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
+    # Singletons ausgeben
     for sg in singletons:
         attrs = [
             xml_attr_pair("id", sg.get("id")),
             xml_attr_pair("type", sg.get("type")),
         ]
-        if sg.get("value") is not None:
+        if ("attrs" not in sg or not sg["attrs"]) and sg.get("value") is not None:
             attrs.append(xml_attr_pair("value", sg["value"]))
         for k, v in (sg.get("attrs") or {}).items():
             attrs.append(xml_attr_pair(k, v))
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
+
 
     lines.append('  </notes>')
     lines.append('</annotation>')
