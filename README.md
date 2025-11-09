@@ -102,7 +102,7 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 
 ## 2. Nutzungsart (`use`)
 
-Beschreibt die Eignung der Lizenz zu Lizensierung von bestimmten Produktarten. Wobei eine Lizenz 
+Beschreibt die Eignung der Lizenz zur Lizensierung von bestimmten Produktarten. Wobei eine Lizenz 
 durchaus für mehrere Produktarten sinnvoll sein kann. Lizenz ist geeigent für:  
 
 | Schlüssel | Bedeutung                                                   | Tag‑Typ    | Beispiel |
@@ -147,25 +147,25 @@ Die Lizenz geht speziell auf bestimmte Verwendungen des Lizenzgegenstandes ein.
 
 In der Lizenz werden aufgeführte Pflichten und Folgen beschrieben.
 
-| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
-|---|---|---|---|
+| Schlüssel | Bedeutung                                | Tag‑Typ | Beispiel |
+|---|------------------------------------------|---|---|
 | `nolia` | Haftungsausschluss (Warranty Disclaimer) | **Block** | `[[rul#nolia]]…[[/rul#nolia]]` |
-| `by` | Namensnennung | **Block** | `[[rul#by]]…[[/rul#by]]` |
-| `sa` | Share‑Alike | **Block** | `[[rul#sa]]…[[/rul#sa]]` |
-| `nd` | Keine Bearbeitung | **Block** | `[[rul#nd]]…[[/rul#nd]]` |
-| `nodrm` | Keine DRM | **Block** | `[[rul#nodrm]]…[[/rul#nodrm]]` |
-| `nomili` | Keine militärische Nutzung | **Block** | `[[rul#nomili]]…[[/rul#nomili]]` |
-| `nc` | Nicht‑kommerziell | **Block** | `[[rul#nc]]…[[/rul#nc]]` |
-| `com` | Kommerzielle Nutzung erlaubt | **Block** | `[[rul#com]]…[[/rul#com]]` |
-| `edu` | Bildung | **Block** | `[[rul#edu]]…[[/rul#edu]]` |
-| `gov` | Behörden | **Block** | `[[rul#gov]]…[[/rul#gov]]` |
-| `src` | Quellcodepflicht | **Block** | `[[rul#src]]…[[/rul#src]]` |
-| `notice` | Copyright‑/Hinweispflicht | **Single** | `[[rul#notice]]` |
-| `lictxt` | Lizenztext beifügen | **Single** | `[[rul#lictxt]]` |
-| `changes` | Änderungen kennzeichnen | **Single** | `[[rul#changes]]` |
-| `pat` | Patentlizenz gewährt | **Single** | `[[rul#pat]]` |
-| `patret` | Patentretaliation | **Single** | `[[rul#patret]]` |
-| `tivo` | Anti‑Tivoization | **Single** | `[[rul#tivo]]` |
+| `by` | Namensnennung                            | **Block** | `[[rul#by]]…[[/rul#by]]` |
+| `sa` | Share‑Alike                              | **Block** | `[[rul#sa]]…[[/rul#sa]]` |
+| `nd` | Keine Bearbeitung                        | **Block** | `[[rul#nd]]…[[/rul#nd]]` |
+| `nodrm` | Keine DRM                                | **Block** | `[[rul#nodrm]]…[[/rul#nodrm]]` |
+| `nomili` | Keine militärische Nutzung               | **Block** | `[[rul#nomili]]…[[/rul#nomili]]` |
+| `nc` | Keine kommerzielle Nutzung               | **Block** | `[[rul#nc]]…[[/rul#nc]]` |
+| `com` | Kommerzielle Nutzung erlaubt             | **Block** | `[[rul#com]]…[[/rul#com]]` |
+| `edu` | Bildung                                  | **Block** | `[[rul#edu]]…[[/rul#edu]]` |
+| `gov` | Behörden                                 | **Block** | `[[rul#gov]]…[[/rul#gov]]` |
+| `src` | Quellcodepflicht                         | **Block** | `[[rul#src]]…[[/rul#src]]` |
+| `notice` | Copyright‑/Hinweispflicht                | **Single** | `[[rul#notice]]` |
+| `lictxt` | Lizenztext beifügen                      | **Single** | `[[rul#lictxt]]` |
+| `changes` | Änderungen kennzeichnen                  | **Single** | `[[rul#changes]]` |
+| `pat` | Patentlizenz gewährt                     | **Single** | `[[rul#pat]]` |
+| `patret` | Patentretaliation                        | **Single** | `[[rul#patret]]` |
+| `tivo` | Anti‑Tivoization                         | **Single** | `[[rul#tivo]]` |
 
 ---
 

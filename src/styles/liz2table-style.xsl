@@ -57,7 +57,7 @@
             <xsl:when test="$t='rul#com'">Kommerziell</xsl:when>
             <xsl:when test="$t='rul#edu'">Bildung/Forschung</xsl:when>
             <xsl:when test="$t='rul#gov'">Behörden/Verwaltung</xsl:when>
-            <xsl:when test="$t='rul#notice'">Hinweis beilegen</xsl:when>
+            <xsl:when test="$t='rul#notice'">Hinweis beilegen (Copyright‑/Hinweispflicht)</xsl:when>
             <xsl:when test="$t='rul#lictxt'">Lizenztext beifügen</xsl:when>
             <xsl:when test="$t='rul#changes'">Änderungen kennzeichnen</xsl:when>
             <xsl:when test="$t='rul#src'">Quellcode bereitstellen</xsl:when>
