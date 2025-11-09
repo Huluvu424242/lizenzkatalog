@@ -71,10 +71,13 @@ Eine gerenderte Auswertung ist im Online‑Katalog einsehbar, z. B.:
 
 # Systematik
 
-Die **Systematik** strukturiert Annotationen für die spätere Auswertung. Es gibt **Block‑Tags** (mit Start‑ und Endmarkierung) und **Single‑Tags** (ohne Endmarkierung).
+Die **Systematik** strukturiert Annotationen für die spätere Auswertung. Es gibt **Block‑Tags** (mit Start‑ und Endmarkierung) zum Referenzieren auf wichtige Textpassagen innerhalb der Lizenz, und **Single‑Tags** (ohne Endmarkierung) um das Vorhandensein spezieller Eigenschaften bei der annotierten 
+Lizenz hervorzuheben.
 
 > **Block‑Tag**: `[[bereich#schlüssel]] … [[/bereich#schlüssel]]`  
 > **Single‑Tag**: `[[bereich#schlüssel[="wert"]]]`
+
+Die Annotationen lassen sich den folgenden Themenbereichen zuordnen. 
 
 Die Bereiche:
 
@@ -99,7 +102,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 
 ## 2. Nutzungsart (`use`)
 
-Beschreibt die Eignung der Lizenz zu Lizensierung von: 
+Beschreibt die Eignung der Lizenz zu Lizensierung von bestimmten Produktarten. Wobei eine Lizenz 
+durchaus für mehrere Produktarten sinnvoll sein kann. Lizenz ist geeigent für:  
 
 | Schlüssel | Bedeutung                                                   | Tag‑Typ    | Beispiel |
 |---|-------------------------------------------------------------|------------|---|
