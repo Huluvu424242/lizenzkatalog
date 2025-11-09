@@ -4,9 +4,6 @@
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text xml:space="preserve">
-[[eval#
-
-
         GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -684,12 +681,12 @@ Public License instead of this License.  But first, please read
 
   </text>
   <notes>
-    <note id="a1" type="lic#name" start="18" end="91"/>
-    <note id="a3" type="act#mod" start="4056" end="4413"/>
-    <note id="a4" type="act#der" start="10488" end="10698"/>
-    <note id="a5" type="act#der" start="11039" end="11506"/>
-    <note id="a6" type="rul#nolia" start="30805" end="31357"/>
-    <note id="a7" type="rul#nolia" start="31389" end="31995"/>
+    <note id="a1" type="lic#name" start="8" end="81"/>
+    <note id="a3" type="act#mod" start="4046" end="4403"/>
+    <note id="a4" type="act#der" start="10478" end="10688"/>
+    <note id="a5" type="act#der" start="11029" end="11496"/>
+    <note id="a6" type="rul#nolia" start="30795" end="31347"/>
+    <note id="a7" type="rul#nolia" start="31379" end="31985"/>
     <note id="a2" type="lic#spdx" value="GPL-3.0"/>
   </notes>
 </annotation>
