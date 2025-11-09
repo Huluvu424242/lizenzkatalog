@@ -351,21 +351,6 @@
                                 <xsl:otherwise>yellow</xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
-                        <tr>
-                            <td><code><xsl:value-of select="@if"/></code></td>
-                            <td>
-                                <span class="pill">
-                                    <xsl:attribute name="class">
-                                        <xsl:text>pill </xsl:text><xsl:value-of select="$cls"/>
-                                    </xsl:attribute>
-                                    <xsl:choose>
-                                        <xsl:when test="@then"><xsl:value-of select="@then"/></xsl:when>
-                                        <xsl:otherwise>–</xsl:otherwise>
-                                    </xsl:choose>
-                                </span>
-                            </td>
-                            <td><xsl:value-of select="@because"/></td>
-                        </tr>
                     </xsl:for-each>
                 </table>
             </xsl:when>
