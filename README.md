@@ -99,16 +99,20 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 
 ## 2. Nutzungsart (`use`)
 
-| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
-|---|---|---|---|
-| `doc` | Dokumentation | **Block** | `[[use#doc]]…[[/use#doc]]` |
-| `lib` | Bibliothek / Abhängigkeit | **Block** | `[[use#lib]]…[[/use#lib]]` |
-| `app` | Lokale Anwendung | **Block** | `[[use#app]]…[[/use#app]]` |
-| `cld` | Cloud‑Anwendung | **Block** | `[[use#cld]]…[[/use#cld]]` |
+Beschreibt die Eignung der Lizenz zu Lizensierung von: 
+
+| Schlüssel | Bedeutung                                                   | Tag‑Typ    | Beispiel |
+|---|-------------------------------------------------------------|------------|---|
+| `doc` | Dokumentation                                               | **Single** | `[[use#doc]]` |
+| `lib` | Software Bibliotheken / Plugins oder anderen Abhängigkeiten | **Single**  | `[[use#lib]]` |
+| `app` | Anwendungen (Desktop, Server, Mobile, ...)                  | **Single**  | `[[use#app]]` |
+| `cld` | Cloud‑Anwendungen                                           | **Single**  | `[[use#cld]]` |
 
 ---
 
 ## 3. Begrenzung (`lim`)
+
+Die Lizenz enthält Angaben zu Einschränkungen bezüglich der Anzahlen folgender Dinge:
 
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
@@ -123,6 +127,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 
 ## 4. Aktionen (`act`)
 
+Die Lizenz geht speziell auf bestimmte Verwendungen des Lizenzgegenstandes ein. 
+
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
 | `cop` | Kopieren / Vervielfältigen | **Block** | `[[act#cop]]…[[/act#cop]]` |
@@ -134,6 +140,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 ---
 
 ## 5. Pflichten / Folgen (`rul`)
+
+In der Lizenz werden aufgeführte Pflichten und Folgen beschrieben.
 
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
@@ -159,6 +167,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 
 ## 6. Kopyleft‑Stärke (`cpy`)
 
+Quantifizierung der Stärke des durch die Lizenz geforderten Copylefts.
+
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
 | `none` | Kein Copyleft | **Single** | `[[cpy#none]]` |
@@ -169,6 +179,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 ---
 
 ## 7. Verbreitungsmodus (`dst`)
+
+Veraltet: Dieser Abschnitt wird zukünftig nur in den Bewertungen Anwendung finden.
 
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
@@ -183,6 +195,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 
 ## 8. Kopplung (`lnk`)
 
+Veraltet: Dieser Abschnitt wird zukünftig nur in den Bewertungen Anwendung finden.
+
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
 | `api` | Lose Kopplung (API/Netzwerk/IPC) | **Single** | `[[lnk#api]]` |
@@ -192,6 +206,8 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 ---
 
 ## 9. Umgebung (`env`)
+
+Veraltet: Dieser Abschnitt wird zukünftig nur in den Bewertungen Anwendung finden.
 
 | Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
 |---|---|---|---|
