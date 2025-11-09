@@ -10,8 +10,5 @@ Pflichten (auszugsweise):
 
 -- Policies --------------------------------------------------------------------
 
-[[env#com]] [[use#lib]] [[dst#internal]] [[dst#srv]]
 [[pol#if if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst."]]
-
-[[dst#public]]
 [[pol#if if="env=com,use=lib,dst=public,cpy=strong"       then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
