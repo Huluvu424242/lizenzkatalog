@@ -333,9 +333,9 @@
             <xsl:when test="count($pols) &gt; 0">
                 <table>
                     <tr>
-                        <th>IF (Kontext)</th>
-                        <th>THEN</th>
-                        <th>BECAUSE</th>
+                        <th>Gegebenheiten</th>
+                        <th>Verwendbarkeit</th>
+                        <th>Hauptgrund</th>
                     </tr>
                     <xsl:for-each select="$pols">
                         <xsl:variable name="then" select="@then"/>
