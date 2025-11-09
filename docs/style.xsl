@@ -8,7 +8,8 @@
                 doctype-system="about:legacy-compat"
                 encoding="UTF-8"
                 indent="yes"/>
-    <xsl:strip-space elements=""/>
+    <!-- Optional: benenne Elemente statt leer zu lassen, spart Whitespace -->
+    <xsl:strip-space elements="annotation notes note text"/>
 
     <!-- Muenchian key: alle Bereiche (mit Textbezug) nach @type gruppieren -->
     <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
@@ -65,7 +66,7 @@
             <xsl:when test="$t='rul#patret'">Patentretaliation</xsl:when>
             <xsl:when test="$t='rul#tivo'">Anti-Tivoization</xsl:when>
 
-            <!-- cpy/dst/lnk/env/pol/met -->
+            <!-- cpy/dst/lnk/env -->
             <xsl:when test="$t='cpy#none'">Copyleft: none</xsl:when>
             <xsl:when test="$t='cpy#weak'">Copyleft: weak</xsl:when>
             <xsl:when test="$t='cpy#strong'">Copyleft: strong</xsl:when>
@@ -127,9 +128,9 @@
                 <xsl:when test="notes/note[@type='lic#name' and @start and @end]">
                     <xsl:variable name="n" select="notes/note[@type='lic#name' and @start and @end][1]"/>
                     <xsl:value-of select="normalize-space(
-                        substring($docText, number($n/@start) + 1,
-                                           number($n/@end) - number($n/@start) + 1)
-                    )"/>
+            substring($docText, number($n/@start) + 1,
+                               number($n/@end) - number($n/@start) + 1)
+          )"/>
                 </xsl:when>
                 <xsl:otherwise/>
             </xsl:choose>
@@ -188,7 +189,7 @@
                     </xsl:if>
                 </h1>
 
-                <!-- Kontext-Badges aus env/use/cpy/dst/lnk und ausgewählte rul-Flags -->
+                <!-- Kontext-Badges -->
                 <div class="badges">
                     <xsl:call-template name="render-badges"/>
                 </div>
@@ -210,7 +211,7 @@
                         <th>Wert</th>
                         <th>ID</th>
                     </tr>
-                    <xsl:for-each select="notes/note[not(@start) or not(@end)]">
+                    <xsl:for-each select="notes/note[not(@start) and not(@end)]">
                         <xsl:sort select="@type"/>
                         <xsl:variable name="tooltip">
                             <xsl:choose>
@@ -241,7 +242,7 @@
                         </tr>
                     </xsl:for-each>
                 </table>
-                <xsl:if test="not(notes/note[not(@start) or not(@end)])">
+                <xsl:if test="not(notes/note[not(@start) and not(@end)])">
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
@@ -322,10 +323,10 @@
     <xsl:template name="render-badges">
         <!-- Kontext-Badges -->
         <xsl:for-each select="/annotation/notes/note[
-              starts-with(@type,'env#') or starts-with(@type,'use#')
-           or starts-with(@type,'cpy#') or starts-with(@type,'dst#')
-           or starts-with(@type,'lnk#')
-        ]">
+         starts-with(@type,'env#') or starts-with(@type,'use#')
+      or starts-with(@type,'cpy#') or starts-with(@type,'dst#')
+      or starts-with(@type,'lnk#')
+    ]">
             <xsl:variable name="cls">
                 <xsl:choose>
                     <xsl:when test="starts-with(@type,'env#')">badge env</xsl:when>
@@ -346,9 +347,9 @@
 
         <!-- Wichtige RUL-Flags als Pills (egal ob Bereich oder Singleton) -->
         <xsl:for-each select="/annotation/notes/note[
-            @type='rul#notice' or @type='rul#lictxt' or @type='rul#src'
-            or @type='rul#changes' or @type='rul#pat' or @type='rul#patret' or @type='rul#tivo'
-        ][generate-id() = generate-id(key('kType', @type)[1]) or not(@start)]">
+      @type='rul#notice' or @type='rul#lictxt' or @type='rul#src'
+      or @type='rul#changes' or @type='rul#pat' or @type='rul#patret' or @type='rul#tivo'
+    ][generate-id() = generate-id(key('kType', @type)[1]) or not(@start)]">
             <span class="pill">
                 <xsl:call-template name="label-for-type">
                     <xsl:with-param name="t" select="@type"/>
@@ -386,6 +387,7 @@
                                     </xsl:call-template>
                                 </xsl:variable>
                                 <xsl:choose>
+                                    <!-- einfache, robuste Farblogik -->
                                     <xsl:when test="translate($then,'GRÜNGELBROT','grüngelbrot')='grün'">
                                         <span class="pill green">grün</span>
                                     </xsl:when>
@@ -509,65 +511,6 @@
                 <xsl:value-of select="substring($txt, $cursor + 1)"/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-    <!-- Abschnitt "Bewertungen" nur anzeigen, wenn pol-Notes vorhanden -->
-    <xsl:template match="annotation">
-        <html>
-            <head>
-                <title>Lizenz</title>
-                <meta charset="UTF-8"/>
-                <style>
-                    .policy-section { margin: 1rem 0; }
-                    .policy-section h2 { font: 600 1.1rem system-ui; margin: 0 0 .5rem; }
-                    .badge {
-                    display: inline-block; margin: .25rem .4rem .25rem 0;
-                    padding: .15rem .5rem; border-radius: .6rem; font: 500 .85rem system-ui;
-                    border: 1px solid rgba(0,0,0,.08);
-                    }
-                    .badge.green { background: #e7f7ec; color: #126a2c; }
-                    .badge.yellow{ background: #fff7e0; color: #7c5a00; }
-                    .badge.red   { background: #ffeaea; color: #8a1f1f; }
-                </style>
-            </head>
-            <body>
-                <!-- Dein bisheriges Rendering für Text / Tabellen etc. -->
-                <div class="text">
-                    <xsl:value-of select="text" disable-output-escaping="yes"/>
-                </div>
-
-                <!-- Bewertungen -->
-                <xsl:if test="notes/note[starts-with(@type,'pol#') and @type!='pol#_section']">
-                    <div class="policy-section">
-                        <h2>Bewertungen</h2>
-                        <xsl:apply-templates select="notes/note[starts-with(@type,'pol#') and @type!='pol#_section']"/>
-                    </div>
-                </xsl:if>
-            </body>
-        </html>
-    </xsl:template>
-
-    <!-- Einzelnes pol-Badge -->
-    <xsl:template match="note[starts-with(@type,'pol#') and @type!='pol#_section']">
-        <!-- Klasse aus @status, Fallback gelb -->
-        <xsl:variable name="cls" select="
-      if (@status='green') then 'green'
-      else if (@status='red') then 'red'
-      else 'yellow'
-    "/>
-
-        <!-- Label-Priorität: @label -> @if -> Nach dem 'pol#' -->
-        <xsl:variable name="fallbackLabel" select="substring-after(@type,'pol#')"/>
-        <xsl:variable name="label" select="(@label, @if, $fallbackLabel)[1]"/>
-
-        <span class="badge">
-            <xsl:attribute name="class">
-                <xsl:text>badge </xsl:text><xsl:value-of select="$cls"/>
-            </xsl:attribute>
-            <xsl:if test="@title">
-                <xsl:attribute name="title"><xsl:value-of select="@title"/></xsl:attribute>
-            </xsl:if>
-            <xsl:value-of select="$label"/>
-        </span>
     </xsl:template>
 
 </xsl:stylesheet>
