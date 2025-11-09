@@ -357,7 +357,12 @@
 
     <!-- ===== Policies tabellarisch (ohne @value) ===== -->
     <xsl:template name="render-policies">
-        <xsl:variable name="pols" select="/annotation/notes/note[starts-with(@type,'pol#')]"/>
+        <xsl:variable name="pols"
+                      select="/annotation/notes/note[
+           starts-with(@type,'pol#')
+           and (@if or @then or @because)
+           and not(@present='true')
+         ]"/>
         <xsl:choose>
             <xsl:when test="count($pols) &gt; 0">
                 <table>
