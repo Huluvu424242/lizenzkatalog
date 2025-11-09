@@ -510,5 +510,64 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    <!-- Abschnitt "Bewertungen" nur anzeigen, wenn pol-Notes vorhanden -->
+    <xsl:template match="annotation">
+        <html>
+            <head>
+                <title>Lizenz</title>
+                <meta charset="UTF-8"/>
+                <style>
+                    .policy-section { margin: 1rem 0; }
+                    .policy-section h2 { font: 600 1.1rem system-ui; margin: 0 0 .5rem; }
+                    .badge {
+                    display: inline-block; margin: .25rem .4rem .25rem 0;
+                    padding: .15rem .5rem; border-radius: .6rem; font: 500 .85rem system-ui;
+                    border: 1px solid rgba(0,0,0,.08);
+                    }
+                    .badge.green { background: #e7f7ec; color: #126a2c; }
+                    .badge.yellow{ background: #fff7e0; color: #7c5a00; }
+                    .badge.red   { background: #ffeaea; color: #8a1f1f; }
+                </style>
+            </head>
+            <body>
+                <!-- Dein bisheriges Rendering für Text / Tabellen etc. -->
+                <div class="text">
+                    <xsl:value-of select="text" disable-output-escaping="yes"/>
+                </div>
+
+                <!-- Bewertungen -->
+                <xsl:if test="notes/note[starts-with(@type,'pol#') and @type!='pol#_section']">
+                    <div class="policy-section">
+                        <h2>Bewertungen</h2>
+                        <xsl:apply-templates select="notes/note[starts-with(@type,'pol#') and @type!='pol#_section']"/>
+                    </div>
+                </xsl:if>
+            </body>
+        </html>
+    </xsl:template>
+
+    <!-- Einzelnes pol-Badge -->
+    <xsl:template match="note[starts-with(@type,'pol#') and @type!='pol#_section']">
+        <!-- Klasse aus @status, Fallback gelb -->
+        <xsl:variable name="cls" select="
+      if (@status='green') then 'green'
+      else if (@status='red') then 'red'
+      else 'yellow'
+    "/>
+
+        <!-- Label-Priorität: @label -> @if -> Nach dem 'pol#' -->
+        <xsl:variable name="fallbackLabel" select="substring-after(@type,'pol#')"/>
+        <xsl:variable name="label" select="(@label, @if, $fallbackLabel)[1]"/>
+
+        <span class="badge">
+            <xsl:attribute name="class">
+                <xsl:text>badge </xsl:text><xsl:value-of select="$cls"/>
+            </xsl:attribute>
+            <xsl:if test="@title">
+                <xsl:attribute name="title"><xsl:value-of select="@title"/></xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="$label"/>
+        </span>
+    </xsl:template>
 
 </xsl:stylesheet>
