@@ -200,8 +200,8 @@
                         <th>Wert</th>
                         <th>ID</th>
                     </tr>
-                    <xsl:for-each select="notes/note[not(@start) and not(@end)]">
-                        <xsl:sort select="@type"/>
+                    <xsl:for-each select="notes/note[not(@start) and not(@end) and not(starts-with(@type,'pol#'))]">
+                    <xsl:sort select="@type"/>
                         <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
                         <tr>
                             <td>
@@ -230,7 +230,7 @@
                         </tr>
                     </xsl:for-each>
                 </table>
-                <xsl:if test="not(notes/note[not(@start) and not(@end)])">
+                <xsl:if test="not(notes/note[not(@start) and not(@end) and not(starts-with(@type,'pol#'))])">
                     <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
                 </xsl:if>
 
