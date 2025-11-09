@@ -1,35 +1,59 @@
-[![OSPOLizenkatalog-Logo](src/img/ospolizenzkatalog_100x100.png  "KI generiert by ChatGPT©️2025")](src/img/ospolizenzkatalog.png)
-# [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) 
+[![OSPOLizenzkatalog-Logo](src/img/ospolizenzkatalog_100x100.png "KI generiert by ChatGPT©️2025")](src/img/ospolizenzkatalog.png)
+# [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) **Lizenzkatalog**
+
+> Ein leichtgewichtiges, erweiterbares System zur Analyse und Bewertung von Softwarelizenzen auf Basis von Plaintext-Annotationen, Standoff‑XML und XSLT‑Visualisierung.  
+> Online-Demo: [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/)
+
+---
+
+## Inhaltsverzeichnis
+- [Projektziel](#projektziel)
+- [Idee](#idee)
+  - [Beispiel einer Annotation](#beispiel-einer-annotation)
+- [Systematik](#systematik)
+  - [1. Allgemein (lic)](#1-allgemein-lic)
+  - [2. Nutzungsart (use)](#2-nutzungsart-use)
+  - [3. Begrenzung (lim)](#3-begrenzung-lim)
+  - [4. Aktionen (act)](#4-aktionen-act)
+  - [5. Pflichten / Folgen (rul)](#5-pflichten--folgen-rul)
+  - [6. Kopyleft‑Stärke (cpy)](#6-kopyleftstärke-cpy)
+  - [7. Verbreitungsmodus (dst)](#7-verbreitungsmodus-dst)
+  - [8. Kopplung (lnk)](#8-kopplung-lnk)
+  - [9. Umgebung (env)](#9-umgebung-env)
+  - [10. Bewertung / Policy (pol)](#10-bewertung--policy-pol)
+- [Technische Umsetzung](#technische-umsetzung)
+- [Verzeichnisstruktur](#verzeichnisstruktur)
+- [Nutzung (lokal)](#nutzung-lokal)
+- [Visualisierung](#visualisierung)
+- [Hinweise](#hinweise)
+- [Mitarbeit / Contributions](#mitarbeit--contributions)
+
+---
+
 ## Projektziel
 
-Das Projekt stellt ein erweiterbares und anpassbares System zur Analyse und Bewertung von Lizenzen 
-nebst eines Registers mit Bewertungen der gängigsten Lizenzen ([Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/)) 
-für den Einsatz im Umfeld einer [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office)
-(oder eines Nutzers) bereit. 
+Der **OSPO Lizenzkatalog** ist ein erweiterbares und anpassbares System zur **Analyse und Bewertung von Softwarelizenzen**. Es bietet:
 
-Hiermit soll die [OSPO](https://de.wikipedia.org/wiki/Open_Source_Program_Office) (oder der Nutzer)
-Unterstützung bei der Analyse und Bewertung von Lizenzen im eigenen Umfeld erhalten.
+- ein Register der gängigsten Lizenzen ([Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/)),
+- eine einheitliche **Annotation-Systematik** für Lizenztexte,
+- Werkzeuge zur **automatischen Extraktion, Transformation und Visualisierung** der Annotationen.
 
-Das System ist frei einsetzbar und kann auch 1:1 on premise beim Nutzer 
-gehostet werden z.B. auf einem eigenem github Portal. 
+Das System kann sowohl **online** (z. B. via GitHub Pages) als auch **on premise** (lokal beim Nutzer) betrieben werden. Es richtet sich insbesondere an Organisationen mit einem **Open Source Program Office (OSPO)**, kann aber ebenso von Einzelpersonen, Unternehmen und Behörden genutzt werden.
 
-Auch sind eigene Anpassungen der Systematik an die besonderen Bedürfnisse des Nutzers möglich. 
-
-
-
-
+---
 
 ## Idee
-Die Idee besteht in einem leichtgewichtigen Tooling, bei dem  **(auch überlappende) Annotationen** in 
-Plaintext-Dateien (`*.liz`) erfasst werden können. Danach werden **standoff-XML** Dateien generiert und 
-die Ergebnisse über **XSLT** im Browser visualisiert.
 
-Beispiel Linzenz in Plaintext mit Inline Annotationen:
+Die Annotation erfolgt in **Plaintext-Dateien (`*.liz`)**. Ein Python-Skript wandelt diese in **Standoff‑XML** (mit Zeichen‑Offsets) um. Ein **XSLT‑Stylesheet** rendert die Annotationen anschließend im Browser als übersichtliche Tabellen und farbige Textstellen. **Überlappende Annotationen** werden explizit unterstützt.
+
+### Beispiel einer Annotation
 
 **Datei:** `odc_by_1.0_public_text.liz`
-```text title="odc_by_1.0_public_text.liz"
+
+```text
 # [[lic#name]]ODC Attribution License (ODC-By)[[/lic#name]]
 [[lic#spdx="ODC-By-1.0"]]
+
 ### Preamble
 :
 :
@@ -38,295 +62,191 @@ Beispiel Linzenz in Plaintext mit Inline Annotationen:
 direct financial loss to the extent it is caused by proved negligence on
 the part of the Licensor.
 [[/rul#nolia]]
-
 ```
-Das Ergebnis einer solchen Annotation sieht man im Online [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/) oder speziell zum Beispiel hier 
-in der Auswertung zur [Lizenz ODC-BY Version 1](https://huluvu424242.github.io/lizenzkatalog/ODC-By-1.0.tei.xml)
+
+Eine gerenderte Auswertung ist im Online‑Katalog einsehbar, z. B.:  
+👉 **ODC‑BY‑1.0 – TEI-Auswertung**: https://huluvu424242.github.io/lizenzkatalog/ODC-By-1.0.tei.xml
+
+---
 
 # Systematik
 
-Details der Systematik zur Annotierung von Lizenztexten, um diese analysieren und bewerten zu können.  
-Die Systematik untergliedert sich in folgende Bereiche:  
-**Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Kopyleft-Stärke, Verbreitungsmodus, Kopplung, Umgebung, Bewertung (Policy) und Metadaten.**
+Die **Systematik** strukturiert Annotationen für die spätere Auswertung. Es gibt **Block‑Tags** (mit Start‑ und Endmarkierung) und **Single‑Tags** (ohne Endmarkierung).
+
+> **Block‑Tag**: `[[bereich#schlüssel]] … [[/bereich#schlüssel]]`  
+> **Single‑Tag**: `[[bereich#schlüssel[="wert"]]]`
+
+Die Bereiche:
+
+- **Allgemein, Nutzungsart, Begrenzung, Aktionen, Pflichten/Folgen, Kopyleft‑Stärke, Verbreitungsmodus, Kopplung, Umgebung, Bewertung (Policy), Metadaten**
 
 ---
 
-## Allgemein (`lic`)
+## 1. Allgemein (`lic`)
 
-Allgemeine Angaben zur Lizenz selbst.
+Allgemeine Eigenschaften / Metadaten der Lizenz.
 
-* **name**: Name der Lizenz  
-  ```[[lic#name]]...[[/lic#name]]```
-
-* **spdx**: SPDX-ID der Lizenz  
-  ```[[lic#spdx=IDBezeichner]]```  
-  Quelle: [https://spdx.org/licenses/licenses.json](https://spdx.org/licenses/licenses.json)
-
-* **fsf**: FSF Approved  
-  ```[[lic#fsf]]```
-
-* **osi**: OSI Approved  
-  ```[[lic#osi]]```
-
-* **c**: Alle Rechte vorbehalten  
-  ```[[lic#c]]```
-
-* **c0**: Nutzung uneingeschränkt / Public Domain  
-  ```[[lic#c0]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `name` | Lizenzname | **Block** | `[[lic#name]]GPL-3.0[[/lic#name]]` |
+| `spdx` | SPDX‑ID | **Single** | `[[lic#spdx="GPL-3.0-only"]]` |
+| `fsf` | FSF Approved | **Single** | `[[lic#fsf]]` |
+| `osi` | OSI Approved | **Single** | `[[lic#osi]]` |
+| `c` | Alle Rechte vorbehalten | **Single** | `[[lic#c]]` |
+| `c0` | Public Domain | **Single** | `[[lic#c0]]` |
 
 ---
 
-## Nutzungsart (`use`)
+## 2. Nutzungsart (`use`)
 
-Beschreibt, in welcher Form die Software verwendet wird.
-
-* **doc**: Dokumentation  
-  ```[[use#doc]]...[[/use#doc]]```
-
-* **lib**: Softwarekomponente oder Bibliothek als Abhängigkeit  
-  ```[[use#lib]]...[[/use#lib]]```
-
-* **app**: Eigenständige lokale Anwendung  
-  ```[[use#app]]...[[/use#app]]```
-
-* **cld**: Eigenständige Cloud-Anwendung  
-  ```[[use#cld]]...[[/use#cld]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `doc` | Dokumentation | **Block** | `[[use#doc]]…[[/use#doc]]` |
+| `lib` | Bibliothek / Abhängigkeit | **Block** | `[[use#lib]]…[[/use#lib]]` |
+| `app` | Lokale Anwendung | **Block** | `[[use#app]]…[[/use#app]]` |
+| `cld` | Cloud‑Anwendung | **Block** | `[[use#cld]]…[[/use#cld]]` |
 
 ---
 
-## Begrenzung (`lim`)
+## 3. Begrenzung (`lim`)
 
-Definiert quantitative Nutzungseinschränkungen.
-
-* **pc**: Anzahl Rechner  
-  ```[[lim#pc]]...[[/lim#pc]]```
-
-* **dev**: Anzahl Geräte (z. B. Drucker)  
-  ```[[lim#dev]]...[[/lim#dev]]```
-
-* **srv**: Anzahl Server  
-  ```[[lim#srv]]...[[/lim#srv]]```
-
-* **cpu**: Anzahl CPUs  
-  ```[[lim#cpu]]...[[/lim#cpu]]```
-
-* **krn**: Anzahl CPU-Kerne  
-  ```[[lim#krn]]...[[/lim#krn]]```
-
-* **usr**: Anzahl Nutzer  
-  ```[[lim#usr]]...[[/lim#usr]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `pc` | Anzahl Rechner | **Block** | `[[lim#pc]]…[[/lim#pc]]` |
+| `dev` | Anzahl Geräte | **Block** | `[[lim#dev]]…[[/lim#dev]]` |
+| `srv` | Anzahl Server | **Block** | `[[lim#srv]]…[[/lim#srv]]` |
+| `cpu` | Anzahl CPUs | **Block** | `[[lim#cpu]]…[[/lim#cpu]]` |
+| `krn` | Anzahl CPU‑Kerne | **Block** | `[[lim#krn]]…[[/lim#krn]]` |
+| `usr` | Anzahl Nutzer | **Block** | `[[lim#usr]]…[[/lim#usr]]` |
 
 ---
 
-## Aktionen (`act`)
+## 4. Aktionen (`act`)
 
-Beschreibt, welche Handlungen mit der Software erlaubt oder untersagt sind.
-
-* **cop**: Kopieren / Vervielfältigung  
-  ```[[act#cop]]...[[/act#cop]]```
-
-* **mod**: Modifikation / Veränderung  
-  ```[[act#mod]]...[[/act#mod]]```
-
-* **mov**: Verteilen / Verbreiten  
-  ```[[act#mov]]...[[/act#mov]]```
-
-* **sel**: Verkauf / kommerzielle Weitergabe  
-  ```[[act#sel]]...[[/act#sel]]```
-
-* **der**: Ableiten / Integration in eigene Software  
-  ```[[act#der]]...[[/act#der]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `cop` | Kopieren / Vervielfältigen | **Block** | `[[act#cop]]…[[/act#cop]]` |
+| `mod` | Modifikation | **Block** | `[[act#mod]]…[[/act#mod]]` |
+| `mov` | Weitergabe / Verbreitung | **Block** | `[[act#mov]]…[[/act#mov]]` |
+| `sel` | Verkauf / Kommerzialisierung | **Block** | `[[act#sel]]…[[/act#sel]]` |
+| `der` | Ableiten / Integration | **Block** | `[[act#der]]…[[/act#der]]` |
 
 ---
 
-## Pflichten / Folgen (`rul`)
+## 5. Pflichten / Folgen (`rul`)
 
-Kennzeichnet rechtliche oder praktische Pflichten, Einschränkungen und Folgen.
-
-* **nolia**: Haftungsausschluss / Warranty Disclaimer  
-  ```[[rul#nolia]]...[[/rul#nolia]]```
-
-* **by**: Namensnennung erforderlich  
-  ```[[rul#by]]...[[/rul#by]]```
-
-* **sa**: Weitergabe unter gleicher Lizenz (Share-Alike)  
-  ```[[rul#sa]]...[[/rul#sa]]```
-
-* **nd**: Keine Modifikation erlaubt (No Derivatives)  
-  ```[[rul#nd]]...[[/rul#nd]]```
-
-* **nodrm**: Keine technischen Schutzmaßnahmen (DRM)  
-  ```[[rul#nodrm]]...[[/rul#nodrm]]```
-
-* **nomili**: Keine militärische Nutzung  
-  ```[[rul#nomili]]...[[/rul#nomili]]```
-
-* **nc**: Keine kommerzielle Nutzung  
-  ```[[rul#nc]]...[[/rul#nc]]```
-
-* **com**: Kommerzielle Nutzung erlaubt  
-  ```[[rul#com]]...[[/rul#com]]```
-
-* **edu**: Nutzung in Bildung und Forschung erlaubt oder vorgesehen  
-  ```[[rul#edu]]...[[/rul#edu]]```
-
-* **gov**: Nutzung in Behörden und Verwaltungen erlaubt oder vorgesehen  
-  ```[[rul#gov]]...[[/rul#gov]]```
-
-* **src**: Bereitstellung des Quellcodes erforderlich  
-  ```[[rul#src]]...[[/rul#src]]```
-
-* **notice**: Beifügung von Copyright- und Lizenzhinweisen erforderlich  
-  ```[[rul#notice]]```
-
-* **lictxt**: Beifügung des Lizenztextes erforderlich  
-  ```[[rul#lictxt]]```
-
-* **changes**: Änderungen müssen kenntlich gemacht werden  
-  ```[[rul#changes]]```
-
-* **pat**: Patentlizenz wird gewährt  
-  ```[[rul#pat]]```
-
-* **patret**: Patentretaliation-Klausel (Widerruf bei Klage)  
-  ```[[rul#patret]]```
-
-* **tivo**: Anti-Tivoization (kein Lock-down der Hardware zulässig)  
-  ```[[rul#tivo]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `nolia` | Haftungsausschluss (Warranty Disclaimer) | **Block** | `[[rul#nolia]]…[[/rul#nolia]]` |
+| `by` | Namensnennung | **Block** | `[[rul#by]]…[[/rul#by]]` |
+| `sa` | Share‑Alike | **Block** | `[[rul#sa]]…[[/rul#sa]]` |
+| `nd` | Keine Bearbeitung | **Block** | `[[rul#nd]]…[[/rul#nd]]` |
+| `nodrm` | Keine DRM | **Block** | `[[rul#nodrm]]…[[/rul#nodrm]]` |
+| `nomili` | Keine militärische Nutzung | **Block** | `[[rul#nomili]]…[[/rul#nomili]]` |
+| `nc` | Nicht‑kommerziell | **Block** | `[[rul#nc]]…[[/rul#nc]]` |
+| `com` | Kommerzielle Nutzung erlaubt | **Block** | `[[rul#com]]…[[/rul#com]]` |
+| `edu` | Bildung | **Block** | `[[rul#edu]]…[[/rul#edu]]` |
+| `gov` | Behörden | **Block** | `[[rul#gov]]…[[/rul#gov]]` |
+| `src` | Quellcodepflicht | **Block** | `[[rul#src]]…[[/rul#src]]` |
+| `notice` | Copyright‑/Hinweispflicht | **Single** | `[[rul#notice]]` |
+| `lictxt` | Lizenztext beifügen | **Single** | `[[rul#lictxt]]` |
+| `changes` | Änderungen kennzeichnen | **Single** | `[[rul#changes]]` |
+| `pat` | Patentlizenz gewährt | **Single** | `[[rul#pat]]` |
+| `patret` | Patentretaliation | **Single** | `[[rul#patret]]` |
+| `tivo` | Anti‑Tivoization | **Single** | `[[rul#tivo]]` |
 
 ---
 
-## Kopyleft-Stärke (`cpy`)
+## 6. Kopyleft‑Stärke (`cpy`)
 
-Definiert, ab wann und in welcher Form Copyleft-Pflichten greifen.
-
-* **none** – kein Copyleft (z. B. MIT, BSD)  
-  ```[[cpy#none]]```
-
-* **weak** – schwaches Copyleft (z. B. LGPL)  
-  ```[[cpy#weak]]```
-
-* **strong** – starkes Copyleft (z. B. GPL)  
-  ```[[cpy#strong]]```
-
-* **network** – Netzwerkkopyleft (z. B. AGPL)  
-  ```[[cpy#network]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `none` | Kein Copyleft | **Single** | `[[cpy#none]]` |
+| `weak` | Schwaches Copyleft | **Single** | `[[cpy#weak]]` |
+| `strong` | Starkes Copyleft | **Single** | `[[cpy#strong]]` |
+| `network` | Netzwerkkopyleft | **Single** | `[[cpy#network]]` |
 
 ---
 
-## Verbreitungsmodus (`dst`)
+## 7. Verbreitungsmodus (`dst`)
 
-Beschreibt, ob und wie Software oder Teile davon weitergegeben werden.
-
-* **none** – keine Weitergabe  
-  ```[[dst#none]]```
-
-* **internal** – interne Nutzung / Verteilung innerhalb des Unternehmens  
-  ```[[dst#internal]]```
-
-* **partners** – Weitergabe an Partner oder Kunden unter Auflagen  
-  ```[[dst#partners]]```
-
-* **public** – öffentliche Verteilung (z. B. Download, App-Store, Website)  
-  ```[[dst#public]]```
-
-* **srv** – ausschließlich serverseitige Nutzung, kein Client-Code  
-  ```[[dst#srv]]```
-
-* **cli** – Client-Code wird an Dritte übertragen (z. B. JavaScript, Mobile-App)  
-  ```[[dst#cli]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `none` | Keine Weitergabe | **Single** | `[[dst#none]]` |
+| `internal` | Interne Nutzung | **Single** | `[[dst#internal]]` |
+| `partners` | Weitergabe an Partner | **Single** | `[[dst#partners]]` |
+| `public` | Öffentliche Verteilung | **Single** | `[[dst#public]]` |
+| `srv` | Nur Serverseite | **Single** | `[[dst#srv]]` |
+| `cli` | Clientseitige Auslieferung | **Single** | `[[dst#cli]]` |
 
 ---
 
-## Kopplungsart (`lnk`)
+## 8. Kopplung (`lnk`)
 
-Beschreibt die technische Kopplung zwischen lizenzierter und eigener Software.
-
-* **api** – lose Kopplung über API / Netzwerk / IPC  
-  ```[[lnk#api]]```
-
-* **dyn** – dynamisches Linken / Plug-in  
-  ```[[lnk#dyn]]```
-
-* **sta** – statisches Linken / Zusammenführen im Binary  
-  ```[[lnk#sta]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `api` | Lose Kopplung (API/Netzwerk/IPC) | **Single** | `[[lnk#api]]` |
+| `dyn` | Dynamisches Linken / Plug‑in | **Single** | `[[lnk#dyn]]` |
+| `sta` | Statisches Linken | **Single** | `[[lnk#sta]]` |
 
 ---
 
-## Umgebung (`env`)
+## 9. Umgebung (`env`)
 
-Gibt an, in welchem Nutzungskontext die Bewertung erfolgt.
-
-* **com** – kommerzielle Unternehmen oder Organisationen  
-  ```[[env#com]]```
-
-* **edu** – Schulen, Bildung, Kinderbetreuung  
-  ```[[env#edu]]```
-
-* **sci** – Forschung, Universitäten, Bibliotheken  
-  ```[[env#sci]]```
-
-* **prv** – private Nutzung  
-  ```[[env#prv]]```
-
-* **oss** – OSS-Umfeld (freie Entwickler, gemeinnützige Vereine)  
-  ```[[env#oss]]```
-
-* **gov** – Behörden, Verwaltungen, staatliche Einrichtungen  
-  ```[[env#gov]]```
-
-* *(optional)* **ngo** – gemeinnützige Organisationen  
-  ```[[env#ngo]]```
+| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
+|---|---|---|---|
+| `com` | Kommerziell | **Single** | `[[env#com]]` |
+| `edu` | Bildung | **Single** | `[[env#edu]]` |
+| `sci` | Wissenschaft | **Single** | `[[env#sci]]` |
+| `prv` | Privat | **Single** | `[[env#prv]]` |
+| `oss` | OSS‑Umfeld | **Single** | `[[env#oss]]` |
+| `gov` | Behörden | **Single** | `[[env#gov]]` |
+| `ngo` | Gemeinnützig | **Single** | `[[env#ngo]]` |
 
 ---
 
-## Bewertung / Policy (`pol`)
+## 10. Bewertung / Policy (`pol`)
 
-Stellt eine manuell gepflegte Bewertung oder Richtlinie dar,  
-die den Einsatz einer Lizenz unter bestimmten Bedingungen beschreibt.
+Manuell gepflegte Bewertung/Richtlinie für konkrete Nutzungsszenarien.
 
-**Syntax:**
+**Syntax-Beispiel**
+
 ```text
 [[pol#if="env=com,use=lib,dst=internal+srv,cpy=network"
       then="gelb"
       because="AGPL intern ok; kein Client-Code an Dritte."
       scope="license"
       span="rul:src+cpy:network"]]
+```
 
-# Annotationsbeispiele
-## Analyse
+**Erläuterungen**
 
-  Beispiel Haftungsausschluss
-  ```
-  8.2 [[rul#nolia]]If liability may not be excluded by law, it is limited to actual and direct financial loss to the extent it is caused by proved negligence on the part of the Licensor.[[/rul#nolia]]
-  ```
+- `if`: Kommagetrennte Bedingungen; Mehrfachwerte mit `+` (UND) kombinieren.
+- `then`: Ergebnis/Rating (z. B. *grün*, *gelb*, *rot*).
+- `because`: Begründung, die im Bericht angezeigt wird.
+- `scope`: Geltungsbereich (z. B. `license`, `textspan`).
+- `span`: Verstärkende/kontextgebende Annotationen (Bereich:Schlüssel + …).
 
+---
 
-  Beispiel Verbreitung eingeschränkt:
-  ```
-  Goethe [[person#p1 ref="gnd:118540238"]]Johann W. v. Goethe[[/person#p1]]
-  war ein [[relation#r1]]Freund von [[person#p2]]Schiller[[/person#p2]][[/relation#r1]].
-  ```
-## Bewertung
+## Technische Umsetzung
 
-* TODO
-* ```[[eval#grün ]]```
+1. **Python** (`src/liz2standoff.py`)
+   - erzeugt `output.txt` (Plaintext ohne Marker)
+   - erzeugt `output.xml` (Standoff‑Annotationen mit 0‑basierten, end‑exklusiven Offsets)
 
-# Technische Umsetzung
+2. **XSLT 1.0** (`src/styles/liz2table-style.xsl`)
+   - Darstellung der Annotationen als HTML‑Tabelle und farbige Textstellen
+   - kann direkt im Browser genutzt werden (XML + XSL im selben Verzeichnis)
 
-2. Python-Skript erzeugt
-   - `output.txt` (reiner Text ohne Marker)
-   - `output.xml` (standoff-Annotationen mit start/end Offsets)
-
-3. XSLT 2.0 zeigt die Annotationen als HTML-Tabelle an.
+---
 
 ## Verzeichnisstruktur
 
-```
+```text
 ospo-lizenzkatalog/
 ├─ README.md
-├─ pyprojekt.toml
-├─ .gitignore
+├─ pyproject.toml
 ├─ .github/workflows/ci.yml
 ├─ lizenzkatalog/
 │  ├─ apache-2.0.liz
@@ -334,25 +254,39 @@ ospo-lizenzkatalog/
 ├─ src/
 │  ├─ liz2standoff.py
 │  └─ styles/
-│     └─ standoff2table.xsl
+│     └─ liz2table-style.xsl
 └─ build/              # Ausgabeordner für CI und lokale Läufe
 ```
+
+---
 
 ## Nutzung (lokal)
 
 ```bash
-python3 src/liz2standoff.py 
+python3 src/liz2standoff.py
 ```
+
+Die Ausgaben werden unter `build/` abgelegt (konfigurationsabhängig).
+
+---
+
 ## Visualisierung
 
-Die Datei [`src/styles/liz2table-style.xsl`](src/styles/liz2table-style.xsl) ist
-ein **XSLT 1.0** Stylesheet. Diese kann direkt im Browser genutzt werden. 
+Die Datei [`src/styles/liz2table-style.xsl`](src/styles/liz2table-style.xsl) ist ein **XSLT‑1.0**‑Stylesheet und lässt sich im Browser auf das erzeugte `output.xml` anwenden.
 
+---
 
 ## Hinweise
-- Offsets sind 0-basiert und end-exklusiv.
-- Eingabetexte werden NFC-normalisiert, damit Offsets stabil bleiben.
-- IDs sind Pflicht bei überlappenden Bereiche.
 
-# Mitarbeit / Contributions
-TODO noch festzulegen
+- Offsets sind **0‑basiert** und **end‑exklusiv**.
+- Eingabetexte werden **Unicode‑NFC** normalisiert (stabile Offsets).
+- **IDs sind Pflicht** bei **überlappenden Bereichen**.
+- **Single‑Tags** besitzen **kein schließendes Gegenstück**.
+- Für die **SPDX‑ID** kann die offizielle Liste referenziert werden (z. B. `[[lic#spdx="Apache-2.0"]]`).
+
+---
+
+## Mitarbeit / Contributions
+
+Mitmachen ist ausdrücklich willkommen (Erweiterungen der Systematik, neue Lizenz‑Annotationen, Verbesserungen von Skript und Stylesheet). Bitte Pull Requests mit klaren Commits und kurzen Testdaten beilegen.
+
