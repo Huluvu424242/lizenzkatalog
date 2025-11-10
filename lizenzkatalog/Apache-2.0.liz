@@ -211,6 +211,6 @@
 [[pol#if if="env=com,use=lib,dst=public"
 then="gelb"  because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich."]]
 [[pol#if if="env=com,use=lib,dst=partners"
-then="grün"  because="Bereitstellung bei Partner/Kunden ist auf eigener Hardware ist zulässig."]]
+then="grün"  because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig."]]
 [[pol#if if="env=com,use=lib,dst=internal"
 then="grün"  because="Interne Verteilung im Unternehmen ist zulässig."]]
