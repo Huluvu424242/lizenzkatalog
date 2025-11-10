@@ -226,7 +226,7 @@
     <note id="a4" type="rul#notice"/>
     <note id="a5" type="rul#lictxt"/>
     <note id="a7" type="pol#if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="env=com,use=lib,dst=public"/>
-    <note id="a8" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden ist auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden ist auf eigener Hardware ist zulässig." label="env=com,use=lib,dst=partners"/>
+    <note id="a8" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="env=com,use=lib,dst=partners"/>
     <note id="a9" type="pol#if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="env=com,use=lib,dst=internal"/>
     <note id="a10" type="pol#_section" present="true"/>
   </notes>
