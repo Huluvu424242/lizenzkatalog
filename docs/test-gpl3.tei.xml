@@ -25,7 +25,7 @@ Haftungsausschluss.
     <note id="a11" type="rul#src" start="97" end="140"/>
     <note id="a12" type="rul#changes" start="142" end="165"/>
     <note id="a13" type="rul#nolia" start="167" end="185"/>
-    <note id="a2" type="lic#spdx" value="GPL-3.0-only"/>
+    <note id="a2" type="lic#spdx" label="GPL-3.0-only"/>
     <note id="a3" type="lic#fsf"/>
     <note id="a4" type="lic#osi"/>
     <note id="a5" type="cpy#strong"/>
