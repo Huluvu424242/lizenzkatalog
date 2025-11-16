@@ -85,6 +85,86 @@
         </xsl:choose>
     </xsl:template>
 
+    <!-- ===== Hilfs-Templates für Policy-Tooltips ===== -->
+
+    <!-- Tokenizer: zerlegt einen String in <p>-Knoten nach Leerzeichen -->
+    <xsl:template name="tokenize">
+        <xsl:param name="text"/>
+        <xsl:variable name="t" select="normalize-space($text)"/>
+        <xsl:choose>
+            <xsl:when test="contains($t, ' ')">
+                <p><xsl:value-of select="substring-before($t, ' ')"/></p>
+                <xsl:call-template name="tokenize">
+                    <xsl:with-param name="text" select="substring-after($t, ' ')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <p><xsl:value-of select="$t"/></p>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Token wie "env=com" zu "env#com 🏢 Unternehmen" auflösen -->
+    <xsl:template name="token-to-label">
+        <xsl:param name="t"/>
+
+        <!-- Typ-Präfix und Wert extrahieren -->
+        <xsl:variable name="prefix" select="substring-before($t,'=')"/>
+        <xsl:variable name="value"  select="substring-after($t,'=')"/>
+        <xsl:variable name="fullType" select="concat($prefix, '#', $value)"/>
+
+        <!-- passende Note suchen (Label enthält Emoji aus Python) -->
+        <xsl:variable name="n" select="/annotation/notes/note[@type=$fullType][1]"/>
+
+        <xsl:choose>
+            <xsl:when test="$n">
+                <xsl:value-of select="$fullType"/>
+                <xsl:text> </xsl:text>
+                <xsl:choose>
+                    <xsl:when test="$n/@label">
+                        <xsl:value-of select="$n/@label"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="label-for-type">
+                            <xsl:with-param name="t" select="$fullType"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <!-- Fallback, falls keine Note gefunden -->
+            <xsl:otherwise>
+                <xsl:value-of select="$t"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Alle Tokens aus @if einsammeln und kommasepariert auflösen -->
+    <xsl:template name="collect-tokens">
+        <xsl:param name="expr"/>
+
+        <!-- Sonderzeichen (&, |, (),) zu Leerzeichen machen -->
+        <xsl:variable name="flat"
+                      select="translate($expr, '&amp;|()', '    ')"/>
+
+        <!-- in Teile zerlegen -->
+        <xsl:variable name="parts">
+            <xsl:call-template name="tokenize">
+                <xsl:with-param name="text" select="$flat"/>
+            </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:variable name="nodes" select="exsl:node-set($parts)/p"/>
+
+        <xsl:for-each select="$nodes">
+            <xsl:if test="contains(., '=')">
+                <xsl:call-template name="token-to-label">
+                    <xsl:with-param name="t" select="."/>
+                </xsl:call-template>
+                <xsl:if test="position() != last()">, </xsl:if>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+
     <!-- Einstieg -->
     <xsl:template match="/">
         <xsl:apply-templates select="/annotation"/>
@@ -137,10 +217,7 @@
                     .pill.yellow{ background:#fff9e5; border-color:#ffe2a8; }
                     .pill.red{ background:#ffeaea; border-color:#ffc2c2; }
 
-                    /* neu: Label mit Tooltip */
-                    .tooltip-label {
-                    cursor: help;
-                    }
+                    .tooltip-label { cursor: help; }
                 </style>
             </head>
 
@@ -170,7 +247,7 @@
                                 </xsl:call-template>
                             </td>
                             <td>
-                                <!-- HIER: Label (mit Emoji aus Python) + Tooltip: @type + @label -->
+                                <!-- Tooltip: @type und @label, Emoji kommt schon aus Python -->
                                 <span class="tooltip-label">
                                     <xsl:attribute name="title">
                                         <xsl:value-of select="@type"/>
@@ -258,17 +335,13 @@
     <xsl:template name="render-condition-row">
         <tr>
             <!-- Rahmenbedingungen mit Tooltip:
-                 title = @if + ' ' + (@label, falls vorhanden) -->
+                 title = kommaseparierte Liste der env/use/...-Ausprägungen aus @if -->
             <td>
                 <span class="tooltip-label">
                     <xsl:attribute name="title">
-                        <xsl:if test="@if">
-                            <xsl:value-of select="@if"/>
-                        </xsl:if>
-                        <xsl:if test="@label">
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of select="@label"/>
-                        </xsl:if>
+                        <xsl:call-template name="collect-tokens">
+                            <xsl:with-param name="expr" select="@if"/>
+                        </xsl:call-template>
                     </xsl:attribute>
                     <code>
                         <xsl:choose>
