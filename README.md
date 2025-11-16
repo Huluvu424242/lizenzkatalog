@@ -213,15 +213,15 @@ Veraltet: Dieser Abschnitt wird zukünftig nur in den Bewertungen Anwendung find
 
 Veraltet: Dieser Abschnitt wird zukünftig nur in den Bewertungen Anwendung finden.
 
-| Schlüssel | Bedeutung | Tag‑Typ | Beispiel |
-|---|---|---|---|
-| `com` | Kommerziell | **Single** | `[[env#com]]` |
-| `edu` | Bildung | **Single** | `[[env#edu]]` |
-| `sci` | Wissenschaft | **Single** | `[[env#sci]]` |
-| `prv` | Privat | **Single** | `[[env#prv]]` |
-| `oss` | OSS‑Umfeld | **Single** | `[[env#oss]]` |
-| `gov` | Behörden | **Single** | `[[env#gov]]` |
-| `ngo` | Gemeinnützig | **Single** | `[[env#ngo]]` |
+| Schlüssel | Bedeutung      | Tag‑Typ | Beispiel |
+|---|---|-------------|---|---|
+| `com` | &#x1F3E2; |Kommerziell    | **Single** | `[[env#com]]` |
+| `edu` | &#x1F4D8; | Bildung        | **Single** | `[[env#edu]]` |
+| `sci` | &#x1F52C; | Wissenschaft   | **Single** | `[[env#sci]]` |
+| `prv` | &#x1F6CB;&#xFE0F; | Privat         | **Single** | `[[env#prv]]` |
+| `oss` | &#x1F9E9; | OSS‑Umfeld     | **Single** | `[[env#oss]]` |
+| `gov` | &#x1F3DB;&#xFE0F; | Behörden       | **Single** | `[[env#gov]]` |
+| `ngo` | &#x1F499; | Gemeinnützig   | **Single** | `[[env#ngo]]` |
 
 ---
 
