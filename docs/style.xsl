@@ -10,7 +10,7 @@
     <xsl:strip-space elements="annotation notes note text"/>
 
     <!-- ========================================================= -->
-    <!-- Muenchian Key                                            -->
+    <!-- Muenchian Key                                             -->
     <!-- ========================================================= -->
     <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
 
@@ -21,7 +21,7 @@
         <xsl:param name="t"/>
         <xsl:choose>
 
-            <!-- === LIC === -->
+            <!-- lic -->
             <xsl:when test="$t='lic#name'">Lizenzname</xsl:when>
             <xsl:when test="$t='lic#spdx'">SPDX-ID</xsl:when>
             <xsl:when test="$t='lic#fsf'">FSF-Freigabe</xsl:when>
@@ -29,13 +29,13 @@
             <xsl:when test="$t='lic#c'">Alle Rechte vorbehalten</xsl:when>
             <xsl:when test="$t='lic#c0'">Nutzung uneingeschränkt</xsl:when>
 
-            <!-- === USE === -->
+            <!-- use -->
             <xsl:when test="$t='use#doc'">Dokumentation</xsl:when>
             <xsl:when test="$t='use#lib'">Bibliothek/Komponente</xsl:when>
             <xsl:when test="$t='use#app'">Lokale Anwendung</xsl:when>
             <xsl:when test="$t='use#cld'">Cloud-Anwendung</xsl:when>
 
-            <!-- === LIM === -->
+            <!-- lim -->
             <xsl:when test="$t='lim#pc'">Anzahl Rechner</xsl:when>
             <xsl:when test="$t='lim#dev'">Anzahl Geräte</xsl:when>
             <xsl:when test="$t='lim#srv'">Anzahl Server</xsl:when>
@@ -43,14 +43,14 @@
             <xsl:when test="$t='lim#krn'">Anzahl Kerne</xsl:when>
             <xsl:when test="$t='lim#usr'">Anzahl Nutzer</xsl:when>
 
-            <!-- === ACT === -->
+            <!-- act -->
             <xsl:when test="$t='act#cop'">Vervielfältigung</xsl:when>
             <xsl:when test="$t='act#mod'">Modifikation</xsl:when>
             <xsl:when test="$t='act#mov'">Verbreitung</xsl:when>
             <xsl:when test="$t='act#sel'">Verkauf</xsl:when>
             <xsl:when test="$t='act#der'">Abgeleitete Werke</xsl:when>
 
-            <!-- === RUL === -->
+            <!-- rul -->
             <xsl:when test="$t='rul#nolia'">Haftungsausschluss</xsl:when>
             <xsl:when test="$t='rul#by'">Namensnennung</xsl:when>
             <xsl:when test="$t='rul#sa'">Share-Alike</xsl:when>
@@ -69,23 +69,23 @@
             <xsl:when test="$t='rul#patret'">Patent-Retaliation</xsl:when>
             <xsl:when test="$t='rul#tivo'">Anti-Tivoization</xsl:when>
 
-            <!-- === CPY === -->
+            <!-- cpy -->
+            <xsl:when test="$t='cpy#none'">Kein Copyleft</xsl:when>
             <xsl:when test="$t='cpy#weak'">Weak Copyleft</xsl:when>
             <xsl:when test="$t='cpy#strong'">Strong Copyleft</xsl:when>
             <xsl:when test="$t='cpy#network'">Network Copyleft</xsl:when>
-            <xsl:when test="$t='cpy#none'">Kein Copyleft</xsl:when>
 
-            <!-- === DST === -->
+            <!-- dst -->
             <xsl:when test="$t='dst#internal'">Interne Weitergabe</xsl:when>
             <xsl:when test="$t='dst#partners'">Partner/Kunden</xsl:when>
             <xsl:when test="$t='dst#public'">Öffentlich</xsl:when>
 
-            <!-- === LNK === -->
+            <!-- lnk -->
             <xsl:when test="$t='lnk#api'">API-Kopplung</xsl:when>
             <xsl:when test="$t='lnk#dyn'">Dynamisches Linken</xsl:when>
             <xsl:when test="$t='lnk#sta'">Statisches Linken</xsl:when>
 
-            <!-- === ENV === -->
+            <!-- env -->
             <xsl:when test="$t='env#com'">Unternehmen</xsl:when>
             <xsl:when test="$t='env#edu'">Bildung</xsl:when>
             <xsl:when test="$t='env#sci'">Wissenschaft</xsl:when>
@@ -100,9 +100,8 @@
         </xsl:choose>
     </xsl:template>
 
-
     <!-- ========================================================= -->
-    <!-- TOKENIZER FÜR POLICIES                                   -->
+    <!-- TOKENIZER FÜR POLICIES (env=com,use=lib,...)              -->
     <!-- ========================================================= -->
 
     <!-- Komma-separierte if-Ausdrücke splitten -->
@@ -175,7 +174,7 @@
                 </xsl:call-template>
             </xsl:variable>
 
-            <!-- Ausgabe -->
+            <!-- Ausgabe: env#com 🏢 Unternehmen -->
             <xsl:value-of select="$fullType"/>
             <xsl:text> </xsl:text>
             <xsl:if test="string($emoji)!=''">
@@ -210,9 +209,8 @@
         </xsl:for-each>
     </xsl:template>
 
-
     <!-- ========================================================= -->
-    <!-- Einstieg                                                  -->
+    <!-- Einstieg                                                   -->
     <!-- ========================================================= -->
 
     <xsl:template match="/">
@@ -245,16 +243,19 @@
                 <title>Auswertung – <xsl:value-of select="$licenseName"/></title>
 
                 <style>
-                    body { font-family: system-ui, sans-serif; padding:1rem; }
+                    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding:1rem; }
                     table { border-collapse: collapse; width:100%; margin-bottom:1.5rem;}
-                    th,td { border:1px solid #ddd; padding:0.5rem; vertical-align:top; }
+                    th,td { border:1px solid #ddd; padding:0.5rem; vertical-align:top; text-align:left; }
                     th { background:#f6f8fa; }
                     code { background:#f6f8fa; padding:0.1rem 0.25rem; border-radius:4px;}
                     pre { white-space:pre-wrap; background:#fafafa; border:1px dashed #ddd; padding:0.75rem;}
+                    h1,h2 { margin:.2rem 0 .6rem 0; }
 
+                    .muted { color:#777; }
                     .tooltip-label { cursor:help; }
 
-                    .pill { padding:0.1rem 0.4rem; border-radius:6px; border:1px solid #ddd; }
+                    .pill { display:inline-block; padding:0.1rem 0.4rem; border-radius:6px; border:1px solid #ddd;
+                    font-size:0.8rem; background:#fbfbfb; }
                     .pill.green { background:#e9f9ee; border-color:#bfe8c8;}
                     .pill.red { background:#ffeaea; border-color:#ffc2c2;}
                     .pill.yellow { background:#fff9e5; border-color:#ffe2a8;}
@@ -267,6 +268,15 @@
                     .hl-6 { background:#fde2e4;}
                     .hl-7 { background:#e4d8f6;}
                     .hl-8 { background:#f6e6b4;}
+
+                    .badges { display:flex; flex-wrap:wrap; gap:.35rem; margin:.35rem 0 1rem; }
+                    .badge { display:inline-block; padding:.2rem .5rem; border-radius:999px; border:1px solid #ddd;
+                    background:#f7f7f7; font-size:.85rem; }
+                    .badge.env { background:#f6f2ff; border-color:#e0d7ff; }
+                    .badge.use { background:#e6f7ff; border-color:#bfe7ff; }
+                    .badge.cpy { background:#eef7ff; border-color:#cfe6ff; }
+                    .badge.dst { background:#f1fff0; border-color:#d6f5d3; }
+                    .badge.lnk { background:#fff8e6; border-color:#ffe7ad; }
                 </style>
 
             </head>
@@ -275,9 +285,14 @@
 
                 <h1>Auswertung<br/><xsl:value-of select="$licenseName"/></h1>
 
+                <!-- Tagliste / Kontext-Badges -->
+                <div class="badges">
+                    <xsl:call-template name="render-badges"/>
+                </div>
+
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- Policies -->
+                <!-- ===== Policies ===== -->
                 <h2>Policies</h2>
                 <xsl:call-template name="render-policies"/>
 
@@ -293,19 +308,31 @@
                             <td><xsl:value-of select="position()"/></td>
 
                             <td>
-                                <xsl:call-template name="label-for-type">
-                                    <xsl:with-param name="t" select="@type"/>
-                                </xsl:call-template>
+                                <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
+                                <span title="{$tooltip}">
+                                    <xsl:call-template name="label-for-type">
+                                        <xsl:with-param name="t" select="@type"/>
+                                    </xsl:call-template>
+                                </span>
                             </td>
 
                             <td>
                                 <span class="tooltip-label">
                                     <xsl:attribute name="title">
                                         <xsl:value-of select="@type"/>
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="@label"/>
+                                        <xsl:if test="@label">
+                                            <xsl:text> </xsl:text>
+                                            <xsl:value-of select="@label"/>
+                                        </xsl:if>
                                     </xsl:attribute>
-                                    <xsl:value-of select="@label"/>
+                                    <xsl:choose>
+                                        <xsl:when test="@label">
+                                            <xsl:value-of select="@label"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <span class="muted">–</span>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
                                 </span>
                             </td>
 
@@ -313,57 +340,69 @@
                         </tr>
                     </xsl:for-each>
                 </table>
+                <xsl:if test="not(notes/note[not(@start) and not(@end) and not(starts-with(@type,'pol#'))])">
+                    <p class="muted">Keine Annotationen ohne Textbezug vorhanden.</p>
+                </xsl:if>
 
-                <!-- ===== Textbezug ===== -->
+                <!-- ===== Textbezug-Tabelle ===== -->
                 <h2>Informationen mit Textbezug</h2>
 
+                <!-- typeOrder bestimmen -->
                 <xsl:variable name="typeOrderRTF">
-                    <xsl:for-each select="notes/note[@start][generate-id()=
-                    generate-id(key('kType',@type)[1])]">
+                    <xsl:for-each select="notes/note[@start][generate-id()=generate-id(key('kType',@type)[1])]">
                         <xsl:sort select="@type"/>
                         <t type="{@type}"/>
                     </xsl:for-each>
                 </xsl:variable>
-
-                <xsl:variable name="typeOrder"
-                              select="exsl:node-set($typeOrderRTF)/t"/>
+                <xsl:variable name="typeOrder" select="exsl:node-set($typeOrderRTF)/t"/>
 
                 <table>
                     <tr>
-                        <th>#</th><th>Typ</th><th>Auszug</th>
-                        <th>ID</th><th>Start</th><th>Ende</th>
+                        <th>#</th><th>Typ</th><th>Auszug</th><th>ID</th><th>Start</th><th>Ende</th>
                     </tr>
-
                     <xsl:for-each select="notes/note[@start]">
                         <xsl:sort select="@start" data-type="number"/>
                         <xsl:sort select="@end" data-type="number"/>
 
-                        <tr>
-                            <td><xsl:value-of select="position()"/></td>
+                        <xsl:variable name="s" select="number(@start)"/>
+                        <xsl:variable name="e" select="number(@end)"/>
+                        <xsl:variable name="frag"
+                                      select="substring($txt, $s+1, $e - $s + 1)"/>
+                        <xsl:variable name="tooltipSpan"
+                                      select="concat('[[', @type, ']]...[[/', @type, ']]')"/>
 
+                        <tr>
+                            <!-- Verlinkung auf farbigen Originaltext -->
                             <td>
-                                <xsl:call-template name="label-for-type">
-                                    <xsl:with-param name="t" select="@type"/>
-                                </xsl:call-template>
+                                <a href="#frag-{@id}">
+                                    <xsl:value-of select="position()"/>
+                                </a>
                             </td>
 
                             <td>
-                                <xsl:value-of select="
-                                substring($txt,
-                                   number(@start)+1,
-                                   number(@end)-number(@start)+1)"/>
+                                <span title="{$tooltipSpan}">
+                                    <xsl:call-template name="label-for-type">
+                                        <xsl:with-param name="t" select="@type"/>
+                                    </xsl:call-template>
+                                </span>
+                            </td>
+
+                            <td>
+                                <xsl:value-of select="normalize-space($frag)"/>
                             </td>
 
                             <td><xsl:value-of select="@id"/></td>
                             <td><xsl:value-of select="@start"/></td>
                             <td><xsl:value-of select="@end"/></td>
                         </tr>
-
                     </xsl:for-each>
                 </table>
+                <xsl:if test="not(notes/note[@start])">
+                    <p class="muted">Keine Annotationen mit Textbezug vorhanden.</p>
+                </xsl:if>
 
                 <!-- ===== Originaltext ===== -->
-                <h2>Originaltext</h2>
+                <h2>Originaltext (mit Hervorhebungen)</h2>
                 <pre>
                     <xsl:call-template name="render-original">
                         <xsl:with-param name="typeOrder" select="$typeOrder"/>
@@ -374,14 +413,58 @@
         </html>
     </xsl:template>
 
+    <!-- ========================================================= -->
+    <!-- Badges (Tagliste oben)                                   -->
+    <!-- ========================================================= -->
+    <xsl:template name="render-badges">
+        <!-- Kontext-Badges für env/use/cpy/dst/lnk -->
+        <xsl:for-each select="/annotation/notes/note[
+             starts-with(@type,'env#') or starts-with(@type,'use#')
+          or starts-with(@type,'cpy#') or starts-with(@type,'dst#')
+          or starts-with(@type,'lnk#')
+        ]">
+            <xsl:variable name="cls">
+                <xsl:choose>
+                    <xsl:when test="starts-with(@type,'env#')">badge env</xsl:when>
+                    <xsl:when test="starts-with(@type,'use#')">badge use</xsl:when>
+                    <xsl:when test="starts-with(@type,'cpy#')">badge cpy</xsl:when>
+                    <xsl:when test="starts-with(@type,'dst#')">badge dst</xsl:when>
+                    <xsl:otherwise>badge lnk</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <span class="{$cls}">
+                <xsl:value-of select="substring-after(@type,'#')"/>
+                <xsl:if test="@label">
+                    <xsl:text> – </xsl:text>
+                    <xsl:value-of select="@label"/>
+                </xsl:if>
+            </span>
+        </xsl:for-each>
+
+        <!-- Wichtige RUL-Flags als Pills (einmalig) -->
+        <xsl:for-each select="/annotation/notes/note[
+              @type='rul#notice' or @type='rul#lictxt' or @type='rul#src'
+           or @type='rul#changes' or @type='rul#pat' or @type='rul#patret'
+           or @type='rul#tivo'
+        ][generate-id() = generate-id(key('kType', @type)[1]) or not(@start)]">
+            <span class="pill">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
+            </span>
+        </xsl:for-each>
+    </xsl:template>
 
     <!-- ========================================================= -->
-    <!-- Policy Rendering                                           -->
+    <!-- Policies-Renderer                                         -->
     <!-- ========================================================= -->
-
     <xsl:template name="render-policies">
         <xsl:variable name="pols"
-                      select="/annotation/notes/note[starts-with(@type,'pol#') and not(@present='true')]"/>
+                      select="/annotation/notes/note[
+                starts-with(@type,'pol#')
+                and (@if or @then or @because)
+                and not(@present='true')
+            ]"/>
 
         <xsl:choose>
             <xsl:when test="count($pols)>0">
@@ -402,22 +485,17 @@
         </xsl:choose>
     </xsl:template>
 
-
-    <!-- Policy-Zeile mit neuem Tooltip -->
+    <!-- Policy-Zeile mit Tooltip aus @if -->
     <xsl:template name="render-condition-row">
         <tr>
-
-            <!-- === RAHMENBEDINGUNGEN === -->
+            <!-- Rahmenbedingungen mit Tooltip = Liste der env/use/dst/cpy-Ausprägungen -->
             <td>
                 <span class="tooltip-label">
-
-                    <!-- TOOLTIP = hübsch formatierte Liste -->
                     <xsl:attribute name="title">
                         <xsl:call-template name="collect-tokens">
                             <xsl:with-param name="expr" select="@if"/>
                         </xsl:call-template>
                     </xsl:attribute>
-
                     <code>
                         <xsl:choose>
                             <xsl:when test="@label">
@@ -431,7 +509,7 @@
                 </span>
             </td>
 
-            <!-- === VERWENDBARKEIT === -->
+            <!-- Verwendbarkeit -->
             <td>
                 <span class="pill">
                     <xsl:attribute name="class">
@@ -442,24 +520,21 @@
                 </span>
             </td>
 
-            <!-- === GRUND === -->
+            <!-- Grund -->
             <td><xsl:value-of select="@because"/></td>
-
         </tr>
     </xsl:template>
-
 
     <!-- ========================================================= -->
     <!-- Originaltext Renderer                                     -->
     <!-- ========================================================= -->
-
     <xsl:template name="render-original">
         <xsl:param name="typeOrder"/>
 
         <xsl:variable name="txt" select="string(/annotation/text)"/>
 
         <xsl:variable name="sortedSpansRTF">
-            <xsl:for-each select="/annotation/notes/note[@start]">
+            <xsl:for-each select="/annotation/notes/note[@start and @end]">
                 <xsl:sort select="@start" data-type="number"/>
                 <xsl:sort select="@end" data-type="number"/>
                 <span start="{@start}" end="{@end}" id="{@id}" type="{@type}"/>
@@ -485,8 +560,7 @@
         </xsl:choose>
     </xsl:template>
 
-
-    <!-- REKURSIVER TEXT-RENDERER -->
+    <!-- Rekursiver Renderer mit farbigen Spans + IDs für Anker -->
     <xsl:template name="render-from">
         <xsl:param name="txt"/>
         <xsl:param name="nodes"/>
@@ -495,40 +569,39 @@
         <xsl:param name="cursor"/>
 
         <xsl:choose>
-
             <xsl:when test="$idx &lt;= count($nodes)">
                 <xsl:variable name="n" select="$nodes[$idx]"/>
                 <xsl:variable name="s" select="number($n/@start)"/>
                 <xsl:variable name="e" select="number($n/@end)"/>
 
-                <!-- Text davor -->
+                <!-- Text vor der aktuellen Annotation -->
                 <xsl:if test="$s &gt; $cursor">
-                    <xsl:value-of select="substring($txt,$cursor+1,$s - $cursor)"/>
+                    <xsl:value-of select="substring($txt, $cursor+1, $s - $cursor)"/>
                 </xsl:if>
 
-                <!-- Index der Farbe -->
+                <!-- Highlight-Index für diesen Typ -->
                 <xsl:variable name="typeIndex"
                               select="count($typeOrder[@type=$n/@type]/preceding-sibling::t)+1"/>
 
                 <xsl:variable name="cls">
                     <xsl:choose>
-                        <xsl:when test="$typeIndex mod 8=1">hl-1</xsl:when>
-                        <xsl:when test="$typeIndex mod 8=2">hl-2</xsl:when>
-                        <xsl:when test="$typeIndex mod 8=3">hl-3</xsl:when>
-                        <xsl:when test="$typeIndex mod 8=4">hl-4</xsl:when>
-                        <xsl:when test="$typeIndex mod 8=5">hl-5</xsl:when>
-                        <xsl:when test="$typeIndex mod 8=6">hl-6</xsl:when>
-                        <xsl:when test="$typeIndex mod 8=7">hl-7</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 1">hl-1</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 2">hl-2</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 3">hl-3</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 4">hl-4</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 5">hl-5</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 6">hl-6</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 7">hl-7</xsl:when>
                         <xsl:otherwise>hl-8</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
 
-                <!-- Markierter Span -->
-                <span class="{$cls}">
+                <!-- markierter Bereich mit ID für die Tabelle (#frag-ID) -->
+                <span id="frag-{$n/@id}" class="{$cls}">
                     <xsl:value-of select="substring($txt, $s+1, $e - $s+1)"/>
                 </span>
 
-                <!-- Weiter -->
+                <!-- Rekursiv weiter -->
                 <xsl:call-template name="render-from">
                     <xsl:with-param name="txt" select="$txt"/>
                     <xsl:with-param name="nodes" select="$nodes"/>
@@ -538,11 +611,9 @@
                 </xsl:call-template>
 
             </xsl:when>
-
             <xsl:otherwise>
-                <xsl:value-of select="substring($txt,$cursor+1)"/>
+                <xsl:value-of select="substring($txt, $cursor+1)"/>
             </xsl:otherwise>
-
         </xsl:choose>
     </xsl:template>
 
