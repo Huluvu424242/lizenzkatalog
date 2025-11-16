@@ -104,6 +104,7 @@
             <!-- env -->
             <xsl:when test="$t='env#com'">
                 <!-- 🏢 Unternehmen -->
+                <xsl:text disable-output-escaping="yes">&#x26;#x1F3E2;</xsl:text>
                 &#x1F3E2;
             </xsl:when>
             <xsl:when test="$t='env#edu'">
