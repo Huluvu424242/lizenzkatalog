@@ -115,7 +115,6 @@
                     <xsl:value-of select="$licenseName"/>
                 </title>
 
-                <!-- Deine Styles unverändert -->
                 <style>
                     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 1rem; }
                     table { border-collapse: collapse; width: 100%; margin-bottom: 1.5rem; }
@@ -215,7 +214,7 @@
         </html>
     </xsl:template>
 
-    <!-- ===== Policies-Renderer (vereinfacht) ===== -->
+    <!-- ===== Policies-Renderer ===== -->
     <xsl:template name="render-policies">
         <xsl:variable name="pols"
                       select="/annotation/notes/note[starts-with(@type,'pol#') and not(@present='true')]"/>
@@ -242,7 +241,7 @@
     <xsl:template name="render-condition-row">
 
         <tr>
-            <!-- >>> HIER: Nur noch @label oder Fallback @if <<< -->
+            <!-- Nur noch @label oder Fallback @if -->
             <td><code>
                 <xsl:choose>
                     <xsl:when test="@label"><xsl:value-of select="@label"/></xsl:when>
@@ -263,7 +262,7 @@
         </tr>
     </xsl:template>
 
-    <!-- ===== Originaltext-Renderer (unverändert) ===== -->
+    <!-- ===== Originaltext-Renderer ===== -->
     <xsl:template name="render-original">
         <xsl:param name="typeOrder"/>
         <xsl:variable name="txt" select="string(/annotation/text)"/>
@@ -303,15 +302,17 @@
         <xsl:choose>
             <xsl:when test="$idx &lt;= count($nodes)">
                 <xsl:variable name="n" select="$nodes[$idx]"/>
-                <xsl:variable name="s" select="number($n/@start)"/>
-                <xsl:variable name="e" select="number($n/@end)"/>
+                <xsl:variable name="start" select="number($n/@start)"/>
+                <xsl:variable name="end"   select="number($n/@end)"/>
 
-                <xsl:if test="$s &gt; $cursor">
-                    <xsl:value-of select="substring($txt, $cursor+1, $s - $cursor)"/>
+                <!-- Text vor der aktuellen Annotation -->
+                <xsl:if test="$start &gt; $cursor">
+                    <xsl:value-of select="substring($txt, $cursor + 1, $start - $cursor)"/>
                 </xsl:if>
 
+                <!-- Highlight-Index für diesen Typ -->
                 <xsl:variable name="typeIndex"
-                              select="count($typeOrder[@type=$n/@type]/preceding-sibling::t)+1"/>
+                              select="count($typeOrder[@type=$n/@type]/preceding-sibling::t) + 1"/>
 
                 <xsl:variable name="cls">
                     <xsl:choose>
@@ -326,22 +327,25 @@
                     </xsl:choose>
                 </xsl:variable>
 
+                <!-- Markierter Bereich -->
                 <span class="{$cls}">
-                    <xsl:value-of select="substring($txt, $s+1, $e - $s+1)"/>
+                    <xsl:value-of select="substring($txt, $start + 1, $end - $start + 1)"/>
                 </span>
 
+                <!-- Rekursiv weiter mit nächster Annotation -->
                 <xsl:call-template name="render-from">
-                    <xsl:with-param name="txt" select="$txt"/>
-                    <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="txt"       select="$txt"/>
+                    <xsl:with-param name="nodes"     select="$nodes"/>
                     <xsl:with-param name="typeOrder" select="$typeOrder"/>
-                    <xsl:with-param name="idx" select="$idx+1"/>
-                    <xsl:with-param name="cursor" select="$e+1"/>
+                    <xsl:with-param name="idx"       select="$idx + 1"/>
+                    <xsl:with-param name="cursor"    select="$end + 1"/>
                 </xsl:call-template>
 
             </xsl:when>
 
+            <!-- Resttext hinter der letzten Annotation -->
             <xsl:otherwise>
-                <xsl:value-of select="substring($txt, $cursor+1)"/>
+                <xsl:value-of select="substring($txt, $cursor + 1)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
