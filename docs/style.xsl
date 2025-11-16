@@ -283,7 +283,13 @@
 
             <body>
 
-                <h1>Auswertung<br/><xsl:value-of select="$licenseName"/></h1>
+                <h1>
+                    <xsl:text>Auswertung</xsl:text>
+                    <xsl:if test="string($licenseName) != ''">
+                        <br/>
+                        <xsl:value-of select="$licenseName"/>
+                    </xsl:if>
+                </h1>
 
                 <!-- Tagliste / Kontext-Badges -->
                 <div class="badges">
@@ -292,15 +298,25 @@
 
                 <xsl:variable name="txt" select="string(text)"/>
 
-                <!-- ===== Policies ===== -->
-                <h2>Policies</h2>
+                <!-- ===== Policies (direkt über Attribute) ===== -->
+                <h2>Policies (manuelle Bewertungen)</h2>
                 <xsl:call-template name="render-policies"/>
 
-                <!-- ===== Allgemeine Infos ===== -->
-                <h2>Allgemeine Infos</h2>
+                <!-- ===== Tabelle 1: ohne Textbezug (Singletons) ===== -->
+                <h2>
+                    <img src="ospolizenzkatalog.svg"
+                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                         title="KI generiert by ChatGPT©️2025"
+                         width="100" height="100"
+                         style="max-width:100%; height:auto;"/>
+                    Allgemeine Infos
+                </h2>
                 <table>
                     <tr>
-                        <th>#</th><th>Typ</th><th>Wert</th><th>ID</th>
+                        <th>#</th>
+                        <th>Typ</th>
+                        <th>Wert</th>
+                        <th>ID</th>
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) and not(@end) and not(starts-with(@type,'pol#'))]">
                         <xsl:sort select="@type"/>
@@ -345,7 +361,14 @@
                 </xsl:if>
 
                 <!-- ===== Textbezug-Tabelle ===== -->
-                <h2>Informationen mit Textbezug</h2>
+                <h2>
+                    <img src="ospolizenzkatalog.svg"
+                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                         title="KI generiert by ChatGPT©️2025"
+                         width="100" height="100"
+                         style="max-width:100%; height:auto;"/>
+                    Informationen mit Textbezug
+                </h2>
 
                 <!-- typeOrder bestimmen -->
                 <xsl:variable name="typeOrderRTF">
@@ -358,7 +381,12 @@
 
                 <table>
                     <tr>
-                        <th>#</th><th>Typ</th><th>Auszug</th><th>ID</th><th>Start</th><th>Ende</th>
+                        <th>#</th>
+                        <th>Typ</th>
+                        <th>Auszug</th>
+                        <th>ID</th>
+                        <th>Start</th>
+                        <th>Ende</th>
                     </tr>
                     <xsl:for-each select="notes/note[@start]">
                         <xsl:sort select="@start" data-type="number"/>
