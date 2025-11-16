@@ -96,45 +96,94 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- ===== Emoji-Mapping nur für env#... ===== -->
+    <!-- ===== Emoji-Mapping für env=... Codes (aus dem @if-String) ===== -->
     <xsl:template name="emoji-for-env">
-        <xsl:param name="t"/>
+        <!-- code ist z.B. 'com', 'edu', 'sci', 'prv', 'oss', 'gov', 'ngo' -->
+        <xsl:param name="code"/>
 
         <xsl:choose>
-            <!-- env -->
-            <xsl:when test="$t='env#com'">
+            <xsl:when test="$code='com'">
                 <!-- 🏢 Unternehmen -->
-                <xsl:text disable-output-escaping="yes">&#x26;#x1F3E2;</xsl:text>
                 &#x1F3E2;
             </xsl:when>
-            <xsl:when test="$t='env#edu'">
+            <xsl:when test="$code='edu'">
                 <!-- 🎓 Bildung -->
                 &#x1F393;
             </xsl:when>
-            <xsl:when test="$t='env#sci'">
-                <!-- 🔬 Forschung/Wissenschaft -->
+            <xsl:when test="$code='sci'">
+                <!-- 🔬 Wissenschaft -->
                 &#x1F52C;
             </xsl:when>
-            <xsl:when test="$t='env#prv'">
+            <xsl:when test="$code='prv'">
                 <!-- 🏠 Privat -->
                 &#x1F3E0;
             </xsl:when>
-            <xsl:when test="$t='env#oss'">
-                <!-- 🐧 OSS (Linux-Pinguin) -->
+            <xsl:when test="$code='oss'">
+                <!-- 🐧 OSS -->
                 &#x1F427;
             </xsl:when>
-            <xsl:when test="$t='env#gov'">
-                <!-- 🏛 Verwaltung/Behörde -->
+            <xsl:when test="$code='gov'">
+                <!-- 🏛 Verwaltung -->
                 &#x1F3DB;
             </xsl:when>
-            <xsl:when test="$t='env#ngo'">
-                <!-- 🤝 NGO / Gemeinnützig -->
+            <xsl:when test="$code='ngo'">
+                <!-- 🤝 NGO -->
                 &#x1F91D;
             </xsl:when>
-
-            <!-- Fallback: notfalls den Typcode anzeigen -->
             <xsl:otherwise>
-                <xsl:value-of select="$t"/>
+                <xsl:value-of select="$code"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- ===== IF-Renderer: ersetzt env=xxx durch Emoji, Rest bleibt Text ===== -->
+    <xsl:template name="render-if-env">
+        <xsl:param name="if"/>
+
+        <xsl:choose>
+            <!-- Nur wenn überhaupt ein env=... drin steckt -->
+            <xsl:when test="contains($if, 'env=')">
+                <!-- Teil nach 'env=' -->
+                <xsl:variable name="afterEnv" select="substring-after($if, 'env=')"/>
+                <!-- env-Code bis zum nächsten Komma oder bis zum Ende -->
+                <xsl:variable name="envCodeRaw">
+                    <xsl:choose>
+                        <xsl:when test="contains($afterEnv, ',')">
+                            <xsl:value-of select="substring-before($afterEnv, ',')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$afterEnv"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <!-- evtl. Whitespace weg -->
+                <xsl:variable name="envCode" select="normalize-space($envCodeRaw)"/>
+
+                <!-- Emoji für env -->
+                <xsl:call-template name="emoji-for-env">
+                    <xsl:with-param name="code" select="$envCode"/>
+                </xsl:call-template>
+
+                <!-- Rest der Bedingungen: alles nach dem ersten Komma (also ohne env=...) -->
+                <xsl:variable name="rest">
+                    <xsl:choose>
+                        <xsl:when test="contains($if, ',')">
+                            <xsl:value-of select="substring-after($if, ',')"/>
+                        </xsl:when>
+                        <xsl:otherwise/>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <!-- Leerzeichen + Rest zeigen, falls vorhanden -->
+                <xsl:if test="string($rest) != ''">
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="$rest"/>
+                </xsl:if>
+            </xsl:when>
+
+            <!-- Fallback: falls kein env=... vorhanden ist, einfach Text ausgeben -->
+            <xsl:otherwise>
+                <xsl:value-of select="$if"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -376,34 +425,13 @@
                     <xsl:otherwise>badge lnk</xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-
-            <xsl:choose>
-                <!-- Spezieller Fall: env#... → Emoji + Tooltip -->
-                <xsl:when test="starts-with(@type,'env#')">
-                    <xsl:variable name="tooltip">
-                        <xsl:call-template name="label-for-type">
-                            <xsl:with-param name="t" select="@type"/>
-                        </xsl:call-template>
-                    </xsl:variable>
-
-                    <span class="{$cls}" title="{$tooltip}">
-                        <xsl:call-template name="emoji-for-env">
-                            <xsl:with-param name="t" select="@type"/>
-                        </xsl:call-template>
-                    </span>
-                </xsl:when>
-
-                <!-- Alle anderen Badges wie bisher -->
-                <xsl:otherwise>
-                    <span class="{$cls}">
-                        <xsl:value-of select="substring-after(@type,'#')"/>
-                        <xsl:if test="@label">
-                            <xsl:text> – </xsl:text>
-                            <xsl:value-of select="@label"/>
-                        </xsl:if>
-                    </span>
-                </xsl:otherwise>
-            </xsl:choose>
+            <span class="{$cls}">
+                <xsl:value-of select="substring-after(@type,'#')"/>
+                <xsl:if test="@label">
+                    <xsl:text> – </xsl:text>
+                    <xsl:value-of select="@label"/>
+                </xsl:if>
+            </span>
         </xsl:for-each>
 
         <!-- Wichtige RUL-Flags als Pills (egal ob Bereich oder Singleton) -->
@@ -436,12 +464,10 @@
                         <th>Hauptgrund</th>
                     </tr>
                     <xsl:for-each select="$pols">
-                        <!-- Falls dein Row-Renderer die Klasse selbst bestimmt, einfach nur callen: -->
                         <xsl:call-template name="render-condition-row">
                             <xsl:with-param name="if" select="@if"/>
                             <xsl:with-param name="then" select="@then"/>
                             <xsl:with-param name="because" select="@because"/>
-                            <!-- Optional: nur wenn dein Row-Renderer eine Klasse erwartet -->
                             <xsl:with-param name="cls">
                                 <xsl:choose>
                                     <xsl:when
@@ -486,7 +512,10 @@
         <tr>
             <td>
                 <code>
-                    <xsl:value-of select="$if"/>
+                    <!-- HIER: env=xxx in @if wird durch Emoji ersetzt -->
+                    <xsl:call-template name="render-if-env">
+                        <xsl:with-param name="if" select="$if"/>
+                    </xsl:call-template>
                 </code>
             </td>
             <td>
