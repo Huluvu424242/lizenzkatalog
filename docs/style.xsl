@@ -113,30 +113,62 @@
         <xsl:variable name="value"  select="substring-after($t,'=')"/>
         <xsl:variable name="fullType" select="concat($prefix, '#', $value)"/>
 
-        <!-- passende Note suchen (Label enthält Emoji aus Python) -->
-        <xsl:variable name="n" select="/annotation/notes/note[@type=$fullType][1]"/>
+        <!-- Emoji abhängig von Typ/Ausprägung -->
+        <xsl:variable name="emoji">
+            <xsl:choose>
+                <!-- env -->
+                <xsl:when test="$fullType='env#com'">🏢</xsl:when>
+                <xsl:when test="$fullType='env#edu'">🎓</xsl:when>
+                <xsl:when test="$fullType='env#sci'">🔬</xsl:when>
+                <xsl:when test="$fullType='env#prv'">🏡</xsl:when>
+                <xsl:when test="$fullType='env#oss'">🐧</xsl:when>
+                <xsl:when test="$fullType='env#gov'">🏛️</xsl:when>
+                <xsl:when test="$fullType='env#ngo'">🤝</xsl:when>
 
-        <xsl:choose>
-            <xsl:when test="$n">
-                <xsl:value-of select="$fullType"/>
-                <xsl:text> </xsl:text>
-                <xsl:choose>
-                    <xsl:when test="$n/@label">
-                        <xsl:value-of select="$n/@label"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="label-for-type">
-                            <xsl:with-param name="t" select="$fullType"/>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <!-- Fallback, falls keine Note gefunden -->
-            <xsl:otherwise>
-                <xsl:value-of select="$t"/>
-            </xsl:otherwise>
-        </xsl:choose>
+                <!-- use -->
+                <xsl:when test="$fullType='use#lib'">📚</xsl:when>
+                <xsl:when test="$fullType='use#app'">💻</xsl:when>
+                <xsl:when test="$fullType='use#doc'">📄</xsl:when>
+                <xsl:when test="$fullType='use#cld'">☁️</xsl:when>
+
+                <!-- rul (Beispiele) -->
+                <xsl:when test="$fullType='rul#by'">📝</xsl:when>
+                <xsl:when test="$fullType='rul#nolia'">⚠️</xsl:when>
+                <xsl:when test="$fullType='rul#nc'">🚫</xsl:when>
+
+                <!-- Fallback: kein Emoji -->
+                <xsl:otherwise/>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- Klartext-Label holen:
+             1) bevorzugt aus Note/@label (inkl. Emoji aus Python, falls vorhanden)
+             2) sonst aus Label-Mapping -->
+        <xsl:variable name="labelText">
+            <xsl:variable name="n" select="/annotation/notes/note[@type=$fullType and @label][1]"/>
+            <xsl:choose>
+                <xsl:when test="$n">
+                    <xsl:value-of select="$n/@label"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="label-for-type">
+                        <xsl:with-param name="t" select="$fullType"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- Finale Ausgabe für den Tooltip:
+             env#com 🏢 Unternehmen -->
+        <xsl:value-of select="$fullType"/>
+        <xsl:text> </xsl:text>
+        <xsl:if test="string($emoji) != ''">
+            <xsl:value-of select="$emoji"/>
+            <xsl:text> </xsl:text>
+        </xsl:if>
+        <xsl:value-of select="$labelText"/>
     </xsl:template>
+
 
     <!-- Alle Tokens aus @if einsammeln und kommasepariert auflösen -->
     <xsl:template name="collect-tokens">
