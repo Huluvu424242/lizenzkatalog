@@ -10,6 +10,7 @@
 # - Keine re.VERBOSE-Flags in den Hauptmustern (robuster gegen Sonderfälle)
 # - pol-Singletons bekommen status (green|yellow|red), title (Tooltip) und label aus if
 # - pol#_section wird automatisch erzeugt, wenn es irgendeine pol-Note gibt
+# - NEU: Für pol-Notes wird label mit Emojis aus env=... aufgebaut (🏢, 🎓, ...)
 
 from __future__ import annotations
 
@@ -43,6 +44,17 @@ SINGLETON_TAGS: set[str] = {
     "rul#notice", "rul#lictxt", "rul#pat", "rul#patret", "rul#tivo",
 }
 
+# Emoji-Mapping für env-Codes (wird für pol@if → label verwendet)
+ENV_EMOJI: dict[str, str] = {
+    "com": "🏢",  # Unternehmen
+    "edu": "🎓",  # Bildung
+    "sci": "🔬",  # Wissenschaft
+    "prv": "🏠",  # Privat
+    "oss": "🐧",  # OSS / Pinguin
+    "gov": "🏛",  # Verwaltung / Behörde
+    "ngo": "🤝",  # NGO / Gemeinnützig
+}
+
 # -------------------- Regexe (ohne VERBOSE) ----------------------------------
 # "=" oder " <KV-Paare>" bis "]]"
 OPEN_OR_SINGLETON_REGEX = re.compile(
@@ -72,7 +84,7 @@ CLOSE_REGEX = re.compile(
 MASTER_REGEX = re.compile(
     OPEN_OR_SINGLETON_REGEX.pattern + r"|" + CLOSE_REGEX.pattern,
     re.DOTALL,
-)
+    )
 
 # Literal [[ bzw. ]] im Text (escaped)
 ESCAPED_OPEN_MARKER = r"\[\["
@@ -80,21 +92,28 @@ ESCAPED_CLOSE_MARKER = r"\]\]"
 
 
 # -------------------- String-Helfer ------------------------------------------
-def lastpos(content: str) -> int: return len(content) - 1
+def lastpos(content: str) -> int:
+    return len(content) - 1
 
 
-def nextpos(pos: int) -> int: return pos + 1
+def nextpos(pos: int) -> int:
+    return pos + 1
 
 
-def last_char(content: str) -> str: return content[-1]
+def last_char(content: str) -> str:
+    return content[-1]
 
 
-def first_char(content: str) -> str: return content[0]
+def first_char(content: str) -> str:
+    return content[0]
 
 
 def is_string_part(content: str) -> bool:
-    return (len(content) >= 2 and first_char(content) == DOPPELTES_HOCHKOMMA and last_char(
-        content) == DOPPELTES_HOCHKOMMA)
+    return (
+            len(content) >= 2
+            and first_char(content) == DOPPELTES_HOCHKOMMA
+            and last_char(content) == DOPPELTES_HOCHKOMMA
+    )
 
 
 def unquote_value(content: str | None) -> str:
@@ -128,7 +147,7 @@ def unquote_marker(text: str) -> str:
     return text.replace(ESCAPED_OPEN_MARKER, OPEN_MARKER).replace(ESCAPED_CLOSE_MARKER, CLOSE_MARKER)
 
 
-# -------------------- pol: KV-Parsing + Status -------------------------------
+# -------------------- pol: KV-Parsing + Status + IF→Emoji-Label -------------
 _KV_PAIR_RE = re.compile(
     r"\s*([A-Za-z_][A-Za-z0-9_\-]*)\s*=\s*(?:\"((?:\\.|[^\"\\])*)\"|([^\s;]+))\s*;?"
 )
@@ -164,6 +183,38 @@ def normalize_then_to_status(then_val: str | None) -> str | None:
     if t in {"conditional", "maybe", "depends", "it-depends", "yellow", "gelb"}:
         return "yellow"
     return "yellow"
+
+
+def make_policy_if_label(if_raw: str | None) -> str | None:
+    """
+    Baut aus einem if-String wie
+        "env=com,use=lib,dst=public,cpy=strong"
+    eine Anzeigeform wie
+        "🏢 use=lib,dst=public,cpy=strong"
+    Nur env=… wird in ein Emoji umgewandelt, der Rest bleibt Text.
+    """
+    if not if_raw:
+        return None
+
+    parts = [p.strip() for p in if_raw.split(",") if p.strip()]
+    env_emoji = ""
+    other_parts: list[str] = []
+
+    for p in parts:
+        if p.startswith("env="):
+            code = p.split("=", 1)[1].strip()
+            env_emoji = ENV_EMOJI.get(code, code)
+        else:
+            other_parts.append(p)
+
+    if env_emoji:
+        if other_parts:
+            return f"{env_emoji} " + ",".join(other_parts)
+        else:
+            return env_emoji
+
+    # Falls kein env=... drin ist, einfach Original zurückgeben
+    return if_raw
 
 
 # -------------------- Dateien kopieren ---------------------------------------
@@ -206,18 +257,12 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             is_singleton_by_vocab = (tag_key in SINGLETON_TAGS) or (cat in SINGLETON_CATEGORIES)
             is_singleton_with_label = (val is not None)
 
-            # vorher:
-            # if is_singleton_by_vocab or is_singleton_by_value:
-            #     auto_seq += 1
-            #     note: dict = {"id": f"a{auto_seq}", "type": tag_key, "value": val}
-
-            # nachher:
-            if is_singleton_by_vocab or is_singleton_with_label:  # Variablennamen gern anpassen
+            if is_singleton_by_vocab or is_singleton_with_label:
                 auto_seq += 1
                 note: dict = {"id": f"a{auto_seq}", "type": tag_key, "label": val}
 
-
                 if cat == "pol":
+                    # pol-Notes: VALUE wird als KV-Paare interpretiert
                     attrs = parse_kv_attributes(raw_val or "")
                     status = attrs.get("status") or normalize_then_to_status(attrs.get("then"))
                     if status:
@@ -225,8 +270,13 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
                     tooltip = attrs.get("because") or attrs.get("grund") or attrs.get("why")
                     if tooltip:
                         attrs["title"] = tooltip
-                    if "if" in attrs and "label" not in attrs:
-                        attrs["label"] = attrs["if"]
+
+                    # Emoji-Label aus if=... bauen
+                    if "if" in attrs:
+                        nice_label = make_policy_if_label(attrs["if"])
+                        if nice_label:
+                            attrs.setdefault("label", nice_label)
+
                     if attrs:
                         note["attrs"] = attrs
 
@@ -245,7 +295,8 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             stack = open_stacks.get(tag_key, [])
             if not stack:
                 raise ValueError(
-                    f"Ende für unbekannte/geschlossene Spanne {tag_key} bei Pos {treffer.start()} in {inp}")
+                    f"Ende für unbekannte/geschlossene Spanne {tag_key} bei Pos {treffer.start()} in {inp}"
+                )
             frame = stack.pop()
             frame["end"] = out_len
             notes.append(frame)
@@ -321,7 +372,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("id", sg.get("id")),
             xml_attr_pair("type", sg.get("type")),
         ]
-        # Früher: if ("attrs" not in sg or not sg["attrs"]) and sg.get("value") is not None:
+        # Früher: value; jetzt label als Standardattribut, falls keine attrs existieren
         if ("attrs" not in sg or not sg["attrs"]) and sg.get("label") is not None:
             attrs.append(xml_attr_pair("label", sg["label"]))
 
