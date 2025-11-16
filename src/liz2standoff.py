@@ -10,7 +10,7 @@
 # - Keine re.VERBOSE-Flags in den Hauptmustern (robuster gegen Sonderfälle)
 # - pol-Singletons bekommen status (green|yellow|red), title (Tooltip) und label aus if
 # - pol#_section wird automatisch erzeugt, wenn es irgendeine pol-Note gibt
-# - NEU: Für pol-Notes wird label mit Emojis aus env=... aufgebaut (🏢, 🎓, ...)
+# - NEU: label baut ein Emoji-„Dashboard“ aus env/use/dst/cpy
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ SINGLETON_TAGS: set[str] = {
     "rul#notice", "rul#lictxt", "rul#pat", "rul#patret", "rul#tivo",
 }
 
-# Emoji-Mapping für env-Codes (wird für pol@if → label verwendet)
+# Emoji-Mappings für env / use / dst / cpy
 ENV_EMOJI: dict[str, str] = {
     "com": "🏢",  # Unternehmen
     "edu": "🎓",  # Bildung
@@ -53,6 +53,29 @@ ENV_EMOJI: dict[str, str] = {
     "oss": "🐧",  # OSS / Pinguin
     "gov": "🏛",  # Verwaltung / Behörde
     "ngo": "🤝",  # NGO / Gemeinnützig
+}
+
+USE_EMOJI: dict[str, str] = {
+    "doc": "📄",  # Dokumentation
+    "lib": "📚",  # Bibliothek / Komponente
+    "app": "💻",  # Lokale Anwendung
+    "cld": "☁️",  # Cloud-Anwendung
+}
+
+DST_EMOJI: dict[str, str] = {
+    "none": "🚫",      # keine Weitergabe
+    "internal": "🏢",  # intern im Unternehmen
+    "partners": "🤝",  # Partner/Kunden
+    "public": "🌍",    # öffentlich
+    "srv": "🖥️",      # Server-seitig
+    "cli": "🧑‍💻",     # Client-Code
+}
+
+CPY_EMOJI: dict[str, str] = {
+    "none": "⚪",    # kein Copyleft
+    "weak": "🟢",    # weak copyleft
+    "strong": "🔴",  # strong copyleft
+    "network": "🌐", # network copyleft
 }
 
 # -------------------- Regexe (ohne VERBOSE) ----------------------------------
@@ -190,30 +213,78 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     Baut aus einem if-String wie
         "env=com,use=lib,dst=public,cpy=strong"
     eine Anzeigeform wie
-        "🏢 use=lib,dst=public,cpy=strong"
-    Nur env=… wird in ein Emoji umgewandelt, der Rest bleibt Text.
+        "🏢 📚 🌍 🔴"
+    Optional gefolgt von Textteilen, falls es weitere Bedingungen gibt.
     """
     if not if_raw:
         return None
 
     parts = [p.strip() for p in if_raw.split(",") if p.strip()]
-    env_emoji = ""
+    env_emojis: list[str] = []
+    use_emojis: list[str] = []
+    dst_emojis: list[str] = []
+    cpy_emojis: list[str] = []
     other_parts: list[str] = []
 
     for p in parts:
-        if p.startswith("env="):
-            code = p.split("=", 1)[1].strip()
-            env_emoji = ENV_EMOJI.get(code, code)
+        if "=" not in p:
+            other_parts.append(p)
+            continue
+
+        key, val = p.split("=", 1)
+        key = key.strip()
+        val = val.strip()
+
+        if key == "env":
+            em = ENV_EMOJI.get(val)
+            if em:
+                env_emojis.append(em)
+            else:
+                other_parts.append(p)
+        elif key == "use":
+            em = USE_EMOJI.get(val)
+            if em:
+                use_emojis.append(em)
+            else:
+                other_parts.append(p)
+        elif key == "dst":
+            em = DST_EMOJI.get(val)
+            if em:
+                dst_emojis.append(em)
+            else:
+                other_parts.append(p)
+        elif key == "cpy":
+            em = CPY_EMOJI.get(val)
+            if em:
+                cpy_emojis.append(em)
+            else:
+                other_parts.append(p)
         else:
             other_parts.append(p)
 
-    if env_emoji:
-        if other_parts:
-            return f"{env_emoji} " + ",".join(other_parts)
-        else:
-            return env_emoji
+    emoji_chunks: list[str] = []
+    emoji_chunks.extend(env_emojis)
+    emoji_chunks.extend(use_emojis)
+    emoji_chunks.extend(dst_emojis)
+    emoji_chunks.extend(cpy_emojis)
 
-    # Falls kein env=... drin ist, einfach Original zurückgeben
+    label_parts: list[str] = []
+
+    if emoji_chunks:
+        label_parts.append(" ".join(emoji_chunks))
+
+    if other_parts:
+        # Falls zusätzliche textuelle Bedingungen existieren, hinten anhängen
+        suffix = ",".join(other_parts)
+        if label_parts:
+            label_parts.append(" " + suffix)
+        else:
+            label_parts.append(suffix)
+
+    if label_parts:
+        return "".join(label_parts)
+
+    # Falls nichts erkannt wurde, gib den Rohwert zurück
     return if_raw
 
 
