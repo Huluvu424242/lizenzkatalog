@@ -230,7 +230,7 @@ Veraltet: Dieser Abschnitt wird zukünftig nur in den Bewertungen Anwendung find
 | `edu`     | &#x1F393;         | Bildung      | **Single** | `[[env#edu]]` |
 | `sci`     | &#x1F52C;         | Wissenschaft | **Single** | `[[env#sci]]` |
 | `prv`     | &#x1F6CB;&#xFE0F; | Privat       | **Single** | `[[env#prv]]` |
-| `oss`     | &#x1F9E9;         | OSS‑Umfeld   | **Single** | `[[env#oss]]` |
+| `oss`     | &#x1F680;         | OSS‑Umfeld   | **Single** | `[[env#oss]]` |
 | `gov`     | &#x1F3DB;&#xFE0F; | Behörden     | **Single** | `[[env#gov]]` |
 | `ngo`     | &#x1F499;         | Gemeinnützig | **Single** | `[[env#ngo]]` |
 
