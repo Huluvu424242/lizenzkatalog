@@ -307,7 +307,7 @@
                 <xsl:variable name="e" select="number($n/@end)"/>
 
                 <xsl:if test="$s &gt; $cursor">
-                    <xsl:value-of select="substring($txt, $cursor+1, $s-$cursor)"/>
+                    <xsl:value-of select="substring($txt, $cursor+1, $s - $cursor)"/>
                 </xsl:if>
 
                 <xsl:variable name="typeIndex"
@@ -327,7 +327,7 @@
                 </xsl:variable>
 
                 <span class="{$cls}">
-                    <xsl:value-of select="substring($txt, $s+1, $e-$s+1)"/>
+                    <xsl:value-of select="substring($txt, $s+1, $e - $s+1)"/>
                 </span>
 
                 <xsl:call-template name="render-from">
