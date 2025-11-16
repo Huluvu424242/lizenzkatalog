@@ -85,75 +85,6 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- ===== Emoji-Badge + Tooltip für env#… ===== -->
-    <xsl:template name="env-badge">
-        <!-- code ist z.B. 'com', 'edu', … -->
-        <xsl:param name="code"/>
-
-        <!-- Emoji je Kategorie -->
-        <xsl:variable name="emoji">
-            <xsl:choose>
-                <xsl:when test="$code='com'">🏢</xsl:when>
-                <xsl:when test="$code='edu'">🎓</xsl:when>
-                <xsl:when test="$code='sci'">🔬</xsl:when>
-                <xsl:when test="$code='prv'">🏡</xsl:when>
-                <xsl:when test="$code='oss'">🐧</xsl:when>
-                <xsl:when test="$code='gov'">🏛️</xsl:when>
-                <xsl:when test="$code='ngo'">🤝</xsl:when>
-                <xsl:otherwise>❓</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <!-- Beschreibungstext je Kategorie -->
-        <xsl:variable name="desc">
-            <xsl:choose>
-                <xsl:when test="$code='com'">Kommerzielle Nutzung in Unternehmen oder Organisationen</xsl:when>
-                <xsl:when test="$code='edu'">Nutzung in Bildungseinrichtungen</xsl:when>
-                <xsl:when test="$code='sci'">Wissenschaftliche Nutzung und Forschung</xsl:when>
-                <xsl:when test="$code='prv'">Private, nicht-kommerzielle Nutzung</xsl:when>
-                <xsl:when test="$code='oss'">Nutzung im Open-Source-Umfeld</xsl:when>
-                <xsl:when test="$code='gov'">Öffentliche Verwaltung und Behörden</xsl:when>
-                <xsl:when test="$code='ngo'">Gemeinnützige Organisationen und NGOs</xsl:when>
-                <xsl:otherwise>Unbekannte Umgebung</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <!-- Tooltip: "env=com Kommerzielle Nutzung …" -->
-        <span class="env">
-            <xsl:attribute name="title">
-                <xsl:text>env=</xsl:text>
-                <xsl:value-of select="$code"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="normalize-space($desc)"/>
-            </xsl:attribute>
-            <xsl:value-of select="$emoji"/>
-        </span>
-    </xsl:template>
-
-    <!-- Zelle für env#…-Einträge in "Allgemeine Infos" -->
-    <xsl:template name="render-env-cell">
-        <!-- Code aus dem Typ extrahieren: env#com → com -->
-        <xsl:variable name="code" select="substring-after(@type,'env#')"/>
-
-        <xsl:call-template name="env-badge">
-            <xsl:with-param name="code" select="$code"/>
-        </xsl:call-template>
-
-        <xsl:text> </xsl:text>
-
-        <!-- Text daneben: @label oder Fallback auf label-for-type -->
-        <xsl:choose>
-            <xsl:when test="@label">
-                <xsl:value-of select="@label"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:call-template name="label-for-type">
-                    <xsl:with-param name="t" select="@type"/>
-                </xsl:call-template>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
     <!-- Einstieg -->
     <xsl:template match="/">
         <xsl:apply-templates select="/annotation"/>
@@ -184,7 +115,6 @@
                     <xsl:value-of select="$licenseName"/>
                 </title>
 
-                <!-- Deine Styles, minimal erweitert um .env -->
                 <style>
                     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 1rem; }
                     table { border-collapse: collapse; width: 100%; margin-bottom: 1.5rem; }
@@ -206,7 +136,11 @@
                     .pill.green { background:#e9f9ee; border-color:#bfe8c8; }
                     .pill.yellow{ background:#fff9e5; border-color:#ffe2a8; }
                     .pill.red{ background:#ffeaea; border-color:#ffc2c2; }
-                    .env { font-size: 1.2em; cursor: help; vertical-align: middle; }
+
+                    /* neu: Label mit Tooltip */
+                    .tooltip-label {
+                    cursor: help;
+                    }
                 </style>
             </head>
 
@@ -236,15 +170,17 @@
                                 </xsl:call-template>
                             </td>
                             <td>
-                                <!-- hier: env#… mit Emoji+Tooltip, sonst @label -->
-                                <xsl:choose>
-                                    <xsl:when test="starts-with(@type,'env#')">
-                                        <xsl:call-template name="render-env-cell"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="@label"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
+                                <!-- HIER: Label (mit Emoji aus Python) + Tooltip: @type + @label -->
+                                <span class="tooltip-label">
+                                    <xsl:attribute name="title">
+                                        <xsl:value-of select="@type"/>
+                                        <xsl:if test="@label">
+                                            <xsl:text> </xsl:text>
+                                            <xsl:value-of select="@label"/>
+                                        </xsl:if>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="@label"/>
+                                </span>
                             </td>
                             <td><xsl:value-of select="@id"/></td>
                         </tr>
@@ -320,15 +256,32 @@
 
     <!-- ===== Policy-Zeile ===== -->
     <xsl:template name="render-condition-row">
-
         <tr>
-            <!-- Nur noch @label oder Fallback @if -->
-            <td><code>
-                <xsl:choose>
-                    <xsl:when test="@label"><xsl:value-of select="@label"/></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="@if"/></xsl:otherwise>
-                </xsl:choose>
-            </code></td>
+            <!-- Rahmenbedingungen mit Tooltip:
+                 title = @if + ' ' + (@label, falls vorhanden) -->
+            <td>
+                <span class="tooltip-label">
+                    <xsl:attribute name="title">
+                        <xsl:if test="@if">
+                            <xsl:value-of select="@if"/>
+                        </xsl:if>
+                        <xsl:if test="@label">
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="@label"/>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <code>
+                        <xsl:choose>
+                            <xsl:when test="@label">
+                                <xsl:value-of select="@label"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="@if"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </code>
+                </span>
+            </td>
 
             <td>
                 <span class="pill">
@@ -368,7 +321,9 @@
                     <xsl:with-param name="cursor" select="0"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:otherwise><xsl:value-of select="$txt"/></xsl:otherwise>
+            <xsl:otherwise>
+                <xsl:value-of select="$txt"/>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
