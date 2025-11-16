@@ -34,8 +34,8 @@ Haftungsausschluss.
     <note id="a8" type="rul#pat"/>
     <note id="a9" type="rul#patret"/>
     <note id="a10" type="rul#tivo"/>
-    <note id="a14" type="pol#if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="🏢 use=lib,dst=internal+srv,cpy=strong"/>
-    <note id="a15" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 use=lib,dst=public,cpy=strong"/>
+    <note id="a14" type="pol#if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="🏢 📚 🔴 dst=internal+srv"/>
+    <note id="a15" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴"/>
     <note id="a16" type="pol#_section" present="true"/>
   </notes>
 </annotation>
