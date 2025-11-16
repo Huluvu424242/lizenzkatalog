@@ -503,7 +503,7 @@
 
                 <!-- Text davor -->
                 <xsl:if test="$s &gt; $cursor">
-                    <xsl:value-of select="substring($txt,$cursor+1,$s-$cursor)"/>
+                    <xsl:value-of select="substring($txt,$cursor+1,$s - $cursor)"/>
                 </xsl:if>
 
                 <!-- Index der Farbe -->
@@ -525,7 +525,7 @@
 
                 <!-- Markierter Span -->
                 <span class="{$cls}">
-                    <xsl:value-of select="substring($txt, $s+1, $e-$s+1)"/>
+                    <xsl:value-of select="substring($txt, $s+1, $e - $s+1)"/>
                 </span>
 
                 <!-- Weiter -->
