@@ -57,7 +57,7 @@
             <xsl:when test="$t='rul#com'">Kommerziell</xsl:when>
             <xsl:when test="$t='rul#edu'">Bildung/Forschung</xsl:when>
             <xsl:when test="$t='rul#gov'">Behörden/Verwaltung</xsl:when>
-            <xsl:when test="$t='rul#notice'">Hinweis beilegen (Copyright‑/Hinweispflicht)</xsl:when>
+            <xsl:when test="$t='rul#notice'">Hinweis beilegen (Copyright-/Hinweispflicht)</xsl:when>
             <xsl:when test="$t='rul#lictxt'">Lizenztext beifügen</xsl:when>
             <xsl:when test="$t='rul#changes'">Änderungen kennzeichnen</xsl:when>
             <xsl:when test="$t='rul#src'">Quellcode bereitstellen</xsl:when>
@@ -90,6 +90,48 @@
             <xsl:when test="$t='env#gov'">Umfeld: Verwaltung</xsl:when>
             <xsl:when test="$t='env#ngo'">Umfeld: NGO</xsl:when>
 
+            <xsl:otherwise>
+                <xsl:value-of select="$t"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- ===== Emoji-Mapping nur für env#... ===== -->
+    <xsl:template name="emoji-for-env">
+        <xsl:param name="t"/>
+
+        <xsl:choose>
+            <!-- env -->
+            <xsl:when test="$t='env#com'">
+                <!-- 🏢 Unternehmen -->
+                &#x1F3E2;
+            </xsl:when>
+            <xsl:when test="$t='env#edu'">
+                <!-- 🎓 Bildung -->
+                &#x1F393;
+            </xsl:when>
+            <xsl:when test="$t='env#sci'">
+                <!-- 🔬 Forschung/Wissenschaft -->
+                &#x1F52C;
+            </xsl:when>
+            <xsl:when test="$t='env#prv'">
+                <!-- 🏠 Privat -->
+                &#x1F3E0;
+            </xsl:when>
+            <xsl:when test="$t='env#oss'">
+                <!-- 🐧 OSS (Linux-Pinguin) -->
+                &#x1F427;
+            </xsl:when>
+            <xsl:when test="$t='env#gov'">
+                <!-- 🏛 Verwaltung/Behörde -->
+                &#x1F3DB;
+            </xsl:when>
+            <xsl:when test="$t='env#ngo'">
+                <!-- 🤝 NGO / Gemeinnützig -->
+                &#x1F91D;
+            </xsl:when>
+
+            <!-- Fallback: notfalls den Typcode anzeigen -->
             <xsl:otherwise>
                 <xsl:value-of select="$t"/>
             </xsl:otherwise>
@@ -201,7 +243,7 @@
                         <th>ID</th>
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) and not(@end) and not(starts-with(@type,'pol#'))]">
-                    <xsl:sort select="@type"/>
+                        <xsl:sort select="@type"/>
                         <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
                         <tr>
                             <td>
@@ -333,13 +375,34 @@
                     <xsl:otherwise>badge lnk</xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <span class="{$cls}">
-                <xsl:value-of select="substring-after(@type,'#')"/>
-                <xsl:if test="@label">
-                    <xsl:text> – </xsl:text>
-                    <xsl:value-of select="@label"/>
-                </xsl:if>
-            </span>
+
+            <xsl:choose>
+                <!-- Spezieller Fall: env#... → Emoji + Tooltip -->
+                <xsl:when test="starts-with(@type,'env#')">
+                    <xsl:variable name="tooltip">
+                        <xsl:call-template name="label-for-type">
+                            <xsl:with-param name="t" select="@type"/>
+                        </xsl:call-template>
+                    </xsl:variable>
+
+                    <span class="{$cls}" title="{$tooltip}">
+                        <xsl:call-template name="emoji-for-env">
+                            <xsl:with-param name="t" select="@type"/>
+                        </xsl:call-template>
+                    </span>
+                </xsl:when>
+
+                <!-- Alle anderen Badges wie bisher -->
+                <xsl:otherwise>
+                    <span class="{$cls}">
+                        <xsl:value-of select="substring-after(@type,'#')"/>
+                        <xsl:if test="@label">
+                            <xsl:text> – </xsl:text>
+                            <xsl:value-of select="@label"/>
+                        </xsl:if>
+                    </span>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
 
         <!-- Wichtige RUL-Flags als Pills (egal ob Bereich oder Singleton) -->
@@ -367,7 +430,7 @@
             <xsl:when test="count($pols) &gt; 0">
                 <table>
                     <tr>
-                        <th>Gegebenheiten</th>
+                        <th>Rahmenbedingungen</th>
                         <th>Verwendbarkeit</th>
                         <th>Hauptgrund</th>
                     </tr>
