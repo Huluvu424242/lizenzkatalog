@@ -3,14 +3,19 @@
 
 # liz2standoff.py — Konvertiert .liz (Plaintext mit Markern) in
 # 1) reinen Text (Marker entfernt) und
-# 2) ein Standoff-XML mit <note type="cat#name" id="…" [start="…"] [end="…"] [value="…"] …/>
+# 2) ein Standoff-XML mit <note type="cat#name" id="…" [start="…"] [end="…"] …/>
 #
 # Variante B (robust):
 # - Unterstützt [[cat#name=VALUE]] und [[cat#name key="v" key2=...]]
 # - Keine re.VERBOSE-Flags in den Hauptmustern (robuster gegen Sonderfälle)
 # - pol-Singletons bekommen status (green|yellow|red), title (Tooltip) und label aus if
 # - pol#_section wird automatisch erzeugt, wenn es irgendeine pol-Note gibt
-# - NEU: label baut ein Emoji-„Dashboard“ aus env/use/dst/cpy
+# - label baut ein Emoji-„Dashboard“ aus env/use/dst/cpy
+# - NEU:
+#   * Jede Note bekommt category (lic/use/env/...) und name (z.B. spdx, com, lib)
+#   * env/use/dst/cpy-Singletons erhalten emoji und tooltip
+#   * pol-Notes bekommen if_tooltip für die Rahmenbedingungen
+#   * Spans mit start/end erhalten colorIndex (1–8) für farbige Hervorhebungen
 
 from __future__ import annotations
 
@@ -72,10 +77,46 @@ DST_EMOJI: dict[str, str] = {
 }
 
 CPY_EMOJI: dict[str, str] = {
-    "none": "⚪",    # kein Copyleft
-    "weak": "🟢",    # weak copyleft
-    "strong": "🔴",  # strong copyleft
-    "network": "🌐", # network copyleft
+    "none": "⚪",     # kein Copyleft
+    "weak": "🟢",     # weak copyleft
+    "strong": "🔴",   # strong copyleft
+    "network": "🌐",  # network copyleft
+}
+
+# Klartext-Labels für env/use/dst/cpy etc. (entspricht grob label-for-type im XSLT)
+TYPE_LABELS: dict[str, str] = {
+    # env
+    "env#com": "Unternehmen",
+    "env#edu": "Bildung",
+    "env#sci": "Wissenschaft",
+    "env#prv": "Privat",
+    "env#oss": "OSS-Umfeld",
+    "env#gov": "Verwaltung",
+    "env#ngo": "NGO",
+
+    # use
+    "use#doc": "Dokumentation",
+    "use#lib": "Bibliothek/Komponente",
+    "use#app": "Lokale Anwendung",
+    "use#cld": "Cloud-Anwendung",
+
+    # dst
+    "dst#internal": "Interne Weitergabe",
+    "dst#partners": "Partner/Kunden",
+    "dst#public": "Öffentlich",
+
+    # cpy
+    "cpy#none": "Kein Copyleft",
+    "cpy#weak": "Weak Copyleft",
+    "cpy#strong": "Strong Copyleft",
+    "cpy#network": "Network Copyleft",
+
+    # lic (Beispiele)
+    "lic#spdx": "SPDX-ID",
+    "lic#fsf": "FSF-Freigabe",
+    "lic#osi": "OSI-Freigabe",
+    "lic#c": "Alle Rechte vorbehalten",
+    "lic#c0": "Nutzung uneingeschränkt",
 }
 
 # -------------------- Regexe (ohne VERBOSE) ----------------------------------
@@ -288,6 +329,110 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     return if_raw
 
 
+# -------------------- Tooltip-Beschreibung für if=... ------------------------
+def describe_token(prefix: str, value: str) -> str:
+    """
+    prefix=value (z.B. env=com) → "env#com 🏢 Unternehmen"
+    """
+    full = f"{prefix}#{value}"
+
+    emoji: str | None = None
+    if prefix == "env":
+        emoji = ENV_EMOJI.get(value)
+    elif prefix == "use":
+        emoji = USE_EMOJI.get(value)
+    elif prefix == "dst":
+        emoji = DST_EMOJI.get(value)
+    elif prefix == "cpy":
+        emoji = CPY_EMOJI.get(value)
+
+    label = TYPE_LABELS.get(full, full)
+
+    if emoji:
+        return f"{full} {emoji} {label}"
+    return f"{full} {label}"
+
+
+def make_policy_if_tooltip(if_raw: str | None) -> str | None:
+    """
+    Baut aus if-Randbedingungen einen ausführlichen Tooltiptext, z.B.:
+        "env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"
+    """
+    if not if_raw:
+        return None
+
+    parts = [p.strip() for p in if_raw.split(",") if p.strip()]
+    segments: list[str] = []
+
+    for p in parts:
+        if "=" not in p:
+            # z.B. zusätzliche freie Bedingungen
+            segments.append(p)
+            continue
+
+        key, val = p.split("=", 1)
+        key = key.strip()
+        val = val.strip()
+
+        if key in {"env", "use", "dst", "cpy"}:
+            segments.append(describe_token(key, val))
+        else:
+            segments.append(p)
+
+    return ", ".join(segments) if segments else None
+
+
+# -------------------- Hilfsfunktionen für Notes/Metadaten --------------------
+def enrich_note_metadata(note: dict, cat: str, name: str) -> None:
+    """
+    Fügt generische Metadaten in note['attrs'] ein:
+      - category: lic/use/env/...
+      - name: z.B. spdx, com, lib
+      - emoji: für env/use/dst/cpy (falls vorhanden)
+      - tooltip: z.B. "env#com 🏢 Unternehmen" oder speziell
+                 für lic#spdx: "lic#spdx GPL-3.0"
+    """
+    attrs = note.setdefault("attrs", {})
+    attrs["category"] = cat
+    attrs["name"] = name
+
+    # Emoji für env/use/dst/cpy
+    emoji: str | None = None
+    if cat == "env":
+        emoji = ENV_EMOJI.get(name)
+    elif cat == "use":
+        emoji = USE_EMOJI.get(name)
+    elif cat == "dst":
+        emoji = DST_EMOJI.get(name)
+    elif cat == "cpy":
+        emoji = CPY_EMOJI.get(name)
+
+    if emoji:
+        attrs["emoji"] = emoji
+
+    full = f"{cat}#{name}"
+    type_label = TYPE_LABELS.get(full)
+    label_value = note.get("label")
+
+    tooltip: str | None = None
+
+    # 🔸 Spezialfall: lic#spdx → lic#spdx <WERT> (z.B. GPL-3.0)
+    if cat == "lic" and name == "spdx":
+        if label_value:
+            tooltip = f"{full} {label_value}"
+        else:
+            tooltip = full
+    # 🔸 Standardfall: env/use/dst/cpy/… → full + optional Emoji + Klartext
+    elif type_label:
+        if emoji:
+            tooltip = f"{full} {emoji} {type_label}"
+        else:
+            tooltip = f"{full} {type_label}"
+
+    if tooltip:
+        attrs.setdefault("tooltip", tooltip)
+
+
 # -------------------- Dateien kopieren ---------------------------------------
 def copy_text_file(src_dir: str, dst_dir: str) -> None:
     src_path = Path(src_dir)
@@ -331,6 +476,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             if is_singleton_by_vocab or is_singleton_with_label:
                 auto_seq += 1
                 note: dict = {"id": f"a{auto_seq}", "type": tag_key, "label": val}
+                enrich_note_metadata(note, cat, name)
 
                 if cat == "pol":
                     # pol-Notes: VALUE wird als KV-Paare interpretiert
@@ -342,19 +488,29 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
                     if tooltip:
                         attrs["title"] = tooltip
 
-                    # Emoji-Label aus if=... bauen
                     if "if" in attrs:
+                        # Kompakt-Label (Emoji-Dashboard)
                         nice_label = make_policy_if_label(attrs["if"])
                         if nice_label:
                             attrs.setdefault("label", nice_label)
+                        # Ausführlicher Tooltip (Mix aus env/use/dst/cpy + Beschreibung)
+                        tooltip_if = make_policy_if_tooltip(attrs["if"])
+                        if tooltip_if:
+                            attrs["if_tooltip"] = tooltip_if
 
                     if attrs:
-                        note["attrs"] = attrs
+                        note_attrs = note.setdefault("attrs", {})
+                        note_attrs.update(attrs)
 
                 notes.append(note)
             else:
                 auto_seq += 1
-                frame = {"id": f"a{auto_seq}", "type": tag_key, "start": out_len}
+                frame: dict = {
+                    "id": f"a{auto_seq}",
+                    "type": tag_key,
+                    "start": out_len,
+                }
+                enrich_note_metadata(frame, cat, name)
                 open_stacks.setdefault(tag_key, []).append(frame)
         else:
             mo_close = CLOSE_REGEX.match(treffer.group(0))
@@ -395,6 +551,28 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
     Path(out_txt).write_text(plain_text, encoding="utf-8")
     print(f" --> {out_txt}")
 
+    # -------------------- Zusatz: colorIndex für Spans berechnen -------------
+    span_notes = [n for n in notes if "start" in n and "end" in n]
+    unique_types: list[str] = []
+    for n in span_notes:
+        t = n.get("type")
+        if t is not None and t not in unique_types:
+            unique_types.append(t)
+    unique_types.sort()
+    type_index_map = {t: i + 1 for i, t in enumerate(unique_types)}
+
+    for n in span_notes:
+        t = n.get("type")
+        if not t:
+            continue
+        idx = type_index_map.get(t, 1)
+        color_index = idx % 8
+        if color_index == 0:
+            color_index = 8
+        attrs = n.setdefault("attrs", {})
+        attrs.setdefault("colorIndex", str(color_index))
+
+    # -------------------- XML schreiben --------------------------------------
     def xml_attr_pair(k: str, v: str | None) -> str | None:
         if v is None:
             return None
@@ -404,7 +582,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
         '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
         '<!DOCTYPE annotation SYSTEM "annotation.dtd">',
         '<?xml-stylesheet type="text/xsl" href="style.xsl"?>',
-        '<?thomas-schubert document-status="draft" version="2.0"?>',
+        '<?thomas-schubert document-status="draft" version="2.2"?>',
         '<annotation>',
         '  <text xml:space="preserve">',
         html.escape(plain_text),
@@ -429,7 +607,6 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("start", sp.get("start")),
             xml_attr_pair("end", sp.get("end")),
         ]
-        # value nur ausgeben, wenn KEINE Zusatzattribute existieren
         if ("attrs" not in sp or not sp["attrs"]) and sp.get("value") is not None:
             attrs.append(xml_attr_pair("value", sp["value"]))
         for k, v in (sp.get("attrs") or {}).items():
@@ -437,17 +614,22 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
-    # Singletons ausgeben
+        # Singletons ausgeben
     for sg in singletons:
         attrs = [
             xml_attr_pair("id", sg.get("id")),
             xml_attr_pair("type", sg.get("type")),
         ]
-        # Früher: value; jetzt label als Standardattribut, falls keine attrs existieren
-        if ("attrs" not in sg or not sg["attrs"]) and sg.get("label") is not None:
+
+        attrs_dict = sg.get("attrs") or {}
+
+        # label IMMER ausgeben, solange:
+        # - es vorhanden ist und
+        # - nicht schon in attrs_dict hinterlegt wurde (z.B. bei pol-Notes)
+        if sg.get("label") is not None and "label" not in attrs_dict:
             attrs.append(xml_attr_pair("label", sg["label"]))
 
-        for k, v in (sg.get("attrs") or {}).items():
+        for k, v in attrs_dict.items():
             attrs.append(xml_attr_pair(k, v))
 
         attrs = [a for a in attrs if a is not None]
