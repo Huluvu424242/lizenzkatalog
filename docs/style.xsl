@@ -277,6 +277,7 @@
                     .badge.cpy { background:#eef7ff; border-color:#cfe6ff; }
                     .badge.dst { background:#f1fff0; border-color:#d6f5d3; }
                     .badge.lnk { background:#fff8e6; border-color:#ffe7ad; }
+                    .badge.lic { background:#fff0f0; border-color:#ffd6d6; }
                 </style>
 
             </head>
@@ -440,48 +441,113 @@
             </body>
         </html>
     </xsl:template>
-
     <!-- ========================================================= -->
-    <!-- Badges (Tagliste oben)                                   -->
+    <!-- Badges (Tagliste oben) – nur Singletons                   -->
     <!-- ========================================================= -->
     <xsl:template name="render-badges">
-        <!-- Kontext-Badges für env/use/cpy/dst/lnk -->
+
+        <!-- 1) Lizenz-Kerndaten: SPDX, FSF, OSI -->
         <xsl:for-each select="/annotation/notes/note[
-             starts-with(@type,'env#') or starts-with(@type,'use#')
-          or starts-with(@type,'cpy#') or starts-with(@type,'dst#')
-          or starts-with(@type,'lnk#')
-        ]">
-            <xsl:variable name="cls">
-                <xsl:choose>
-                    <xsl:when test="starts-with(@type,'env#')">badge env</xsl:when>
-                    <xsl:when test="starts-with(@type,'use#')">badge use</xsl:when>
-                    <xsl:when test="starts-with(@type,'cpy#')">badge cpy</xsl:when>
-                    <xsl:when test="starts-with(@type,'dst#')">badge dst</xsl:when>
-                    <xsl:otherwise>badge lnk</xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-            <span class="{$cls}">
-                <xsl:value-of select="substring-after(@type,'#')"/>
+          not(@start) and not(@end)
+          and (@type='lic#spdx' or @type='lic#fsf' or @type='lic#osi')
+    ]">
+            <xsl:sort select="@type"/>
+            <span class="badge lic">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
                 <xsl:if test="@label">
-                    <xsl:text> – </xsl:text>
+                    <xsl:text>: </xsl:text>
                     <xsl:value-of select="@label"/>
                 </xsl:if>
             </span>
         </xsl:for-each>
 
-        <!-- Wichtige RUL-Flags als Pills (einmalig) -->
+        <!-- 2) Copyleft-Ausprägung -->
         <xsl:for-each select="/annotation/notes/note[
-              @type='rul#notice' or @type='rul#lictxt' or @type='rul#src'
-           or @type='rul#changes' or @type='rul#pat' or @type='rul#patret'
-           or @type='rul#tivo'
-        ][generate-id() = generate-id(key('kType', @type)[1]) or not(@start)]">
+          not(@start) and not(@end)
+          and starts-with(@type,'cpy#')
+    ]">
+            <xsl:sort select="@type"/>
+            <span class="badge cpy">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
+            </span>
+        </xsl:for-each>
+
+        <!-- 3) Nutzungsarten (lib/app/doc/cld) -->
+        <xsl:for-each select="/annotation/notes/note[
+          not(@start) and not(@end)
+          and starts-with(@type,'use#')
+    ]">
+            <xsl:sort select="@type"/>
+            <span class="badge use">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
+            </span>
+        </xsl:for-each>
+
+        <!-- 4) Einsatzumgebungen (env#...) -->
+        <xsl:for-each select="/annotation/notes/note[
+          not(@start) and not(@end)
+          and starts-with(@type,'env#')
+    ]">
+            <xsl:sort select="@type"/>
+            <span class="badge env">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
+            </span>
+        </xsl:for-each>
+
+        <!-- 5) Limitierungen (lim#...) -->
+        <xsl:for-each select="/annotation/notes/note[
+          not(@start) and not(@end)
+          and starts-with(@type,'lim#')
+    ]">
+            <xsl:sort select="@type"/>
+            <span class="badge dst">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
+                <xsl:if test="@label">
+                    <xsl:text>: </xsl:text>
+                    <xsl:value-of select="@label"/>
+                </xsl:if>
+            </span>
+        </xsl:for-each>
+
+        <!-- 6) Kommerzielle Einschränkungen/Ausnahmen (optional) -->
+        <xsl:for-each select="/annotation/notes/note[
+          not(@start) and not(@end)
+          and (@type='rul#com' or @type='rul#nc')
+    ]">
+            <xsl:sort select="@type"/>
             <span class="pill">
                 <xsl:call-template name="label-for-type">
                     <xsl:with-param name="t" select="@type"/>
                 </xsl:call-template>
             </span>
         </xsl:for-each>
+
+        <!-- 7) Wichtige RUL-Flags als Pills (wie bisher),
+               aber BEACHTE: weiterhin unabhängig von pol@if -->
+        <xsl:for-each select="/annotation/notes/note[
+          @type='rul#notice' or @type='rul#lictxt' or @type='rul#src'
+       or @type='rul#changes' or @type='rul#pat' or @type='rul#patret'
+       or @type='rul#tivo'
+    ][generate-id() = generate-id(key('kType', @type)[1]) or not(@start)]">
+            <span class="pill">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
+            </span>
+        </xsl:for-each>
+
     </xsl:template>
+
 
     <!-- ========================================================= -->
     <!-- Policies-Renderer                                         -->
