@@ -1,0 +1,14 @@
+Testlizenz - GNU General Public License, Version 3 (GPL-3.0)
+  
+
+
+Pflichten (auszugsweise):
+    
+vollständiger, korrespondierender Quellcode,
+Änderungen kennzeichnen,
+Haftungsausschluss.
+
+-- Policies --------------------------------------------------------------------
+
+
+

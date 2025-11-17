@@ -1,0 +1,14 @@
+[[lic#name]]Testlizenz - GNU General Public License, Version 3 (GPL-3.0)[[/lic#name]]
+[[lic#spdx=GPL-3.0-only]] [[lic#fsf]] [[lic#osi]]
+[[cpy#strong]]
+
+Pflichten (auszugsweise):
+[[rul#notice]] [[rul#lictxt]] [[rul#pat]] [[rul#patret]] [[rul#tivo]]
+[[rul#src]]vollständiger, korrespondierender Quellcode[[/rul#src]],
+[[rul#changes]]Änderungen kennzeichnen[[/rul#changes]],
+[[rul#nolia]]Haftungsausschluss[[/rul#nolia]].
+
+-- Policies --------------------------------------------------------------------
+
+[[pol#if if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst."]]
+[[pol#if if="env=com,use=lib,dst=public,cpy=strong"       then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]

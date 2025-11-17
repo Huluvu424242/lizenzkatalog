@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
+<annotation>
+  <text xml:space="preserve">
+Testlizenz - GNU General Public License, Version 3 (GPL-3.0)
+  
+
+
+Pflichten (auszugsweise):
+    
+vollständiger, korrespondierender Quellcode,
+Änderungen kennzeichnen,
+Haftungsausschluss.
+
+-- Policies --------------------------------------------------------------------
+
+
+
+
+  </text>
+  <notes>
+    <note id="a1" type="lic#name" start="0" end="60"/>
+    <note id="a11" type="rul#src" start="97" end="140"/>
+    <note id="a12" type="rul#changes" start="142" end="165"/>
+    <note id="a13" type="rul#nolia" start="167" end="185"/>
+    <note id="a2" type="lic#spdx" label="GPL-3.0-only"/>
+    <note id="a3" type="lic#fsf"/>
+    <note id="a4" type="lic#osi"/>
+    <note id="a5" type="cpy#strong"/>
+    <note id="a6" type="rul#notice"/>
+    <note id="a7" type="rul#lictxt"/>
+    <note id="a8" type="rul#pat"/>
+    <note id="a9" type="rul#patret"/>
+    <note id="a10" type="rul#tivo"/>
+    <note id="a14" type="pol#if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="🏢 📚 🔴 dst=internal+srv"/>
+    <note id="a15" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴"/>
+    <note id="a16" type="pol#_section" present="true"/>
+  </notes>
+</annotation>

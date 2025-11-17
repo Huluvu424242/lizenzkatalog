@@ -1,0 +1,8 @@
+
+Quelle Google KI: https://share.google/aimode/qlkI7cCoMJB4lwhUP
+
+Unter Anti-Tivoization versteht man eine Klausel in der GNU General Public License Version 3 (GPLv3), die verhindern soll, dass Hardware-Hersteller die von ihnen vertriebenen Geräte so konzipieren und sperren, dass Benutzer keine modifizierten Versionen der auf dem Gerät installierten Open-Source-Software ausführen können.
+Der Begriff leitet sich von der Firma TiVo ab, die genau diese Praxis bei ihren digitalen Videorekordern anwandte: Sie verwendeten Software unter der GPLv2-Lizenz, lieferten den Quelltext gesetzeskonform aus, verhinderten aber durch kryptografische Signaturen (DRM) und Hardware-Sperren, dass Benutzer ihre eigenen, modifizierten Versionen der Software auf dem Gerät installieren konnten.
+Die Anti-Tivoization-Klausel in der GPLv3 (auch bekannt als "Installationsinformations"-Bestimmung) verpflichtet Hersteller von sogenannten "User Products" (Verbraucherprodukten), dem Käufer des Geräts die notwendigen Informationen, Methoden oder Daten (wie z. B. kryptografische Schlüssel) zur Verfügung zu stellen, die dieser benötigt, um eine eigene, modifizierte Version der Software auf dem Gerät zu installieren und auszuführen.
+Ziel ist es, die in der Free-Software-Definition verankerte Freiheit der Benutzer zu gewährleisten, Software zu modifizieren und die Änderungen tatsächlich auf dem Gerät nutzen zu können, anstatt nur den Quelltext zu erhalten, der in der Praxis nutzlos ist, wenn er nicht installiert werden kann.
+Hersteller können die Garantie des Geräts bei der Installation modifizierter Software zwar ausschließen, müssen dem Benutzer aber die technische Möglichkeit zur Installation bieten, wenn sie GPLv3-lizenzierte Software verwenden möchten. 
