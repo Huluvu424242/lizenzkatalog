@@ -3,14 +3,19 @@
 
 # liz2standoff.py — Konvertiert .liz (Plaintext mit Markern) in
 # 1) reinen Text (Marker entfernt) und
-# 2) ein Standoff-XML mit <note type="cat#name" id="…" [start="…"] [end="…"] [value="…"] …/>
+# 2) ein Standoff-XML mit <note type="cat#name" id="…" [start="…"] [end="…"] …/>
 #
 # Variante B (robust):
 # - Unterstützt [[cat#name=VALUE]] und [[cat#name key="v" key2=...]]
 # - Keine re.VERBOSE-Flags in den Hauptmustern (robuster gegen Sonderfälle)
 # - pol-Singletons bekommen status (green|yellow|red), title (Tooltip) und label aus if
 # - pol#_section wird automatisch erzeugt, wenn es irgendeine pol-Note gibt
-# - NEU: label baut ein Emoji-„Dashboard“ aus env/use/dst/cpy
+# - label baut ein Emoji-„Dashboard“ aus env/use/dst/cpy
+# - NEU: Python liefert Zusatz-Metadaten für XSLT:
+#   * category (lic/use/env/...)
+#   * name (z.B. spdx, com, lib)
+#   * emoji für env/use/dst/cpy-Singletons
+#   * colorIndex (1–8) für Spans mit start/end
 
 from __future__ import annotations
 
@@ -72,10 +77,10 @@ DST_EMOJI: dict[str, str] = {
 }
 
 CPY_EMOJI: dict[str, str] = {
-    "none": "⚪",    # kein Copyleft
-    "weak": "🟢",    # weak copyleft
-    "strong": "🔴",  # strong copyleft
-    "network": "🌐", # network copyleft
+    "none": "⚪",     # kein Copyleft
+    "weak": "🟢",     # weak copyleft
+    "strong": "🔴",   # strong copyleft
+    "network": "🌐",  # network copyleft
 }
 
 # -------------------- Regexe (ohne VERBOSE) ----------------------------------
@@ -288,6 +293,32 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     return if_raw
 
 
+# -------------------- Hilfsfunktionen für Notes/Metadaten --------------------
+def enrich_note_metadata(note: dict, cat: str, name: str) -> None:
+    """
+    Fügt generische Metadaten in note['attrs'] ein:
+      - category: lic/use/env/...
+      - name: z.B. spdx, com, lib
+      - emoji: für env/use/dst/cpy (falls vorhanden)
+    """
+    attrs = note.setdefault("attrs", {})
+    attrs["category"] = cat
+    attrs["name"] = name
+
+    emoji: str | None = None
+    if cat == "env":
+        emoji = ENV_EMOJI.get(name)
+    elif cat == "use":
+        emoji = USE_EMOJI.get(name)
+    elif cat == "dst":
+        emoji = DST_EMOJI.get(name)
+    elif cat == "cpy":
+        emoji = CPY_EMOJI.get(name)
+
+    if emoji:
+        attrs["emoji"] = emoji
+
+
 # -------------------- Dateien kopieren ---------------------------------------
 def copy_text_file(src_dir: str, dst_dir: str) -> None:
     src_path = Path(src_dir)
@@ -331,6 +362,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             if is_singleton_by_vocab or is_singleton_with_label:
                 auto_seq += 1
                 note: dict = {"id": f"a{auto_seq}", "type": tag_key, "label": val}
+                enrich_note_metadata(note, cat, name)
 
                 if cat == "pol":
                     # pol-Notes: VALUE wird als KV-Paare interpretiert
@@ -349,12 +381,19 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
                             attrs.setdefault("label", nice_label)
 
                     if attrs:
-                        note["attrs"] = attrs
+                        # in bestehende attrs-Struktur einblenden
+                        note_attrs = note.setdefault("attrs", {})
+                        note_attrs.update(attrs)
 
                 notes.append(note)
             else:
                 auto_seq += 1
-                frame = {"id": f"a{auto_seq}", "type": tag_key, "start": out_len}
+                frame: dict = {
+                    "id": f"a{auto_seq}",
+                    "type": tag_key,
+                    "start": out_len,
+                }
+                enrich_note_metadata(frame, cat, name)
                 open_stacks.setdefault(tag_key, []).append(frame)
         else:
             mo_close = CLOSE_REGEX.match(treffer.group(0))
@@ -395,6 +434,30 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
     Path(out_txt).write_text(plain_text, encoding="utf-8")
     print(f" --> {out_txt}")
 
+    # -------------------- Zusatz: colorIndex für Spans berechnen -------------
+    # Wir bestimmen für alle Spans (mit start/end) den Typ-Index (sortiert nach @type)
+    # und rechnen ihn in colorIndex 1..8 um (wie bisher im XSLT).
+    span_notes = [n for n in notes if "start" in n and "end" in n]
+    unique_types: list[str] = []
+    for n in span_notes:
+        t = n.get("type")
+        if t is not None and t not in unique_types:
+            unique_types.append(t)
+    unique_types.sort()
+    type_index_map = {t: i + 1 for i, t in enumerate(unique_types)}
+
+    for n in span_notes:
+        t = n.get("type")
+        if not t:
+            continue
+        idx = type_index_map.get(t, 1)
+        color_index = idx % 8
+        if color_index == 0:
+            color_index = 8
+        attrs = n.setdefault("attrs", {})
+        attrs.setdefault("colorIndex", str(color_index))
+
+    # -------------------- XML schreiben --------------------------------------
     def xml_attr_pair(k: str, v: str | None) -> str | None:
         if v is None:
             return None
@@ -404,7 +467,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
         '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
         '<!DOCTYPE annotation SYSTEM "annotation.dtd">',
         '<?xml-stylesheet type="text/xsl" href="style.xsl"?>',
-        '<?thomas-schubert document-status="draft" version="2.0"?>',
+        '<?thomas-schubert document-status="draft" version="2.1"?>',
         '<annotation>',
         '  <text xml:space="preserve">',
         html.escape(plain_text),
@@ -429,7 +492,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("start", sp.get("start")),
             xml_attr_pair("end", sp.get("end")),
         ]
-        # value nur ausgeben, wenn KEINE Zusatzattribute existieren
+        # value wäre hier nur Altlast (wird derzeit nicht gesetzt)
         if ("attrs" not in sp or not sp["attrs"]) and sp.get("value") is not None:
             attrs.append(xml_attr_pair("value", sp["value"]))
         for k, v in (sp.get("attrs") or {}).items():
@@ -443,7 +506,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("id", sg.get("id")),
             xml_attr_pair("type", sg.get("type")),
         ]
-        # Früher: value; jetzt label als Standardattribut, falls keine attrs existieren
+        # label als Standardattribut, falls keine attrs existieren
         if ("attrs" not in sg or not sg["attrs"]) and sg.get("label") is not None:
             attrs.append(xml_attr_pair("label", sg["label"]))
 

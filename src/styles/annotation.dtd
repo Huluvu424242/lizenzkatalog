@@ -19,4 +19,7 @@
           title    CDATA  #IMPLIED
           label    CDATA  #IMPLIED
           present    CDATA  #IMPLIED
+          category    CDATA  #IMPLIED
+          name    CDATA  #IMPLIED
+          colorIndex    CDATA  #IMPLIED
           value  CDATA  #IMPLIED>
