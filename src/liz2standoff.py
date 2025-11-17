@@ -606,11 +606,16 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
             xml_attr_pair("id", sg.get("id")),
             xml_attr_pair("type", sg.get("type")),
         ]
-        # label als Standardattribut, falls keine attrs existieren
-        if ("attrs" not in sg or not sg["attrs"]) and sg.get("label") is not None:
+
+        attrs_dict = sg.get("attrs") or {}
+
+        # label IMMER ausgeben, solange:
+        # - es vorhanden ist und
+        # - nicht schon in attrs_dict hinterlegt wurde (z.B. bei pol-Notes)
+        if sg.get("label") is not None and "label" not in attrs_dict:
             attrs.append(xml_attr_pair("label", sg["label"]))
 
-        for k, v in (sg.get("attrs") or {}).items():
+        for k, v in attrs_dict.items():
             attrs.append(xml_attr_pair(k, v))
 
         attrs = [a for a in attrs if a is not None]
