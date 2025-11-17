@@ -336,18 +336,25 @@
         -->
         <xsl:variable name="badgeNodesRTF">
             <xsl:for-each select="/annotation/notes/note[
-                  not(@start) and not(@end) and
-                  (
-                      @category='env' or
-                      @category='use' or
-                      @category='dst' or
-                      @category='cpy' or
-                      @type='lic#spdx' or
-                      @type='lic#c' or
-                      @type='lic#c0'
-                  )
-              ]">
-                <xsl:sort select="@category"/>
+          not(@start) and not(@end) and
+          (
+              @category='env' or
+              @category='use' or
+              @category='dst' or
+              @category='cpy' or
+              @category='lim' or
+              @type='lic#spdx' or
+              @type='lic#c' or
+              @type='lic#c0' or
+              @type='lic#fsf' or
+              @type='lic#osi' or
+              @type='rul#nc' or
+              @type='rul#com' or
+              @type='rul#nomili'
+          )
+      ]">
+
+            <xsl:sort select="@category"/>
                 <xsl:sort select="@name"/>
                 <!-- Duplikate vermeiden: gleiche type+label nur einmal -->
                 <xsl:if test="not(preceding::note[
@@ -398,10 +405,7 @@
                         <xsl:text>Nutzung uneingeschränkt</xsl:text>
                     </xsl:when>
 
-                    <!-- 🔹 FSF-Freigabe:
-                         - Wenn label vorhanden (z.B. "Libre"), -> "FSF: Libre"
-                         - Sonst generisch "FSF-Freigabe"
-                    -->
+                    <!-- 🔹 FSF-Freigabe -->
                     <xsl:when test="@type='lic#fsf'">
                         <xsl:choose>
                             <xsl:when test="@label">
@@ -414,10 +418,7 @@
                         </xsl:choose>
                     </xsl:when>
 
-                    <!-- 🔹 OSI-Freigabe:
-                         - Wenn label vorhanden (z.B. "Approved"), -> "OSI: Approved"
-                         - Sonst "OSI-Freigabe"
-                    -->
+                    <!-- 🔹 OSI-Freigabe -->
                     <xsl:when test="@type='lic#osi'">
                         <xsl:choose>
                             <xsl:when test="@label">
@@ -430,7 +431,44 @@
                         </xsl:choose>
                     </xsl:when>
 
-                    <!-- Standardfall: label, dann name, dann type -->
+                    <!-- 🔹 Nicht-kommerzielle Nutzung -->
+                    <xsl:when test="@type='rul#nc'">
+                        <xsl:text>Nicht-kommerzielle Nutzung</xsl:text>
+                    </xsl:when>
+
+                    <!-- 🔹 Kommerzielle Nutzung explizit erlaubt -->
+                    <xsl:when test="@type='rul#com'">
+                        <xsl:text>Kommerzielle Nutzung erlaubt</xsl:text>
+                    </xsl:when>
+
+                    <!-- 🔹 Keine militärische Nutzung -->
+                    <xsl:when test="@type='rul#nomili'">
+                        <xsl:text>Keine militärische Nutzung</xsl:text>
+                    </xsl:when>
+
+                    <!-- 🔹 Limits (lim#...) – Wert aus @label -->
+                    <xsl:when test="@category='lim' and @name='cpu' and @label">
+                        <xsl:text>CPU-Limit: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+                    <xsl:when test="@category='lim' and @name='usr' and @label">
+                        <xsl:text>Nutzer-Limit: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+                    <xsl:when test="@category='lim' and @name='srv' and @label">
+                        <xsl:text>Server-Limit: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+                    <xsl:when test="@category='lim' and @name='pc' and @label">
+                        <xsl:text>Rechner-Limit: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+                    <xsl:when test="@category='lim' and @name='dev' and @label">
+                        <xsl:text>Geräte-Limit: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+
+                    <!-- 🔹 Standardfall: label, dann name, dann type -->
                     <xsl:when test="@label">
                         <xsl:value-of select="@label"/>
                     </xsl:when>
