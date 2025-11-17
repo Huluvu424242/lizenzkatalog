@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE annotation SYSTEM "annotation.dtd">
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<?thomas-schubert document-status="draft" version="2.2"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text xml:space="preserve">
 Testlizenz - GNU General Public License, Version 3 (GPL-3.0)
@@ -21,21 +21,21 @@ Haftungsausschluss.
 
   </text>
   <notes>
-    <note id="a1" type="lic#name" start="0" end="60" category="lic" name="name" colorIndex="1"/>
-    <note id="a11" type="rul#src" start="97" end="140" category="rul" name="src" colorIndex="4"/>
-    <note id="a12" type="rul#changes" start="142" end="165" category="rul" name="changes" colorIndex="2"/>
-    <note id="a13" type="rul#nolia" start="167" end="185" category="rul" name="nolia" colorIndex="3"/>
+    <note id="a1" type="lic#name" start="0" end="60" category="lic" name="name"/>
+    <note id="a11" type="rul#src" start="97" end="140" category="rul" name="src"/>
+    <note id="a12" type="rul#changes" start="142" end="165" category="rul" name="changes"/>
+    <note id="a13" type="rul#nolia" start="167" end="185" category="rul" name="nolia"/>
     <note id="a2" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
     <note id="a3" type="lic#fsf" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
     <note id="a4" type="lic#osi" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
-    <note id="a5" type="cpy#strong" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a5" type="cpy#strong" label="Strong Copyleft" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
     <note id="a6" type="rul#notice" category="rul" name="notice"/>
     <note id="a7" type="rul#lictxt" category="rul" name="lictxt"/>
     <note id="a8" type="rul#pat" category="rul" name="pat"/>
     <note id="a9" type="rul#patret" category="rul" name="patret"/>
     <note id="a10" type="rul#tivo" category="rul" name="tivo"/>
-    <note id="a14" type="pol#if" category="pol" name="if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="🏢 📚 🔴 dst=internal+srv" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal+srv dst#internal+srv, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a15" type="pol#if" category="pol" name="if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a14" type="pol#if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="🏢 📚 🔴 dst=internal+srv" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal+srv, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a15" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
     <note id="a16" type="pol#_section" present="true"/>
   </notes>
 </annotation>
