@@ -389,12 +389,14 @@ def enrich_note_metadata(note: dict, cat: str, name: str) -> None:
       - category: lic/use/env/...
       - name: z.B. spdx, com, lib
       - emoji: für env/use/dst/cpy (falls vorhanden)
-      - tooltip: z.B. "env#com 🏢 Unternehmen"
+      - tooltip: z.B. "env#com 🏢 Unternehmen" oder speziell
+                 für lic#spdx: "lic#spdx GPL-3.0"
     """
     attrs = note.setdefault("attrs", {})
     attrs["category"] = cat
     attrs["name"] = name
 
+    # Emoji für env/use/dst/cpy
     emoji: str | None = None
     if cat == "env":
         emoji = ENV_EMOJI.get(name)
@@ -408,14 +410,26 @@ def enrich_note_metadata(note: dict, cat: str, name: str) -> None:
     if emoji:
         attrs["emoji"] = emoji
 
-    # Tooltip für bekannte Typen (env/use/dst/cpy/lic etc.)
     full = f"{cat}#{name}"
-    label = TYPE_LABELS.get(full)
-    if label:
-        if emoji:
-            tooltip = f"{full} {emoji} {label}"
+    type_label = TYPE_LABELS.get(full)
+    label_value = note.get("label")
+
+    tooltip: str | None = None
+
+    # 🔸 Spezialfall: lic#spdx → lic#spdx <WERT> (z.B. GPL-3.0)
+    if cat == "lic" and name == "spdx":
+        if label_value:
+            tooltip = f"{full} {label_value}"
         else:
-            tooltip = f"{full} {label}"
+            tooltip = full
+    # 🔸 Standardfall: env/use/dst/cpy/… → full + optional Emoji + Klartext
+    elif type_label:
+        if emoji:
+            tooltip = f"{full} {emoji} {type_label}"
+        else:
+            tooltip = f"{full} {type_label}"
+
+    if tooltip:
         attrs.setdefault("tooltip", tooltip)
 
 
@@ -600,7 +614,7 @@ def konvertiere(inp: str = "input.liz", out_txt: str = "output.txt", out_xml: st
         attrs = [a for a in attrs if a is not None]
         lines.append("    <note " + " ".join(attrs) + "/>")
 
-    # Singletons ausgeben
+        # Singletons ausgeben
     for sg in singletons:
         attrs = [
             xml_attr_pair("id", sg.get("id")),
