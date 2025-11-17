@@ -441,6 +441,6 @@ terms of this License.
     <note id="a1" type="lic#name" start="2" end="34" category="lic" name="name" colorIndex="1"/>
     <note id="a3" type="rul#nolia" start="15947" end="16614" category="rul" name="nolia" colorIndex="2"/>
     <note id="a4" type="rul#nolia" start="16616" end="16789" category="rul" name="nolia" colorIndex="2"/>
-    <note id="a2" type="lic#spdx" category="lic" name="spdx" tooltip="lic#spdx SPDX-ID"/>
+    <note id="a2" type="lic#spdx" label="ODC-By-1.0" category="lic" name="spdx" tooltip="lic#spdx SPDX-ID"/>
   </notes>
 </annotation>

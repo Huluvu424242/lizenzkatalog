@@ -25,7 +25,7 @@ Haftungsausschluss.
     <note id="a11" type="rul#src" start="97" end="140" category="rul" name="src" colorIndex="4"/>
     <note id="a12" type="rul#changes" start="142" end="165" category="rul" name="changes" colorIndex="2"/>
     <note id="a13" type="rul#nolia" start="167" end="185" category="rul" name="nolia" colorIndex="3"/>
-    <note id="a2" type="lic#spdx" category="lic" name="spdx" tooltip="lic#spdx SPDX-ID"/>
+    <note id="a2" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx SPDX-ID"/>
     <note id="a3" type="lic#fsf" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
     <note id="a4" type="lic#osi" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
     <note id="a5" type="cpy#strong" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>

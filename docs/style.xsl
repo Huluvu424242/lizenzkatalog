@@ -388,9 +388,18 @@
                     <xsl:text> </xsl:text>
                 </xsl:if>
                 <xsl:choose>
+                    <!-- Spezialfall: SPDX-Badge -->
+                    <xsl:when test="@type='lic#spdx' and @label">
+                        <xsl:text>SPDX-ID: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+
+                    <!-- Allgemeiner Fall: zeige label, falls vorhanden -->
                     <xsl:when test="@label">
                         <xsl:value-of select="@label"/>
                     </xsl:when>
+
+                    <!-- Fallback: name oder type -->
                     <xsl:when test="@name">
                         <xsl:value-of select="@name"/>
                     </xsl:when>
