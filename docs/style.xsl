@@ -213,16 +213,9 @@
                             <td>
                                 <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
                                 <span title="{$tooltip}">
-                                    <xsl:choose>
-                                        <xsl:when test="@tooltip">
-                                            <xsl:value-of select="@tooltip"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:call-template name="label-for-type">
-                                                <xsl:with-param name="t" select="@type"/>
-                                            </xsl:call-template>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
+                                    <xsl:call-template name="label-for-type">
+                                        <xsl:with-param name="t" select="@type"/>
+                                    </xsl:call-template>
                                 </span>
                             </td>
 
