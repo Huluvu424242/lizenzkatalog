@@ -380,19 +380,60 @@
                     <xsl:value-of select="@emoji"/>
                     <xsl:text> </xsl:text>
                 </xsl:if>
+
                 <xsl:choose>
-                    <!-- Spezialfall: SPDX-Badge -->
+                    <!-- 🔹 SPDX: "SPDX-ID: GPL-3.0" -->
                     <xsl:when test="@type='lic#spdx' and @label">
                         <xsl:text>SPDX-ID: </xsl:text>
                         <xsl:value-of select="@label"/>
                     </xsl:when>
 
-                    <!-- Allgemeiner Fall: zeige label, falls vorhanden -->
+                    <!-- 🔹 Alle Rechte vorbehalten -->
+                    <xsl:when test="@type='lic#c'">
+                        <xsl:text>Alle Rechte vorbehalten</xsl:text>
+                    </xsl:when>
+
+                    <!-- 🔹 Nutzung uneingeschränkt -->
+                    <xsl:when test="@type='lic#c0'">
+                        <xsl:text>Nutzung uneingeschränkt</xsl:text>
+                    </xsl:when>
+
+                    <!-- 🔹 FSF-Freigabe:
+                         - Wenn label vorhanden (z.B. "Libre"), -> "FSF: Libre"
+                         - Sonst generisch "FSF-Freigabe"
+                    -->
+                    <xsl:when test="@type='lic#fsf'">
+                        <xsl:choose>
+                            <xsl:when test="@label">
+                                <xsl:text>FSF: </xsl:text>
+                                <xsl:value-of select="@label"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>FSF-Freigabe</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:when>
+
+                    <!-- 🔹 OSI-Freigabe:
+                         - Wenn label vorhanden (z.B. "Approved"), -> "OSI: Approved"
+                         - Sonst "OSI-Freigabe"
+                    -->
+                    <xsl:when test="@type='lic#osi'">
+                        <xsl:choose>
+                            <xsl:when test="@label">
+                                <xsl:text>OSI: </xsl:text>
+                                <xsl:value-of select="@label"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>OSI-Freigabe</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:when>
+
+                    <!-- Standardfall: label, dann name, dann type -->
                     <xsl:when test="@label">
                         <xsl:value-of select="@label"/>
                     </xsl:when>
-
-                    <!-- Fallback: name oder type -->
                     <xsl:when test="@name">
                         <xsl:value-of select="@name"/>
                     </xsl:when>
