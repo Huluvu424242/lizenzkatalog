@@ -22,4 +22,6 @@
           category    CDATA  #IMPLIED
           name    CDATA  #IMPLIED
           colorIndex    CDATA  #IMPLIED
+          if_tooltip    CDATA  #IMPLIED
+          tooltip    CDATA  #IMPLIED
           value  CDATA  #IMPLIED>
