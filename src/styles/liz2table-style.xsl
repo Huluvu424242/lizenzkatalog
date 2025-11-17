@@ -207,7 +207,7 @@
                     <tr>
                         <th>#</th>
                         <th>Typ</th>
-                        <th>Wert</h>
+                        <th>Wert</th>
                         <th>ID</th>
                     </tr>
                     <xsl:for-each select="notes/note[not(@start) and not(@end) and not(starts-with(@type,'pol#'))]">
