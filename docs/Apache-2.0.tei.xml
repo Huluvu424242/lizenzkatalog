@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE annotation SYSTEM "annotation.dtd">
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
-<?thomas-schubert document-status="draft" version="2.0"?>
+<?thomas-schubert document-status="draft" version="2.2"?>
 <annotation>
   <text xml:space="preserve">
 
@@ -219,15 +219,15 @@
 
   </text>
   <notes>
-    <note id="a6" type="lic#name" start="39" end="141"/>
-    <note id="a1" type="use#doc"/>
-    <note id="a2" type="use#lib"/>
-    <note id="a3" type="cpy#weak"/>
-    <note id="a4" type="rul#notice"/>
-    <note id="a5" type="rul#lictxt"/>
-    <note id="a7" type="pol#if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="🏢 📚 🌍"/>
-    <note id="a8" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="🏢 📚 🤝"/>
-    <note id="a9" type="pol#if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="🏢 📚 🏢"/>
+    <note id="a6" type="lic#name" start="39" end="141" category="lic" name="name" colorIndex="1"/>
+    <note id="a1" type="use#doc" category="use" name="doc" emoji="📄" tooltip="use#doc 📄 Dokumentation"/>
+    <note id="a2" type="use#lib" category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
+    <note id="a3" type="cpy#weak" category="cpy" name="weak" emoji="🟢" tooltip="cpy#weak 🟢 Weak Copyleft"/>
+    <note id="a4" type="rul#notice" category="rul" name="notice"/>
+    <note id="a5" type="rul#lictxt" category="rul" name="lictxt"/>
+    <note id="a7" type="pol#if" category="pol" name="if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="🏢 📚 🌍" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich"/>
+    <note id="a8" type="pol#if" category="pol" name="if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="🏢 📚 🤝" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden"/>
+    <note id="a9" type="pol#if" category="pol" name="if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="🏢 📚 🏢" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe"/>
     <note id="a10" type="pol#_section" present="true"/>
   </notes>
 </annotation>
