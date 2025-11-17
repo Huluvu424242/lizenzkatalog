@@ -4,14 +4,18 @@
                 xmlns:exsl="http://exslt.org/common"
                 exclude-result-prefixes="exsl">
 
-    <xsl:output method="html"
-                doctype-system="about:legacy-compat"
-                encoding="UTF-8"
-                indent="yes"/>
+    <xsl:output method="html" encoding="UTF-8" indent="yes"
+                doctype-system="about:legacy-compat"/>
+
     <xsl:strip-space elements="annotation notes note text"/>
 
     <!-- ========================================================= -->
-    <!-- Label Mapping (Fallback, falls kein @label/@tooltip da ist) -->
+    <!-- Muenchian Key (für Bereiche mit Textbezug)                -->
+    <!-- ========================================================= -->
+    <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
+
+    <!-- ========================================================= -->
+    <!-- Label-Mapping (Fallback, falls kein @label vorhanden)     -->
     <!-- ========================================================= -->
     <xsl:template name="label-for-type">
         <xsl:param name="t"/>
@@ -97,9 +101,8 @@
     </xsl:template>
 
     <!-- ========================================================= -->
-    <!-- Einstieg                                                   -->
+    <!-- Einstieg                                                  -->
     <!-- ========================================================= -->
-
     <xsl:template match="/">
         <xsl:apply-templates select="/annotation"/>
     </xsl:template>
@@ -163,7 +166,9 @@
                     .badge.use { background:#e6f7ff; border-color:#bfe7ff; }
                     .badge.cpy { background:#eef7ff; border-color:#cfe6ff; }
                     .badge.dst { background:#f1fff0; border-color:#d6f5d3; }
-                    .badge.lic { background:#fff8e6; border-color:#ffe7ad; }
+                    .badge.lnk { background:#fff8e6; border-color:#ffe7ad; }
+                    .badge.lic { background:#fff0f6; border-color:#ffcee3; }
+                    .badge.lim { background:#f0fff6; border-color:#c8f2d8; }
                 </style>
 
             </head>
@@ -210,6 +215,7 @@
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
 
+                            <!-- Typ: sprechender Name, Tooltip = [[type]] -->
                             <td>
                                 <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
                                 <span title="{$tooltip}">
@@ -219,6 +225,7 @@
                                 </span>
                             </td>
 
+                            <!-- Wert: primär @label -->
                             <td>
                                 <span class="tooltip-label">
                                     <xsl:attribute name="title">
@@ -257,6 +264,15 @@
                     Informationen mit Textbezug
                 </h2>
 
+                <!-- typeOrder bestimmen -->
+                <xsl:variable name="typeOrderRTF">
+                    <xsl:for-each select="notes/note[@start][generate-id()=generate-id(key('kType',@type)[1])]">
+                        <xsl:sort select="@type"/>
+                        <t type="{@type}"/>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:variable name="typeOrder" select="exsl:node-set($typeOrderRTF)/t"/>
+
                 <table>
                     <tr>
                         <th>#</th>
@@ -287,16 +303,9 @@
 
                             <td>
                                 <span title="{$tooltipSpan}">
-                                    <xsl:choose>
-                                        <xsl:when test="@tooltip">
-                                            <xsl:value-of select="@tooltip"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:call-template name="label-for-type">
-                                                <xsl:with-param name="t" select="@type"/>
-                                            </xsl:call-template>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
+                                    <xsl:call-template name="label-for-type">
+                                        <xsl:with-param name="t" select="@type"/>
+                                    </xsl:call-template>
                                 </span>
                             </td>
 
@@ -317,7 +326,9 @@
                 <!-- ===== Originaltext ===== -->
                 <h2>Originaltext (mit Hervorhebungen)</h2>
                 <pre>
-                    <xsl:call-template name="render-original"/>
+                    <xsl:call-template name="render-original">
+                        <xsl:with-param name="typeOrder" select="$typeOrder"/>
+                    </xsl:call-template>
                 </pre>
 
             </body>
@@ -325,160 +336,95 @@
     </xsl:template>
 
     <!-- ========================================================= -->
-    <!-- Badges (Tagliste oben) – Variante A                       -->
+    <!-- Badges (Tagliste oben)                                   -->
     <!-- ========================================================= -->
     <xsl:template name="render-badges">
-        <!--
-          Kontext-Badges für:
-            - env / use / dst / cpy (aus category)
-            - wichtige Lizenz-Singletons: lic#spdx, lic#c, lic#c0
-          Es werden nur Singletons (ohne start/end) berücksichtigt.
-        -->
-        <xsl:variable name="badgeNodesRTF">
-            <xsl:for-each select="/annotation/notes/note[
-          not(@start) and not(@end) and
-          (
-              @category='env' or
-              @category='use' or
-              @category='dst' or
-              @category='cpy' or
-              @category='lim' or
-              @type='lic#spdx' or
-              @type='lic#c' or
-              @type='lic#c0' or
-              @type='lic#fsf' or
-              @type='lic#osi' or
-              @type='rul#nc' or
-              @type='rul#com' or
-              @type='rul#nomili'
-          )
-      ]">
+        <!-- Kontext-Badges: env/use/cpy/dst/lnk/lim + wichtige lic/rul -->
+        <xsl:for-each select="/annotation/notes/note[
+             not(@start) and not(@end) and
+             (
+               @category='env' or
+               @category='use' or
+               @category='dst' or
+               @category='cpy' or
+               @category='lnk' or
+               @category='lim' or
+               @type='lic#spdx' or
+               @type='lic#c' or
+               @type='lic#c0' or
+               @type='lic#fsf' or
+               @type='lic#osi' or
+               @type='rul#nc' or
+               @type='rul#com' or
+               @type='rul#nomili'
+             )
+        ]">
+            <xsl:sort select="@type"/>
 
-            <xsl:sort select="@category"/>
-                <xsl:sort select="@name"/>
-                <!-- Duplikate vermeiden: gleiche type+label nur einmal -->
-                <xsl:if test="not(preceding::note[
-                                     @type = current()/@type and
-                                     @label = current()/@label
-                                   ])">
-                    <xsl:copy-of select="."/>
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
-
-        <xsl:for-each select="exsl:node-set($badgeNodesRTF)/note">
-            <xsl:variable name="cat" select="@category"/>
             <xsl:variable name="cls">
-                <xsl:text>badge </xsl:text>
                 <xsl:choose>
-                    <xsl:when test="$cat != ''">
-                        <xsl:value-of select="$cat"/>
-                    </xsl:when>
-                    <xsl:otherwise>lic</xsl:otherwise>
+                    <xsl:when test="@category='env'">badge env</xsl:when>
+                    <xsl:when test="@category='use'">badge use</xsl:when>
+                    <xsl:when test="@category='cpy'">badge cpy</xsl:when>
+                    <xsl:when test="@category='dst'">badge dst</xsl:when>
+                    <xsl:when test="@category='lnk'">badge lnk</xsl:when>
+                    <xsl:when test="@category='lim'">badge lim</xsl:when>
+                    <xsl:otherwise>badge lic</xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <span class="{$cls}">
-                <xsl:if test="@tooltip">
-                    <xsl:attribute name="title">
-                        <xsl:value-of select="@tooltip"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:if test="@emoji">
-                    <xsl:value-of select="@emoji"/>
-                    <xsl:text> </xsl:text>
-                </xsl:if>
 
+            <xsl:variable name="badgeTitle">
                 <xsl:choose>
-                    <!-- 🔹 SPDX: "SPDX-ID: GPL-3.0" -->
-                    <xsl:when test="@type='lic#spdx' and @label">
-                        <xsl:text>SPDX-ID: </xsl:text>
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-
-                    <!-- 🔹 Alle Rechte vorbehalten -->
-                    <xsl:when test="@type='lic#c'">
-                        <xsl:text>Alle Rechte vorbehalten</xsl:text>
-                    </xsl:when>
-
-                    <!-- 🔹 Nutzung uneingeschränkt -->
-                    <xsl:when test="@type='lic#c0'">
-                        <xsl:text>Nutzung uneingeschränkt</xsl:text>
-                    </xsl:when>
-
-                    <!-- 🔹 FSF-Freigabe -->
-                    <xsl:when test="@type='lic#fsf'">
-                        <xsl:choose>
-                            <xsl:when test="@label">
-                                <xsl:text>FSF: </xsl:text>
-                                <xsl:value-of select="@label"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>FSF-Freigabe</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:when>
-
-                    <!-- 🔹 OSI-Freigabe -->
-                    <xsl:when test="@type='lic#osi'">
-                        <xsl:choose>
-                            <xsl:when test="@label">
-                                <xsl:text>OSI: </xsl:text>
-                                <xsl:value-of select="@label"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>OSI-Freigabe</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:when>
-
-                    <!-- 🔹 Nicht-kommerzielle Nutzung -->
-                    <xsl:when test="@type='rul#nc'">
-                        <xsl:text>Nicht-kommerzielle Nutzung</xsl:text>
-                    </xsl:when>
-
-                    <!-- 🔹 Kommerzielle Nutzung explizit erlaubt -->
-                    <xsl:when test="@type='rul#com'">
-                        <xsl:text>Kommerzielle Nutzung erlaubt</xsl:text>
-                    </xsl:when>
-
-                    <!-- 🔹 Keine militärische Nutzung -->
-                    <xsl:when test="@type='rul#nomili'">
-                        <xsl:text>Keine militärische Nutzung</xsl:text>
-                    </xsl:when>
-
-                    <!-- 🔹 Limits (lim#...) – Wert aus @label -->
-                    <xsl:when test="@category='lim' and @name='cpu' and @label">
-                        <xsl:text>CPU-Limit: </xsl:text>
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-                    <xsl:when test="@category='lim' and @name='usr' and @label">
-                        <xsl:text>Nutzer-Limit: </xsl:text>
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-                    <xsl:when test="@category='lim' and @name='srv' and @label">
-                        <xsl:text>Server-Limit: </xsl:text>
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-                    <xsl:when test="@category='lim' and @name='pc' and @label">
-                        <xsl:text>Rechner-Limit: </xsl:text>
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-                    <xsl:when test="@category='lim' and @name='dev' and @label">
-                        <xsl:text>Geräte-Limit: </xsl:text>
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-
-                    <!-- 🔹 Standardfall: label, dann name, dann type -->
-                    <xsl:when test="@label">
-                        <xsl:value-of select="@label"/>
-                    </xsl:when>
-                    <xsl:when test="@name">
-                        <xsl:value-of select="@name"/>
+                    <xsl:when test="@tooltip">
+                        <xsl:value-of select="@tooltip"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="@type"/>
                     </xsl:otherwise>
                 </xsl:choose>
+            </xsl:variable>
+
+            <span class="{$cls}" title="{$badgeTitle}">
+                <!-- Emoji aus Python -->
+                <xsl:if test="@emoji">
+                    <xsl:value-of select="@emoji"/>
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+
+                <!-- Anzeige-Text: erst Typ-Spezialfälle, dann @label, dann Fallback -->
+                <xsl:choose>
+                    <!-- SPDX: SPDX-ID: Wert -->
+                    <xsl:when test="@type='lic#spdx' and @label">
+                        <xsl:text>SPDX-ID: </xsl:text>
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+
+                    <!-- generischer Fall: nutze @label, falls vorhanden -->
+                    <xsl:when test="@label">
+                        <xsl:value-of select="@label"/>
+                    </xsl:when>
+
+                    <!-- Fallback: sprechender Typname -->
+                    <xsl:otherwise>
+                        <xsl:call-template name="label-for-type">
+                            <xsl:with-param name="t" select="@type"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </span>
+        </xsl:for-each>
+
+        <!-- Wichtige RUL-Flags als Pills (einmalig) -->
+        <xsl:for-each select="/annotation/notes/note[
+               @type='rul#notice' or @type='rul#lictxt' or @type='rul#src'
+            or @type='rul#changes' or @type='rul#pat' or @type='rul#patret'
+            or @type='rul#tivo'
+        ]">
+            <xsl:sort select="@type"/>
+            <span class="pill">
+                <xsl:call-template name="label-for-type">
+                    <xsl:with-param name="t" select="@type"/>
+                </xsl:call-template>
             </span>
         </xsl:for-each>
     </xsl:template>
@@ -489,10 +435,10 @@
     <xsl:template name="render-policies">
         <xsl:variable name="pols"
                       select="/annotation/notes/note[
-                            starts-with(@type,'pol#')
-                            and (@if or @then or @because)
-                            and not(@present='true')
-                      ]"/>
+                starts-with(@type,'pol#')
+                and (@if or @then or @because)
+                and not(@present='true')
+            ]"/>
 
         <xsl:choose>
             <xsl:when test="count($pols)>0">
@@ -513,19 +459,25 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- Policy-Zeile, nutzt if_tooltip + label aus Python -->
+    <!-- Policy-Zeile: Tooltip für Rahmenbedingungen aus @if_tooltip -->
     <xsl:template name="render-condition-row">
         <tr>
-            <!-- Rahmenbedingungen mit Tooltip -->
+            <!-- Rahmenbedingungen -->
             <td>
                 <span class="tooltip-label">
-                    <xsl:if test="@if_tooltip">
-                        <xsl:attribute name="title">
-                            <xsl:value-of select="@if_tooltip"/>
-                        </xsl:attribute>
-                    </xsl:if>
+                    <xsl:attribute name="title">
+                        <xsl:choose>
+                            <xsl:when test="@if_tooltip">
+                                <xsl:value-of select="@if_tooltip"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="@if"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
                     <code>
                         <xsl:choose>
+                            <!-- label = Emoji-Dashboard, von Python gesetzt -->
                             <xsl:when test="@label">
                                 <xsl:value-of select="@label"/>
                             </xsl:when>
@@ -554,27 +506,30 @@
     </xsl:template>
 
     <!-- ========================================================= -->
-    <!-- Originaltext Renderer (nutzt colorIndex aus Python)       -->
+    <!-- Originaltext Renderer                                     -->
     <!-- ========================================================= -->
     <xsl:template name="render-original">
+        <xsl:param name="typeOrder"/>
+
         <xsl:variable name="txt" select="string(/annotation/text)"/>
 
         <xsl:variable name="sortedSpansRTF">
             <xsl:for-each select="/annotation/notes/note[@start and @end]">
                 <xsl:sort select="@start" data-type="number"/>
                 <xsl:sort select="@end" data-type="number"/>
-                <xsl:copy-of select="."/>
+                <span start="{@start}" end="{@end}" id="{@id}" type="{@type}"/>
             </xsl:for-each>
         </xsl:variable>
 
         <xsl:variable name="nodes"
-                      select="exsl:node-set($sortedSpansRTF)/note"/>
+                      select="exsl:node-set($sortedSpansRTF)/span"/>
 
         <xsl:choose>
             <xsl:when test="$nodes">
                 <xsl:call-template name="render-from">
                     <xsl:with-param name="txt" select="$txt"/>
                     <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="typeOrder" select="$typeOrder"/>
                     <xsl:with-param name="idx" select="1"/>
                     <xsl:with-param name="cursor" select="0"/>
                 </xsl:call-template>
@@ -585,10 +540,11 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- Rekursiver Renderer mit colorIndex + IDs für Anker -->
+    <!-- Rekursiver Renderer mit farbigen Spans + IDs für Anker -->
     <xsl:template name="render-from">
         <xsl:param name="txt"/>
         <xsl:param name="nodes"/>
+        <xsl:param name="typeOrder"/>
         <xsl:param name="idx"/>
         <xsl:param name="cursor"/>
 
@@ -603,17 +559,24 @@
                     <xsl:value-of select="substring($txt, $cursor+1, $s - $cursor)"/>
                 </xsl:if>
 
-                <!-- Klasse direkt aus colorIndex -->
+                <!-- Highlight-Index für diesen Typ -->
+                <xsl:variable name="typeIndex"
+                              select="count($typeOrder[@type=$n/@type]/preceding-sibling::t)+1"/>
+
                 <xsl:variable name="cls">
-                    <xsl:text>hl-</xsl:text>
                     <xsl:choose>
-                        <xsl:when test="$n/@colorIndex">
-                            <xsl:value-of select="$n/@colorIndex"/>
-                        </xsl:when>
-                        <xsl:otherwise>1</xsl:otherwise>
+                        <xsl:when test="$typeIndex mod 8 = 1">hl-1</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 2">hl-2</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 3">hl-3</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 4">hl-4</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 5">hl-5</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 6">hl-6</xsl:when>
+                        <xsl:when test="$typeIndex mod 8 = 7">hl-7</xsl:when>
+                        <xsl:otherwise>hl-8</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
 
+                <!-- markierter Bereich mit ID für die Tabelle (#frag-ID) -->
                 <span id="frag-{$n/@id}" class="{$cls}">
                     <xsl:value-of select="substring($txt, $s+1, $e - $s+1)"/>
                 </span>
@@ -622,6 +585,7 @@
                 <xsl:call-template name="render-from">
                     <xsl:with-param name="txt" select="$txt"/>
                     <xsl:with-param name="nodes" select="$nodes"/>
+                    <xsl:with-param name="typeOrder" select="$typeOrder"/>
                     <xsl:with-param name="idx" select="$idx+1"/>
                     <xsl:with-param name="cursor" select="$e+1"/>
                 </xsl:call-template>
