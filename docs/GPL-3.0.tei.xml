@@ -5,7 +5,7 @@
 <annotation>
   <text xml:space="preserve">
   
-     
+
   
 
 
@@ -331,7 +331,7 @@ part of a transaction in which the right of possession and use of the
 User Product is transferred to the recipient in perpetuity or for a
 fixed term (regardless of how the transaction is characterized), the
 Corresponding Source conveyed under this section must be accompanied
-by the Installation Information. But this requirement does not apply
+by the Installation Information.  But this requirement does not apply
 if neither you nor any third party retains the ability to install
 modified object code on the User Product (for example, the work has
 been installed in ROM).
@@ -691,40 +691,40 @@ Public License instead of this License.  But first, please read
 
   </text>
   <notes>
-    <note id="a13" type="lic#name" start="22" end="95" category="lic" name="name"/>
-    <note id="a14" type="act#mod" start="4059" end="4416" category="act" name="mod"/>
-    <note id="a15" type="act#cop" start="4813" end="5019" category="act" name="cop"/>
-    <note id="a16" type="act#mov" start="8198" end="8338" category="act" name="mov"/>
-    <note id="a17" type="act#mov" start="8882" end="8976" category="act" name="mov"/>
-    <note id="a18" type="act#cop" start="9864" end="9941" category="act" name="cop"/>
-    <note id="a20" type="rul#com" start="10321" end="10448" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
-    <note id="a19" type="act#sel" start="10321" end="10448" category="act" name="sel"/>
-    <note id="a21" type="act#mov" start="10451" end="10490" category="act" name="mov"/>
-    <note id="a22" type="act#der" start="10491" end="12325" category="act" name="der"/>
-    <note id="a23" type="rul#changes" start="10706" end="10808" category="rul" name="changes"/>
-    <note id="a25" type="rul#src" start="12362" end="12575" category="rul" name="src"/>
-    <note id="a24" type="act#mov" start="12362" end="12575" category="act" name="mov"/>
-    <note id="a26" type="act#mov" start="12580" end="12819" category="act" name="mov"/>
-    <note id="a27" type="act#mov" start="12825" end="13539" category="act" name="mov"/>
-    <note id="a28" type="act#mov" start="13545" end="13836" category="act" name="mov"/>
-    <note id="a29" type="act#mov" start="13842" end="14658" category="act" name="mov"/>
-    <note id="a30" type="act#mov" start="14664" end="14899" category="act" name="mov"/>
-    <note id="a31" type="rul#by" start="19101" end="19285" category="rul" name="by"/>
-    <note id="a32" type="rul#nolia" start="30807" end="31359" category="rul" name="nolia"/>
-    <note id="a33" type="rul#nolia" start="31391" end="31997" category="rul" name="nolia"/>
-    <note id="a34" type="rul#nolia" start="31998" end="32424" category="rul" name="nolia"/>
+    <note id="a8" type="lic#name" start="17" end="90" category="lic" name="name"/>
+    <note id="a9" type="act#mod" start="4054" end="4411" category="act" name="mod"/>
+    <note id="a10" type="act#cop" start="4808" end="5014" category="act" name="cop"/>
+    <note id="a11" type="act#mov" start="8193" end="8333" category="act" name="mov"/>
+    <note id="a12" type="act#mov" start="8877" end="8971" category="act" name="mov"/>
+    <note id="a13" type="act#cop" start="9859" end="9936" category="act" name="cop"/>
+    <note id="a14" type="rul#notice" start="9938" end="10312" category="rul" name="notice"/>
+    <note id="a15" type="rul#lictxt" start="10242" end="10312" category="rul" name="lictxt"/>
+    <note id="a17" type="rul#com" start="10316" end="10443" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
+    <note id="a16" type="act#sel" start="10316" end="10443" category="act" name="sel"/>
+    <note id="a18" type="act#mov" start="10446" end="10485" category="act" name="mov"/>
+    <note id="a19" type="act#der" start="10486" end="12320" category="act" name="der"/>
+    <note id="a20" type="rul#changes" start="10701" end="10803" category="rul" name="changes"/>
+    <note id="a22" type="rul#src" start="12357" end="12570" category="rul" name="src"/>
+    <note id="a21" type="act#mov" start="12357" end="12570" category="act" name="mov"/>
+    <note id="a23" type="act#mov" start="12575" end="12814" category="act" name="mov"/>
+    <note id="a24" type="act#mov" start="12820" end="13534" category="act" name="mov"/>
+    <note id="a25" type="act#mov" start="13540" end="13831" category="act" name="mov"/>
+    <note id="a26" type="act#mov" start="13837" end="14653" category="act" name="mov"/>
+    <note id="a27" type="act#mov" start="14659" end="14894" category="act" name="mov"/>
+    <note id="a28" type="rul#tivo" start="16363" end="16809" category="rul" name="tivo"/>
+    <note id="a29" type="rul#by" start="19097" end="19281" category="rul" name="by"/>
+    <note id="a30" type="rul#patret" start="23924" end="24389" category="rul" name="patret"/>
+    <note id="a31" type="rul#pat" start="25172" end="25428" category="rul" name="pat"/>
+    <note id="a32" type="rul#nolia" start="30803" end="31355" category="rul" name="nolia"/>
+    <note id="a33" type="rul#nolia" start="31387" end="31993" category="rul" name="nolia"/>
+    <note id="a34" type="rul#nolia" start="31994" end="32420" category="rul" name="nolia"/>
     <note id="a1" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
     <note id="a2" type="lic#fsf" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
     <note id="a3" type="lic#osi" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
     <note id="a4" type="cpy#strong" label="Strong Copyleft" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a5" type="rul#lictxt" category="rul" name="lictxt"/>
-    <note id="a6" type="rul#notice" category="rul" name="notice"/>
-    <note id="a7" type="rul#tivo" category="rul" name="tivo"/>
-    <note id="a8" type="rul#patret" category="rul" name="patret"/>
-    <note id="a9" type="rul#pat" category="rul" name="pat"/>
-    <note id="a10" type="use#lib" category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
-    <note id="a11" type="use#app" category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
-    <note id="a12" type="use#cld" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
+    <note id="a5" type="use#lib" category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
+    <note id="a6" type="use#app" category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
+    <note id="a7" type="use#cld" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
     <note id="a35" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
     <note id="a36" type="pol#if" if="env=com,use=lib,dst=partners,cpy=strong" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🤝 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, cpy#strong 🔴 Strong Copyleft"/>
     <note id="a37" type="pol#if" if="env=com,use=lib,dst=internal,cpy=strong" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏢 📚 🏢 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe, cpy#strong 🔴 Strong Copyleft"/>
