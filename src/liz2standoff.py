@@ -129,8 +129,18 @@ TYPE_LABELS: dict[str, str] = {
 
 # Standard-Labels, falls kein Wert/Label im .liz angegeben ist
 DEFAULT_LABELS: dict[str, str] = {
+    # lic – neue Default-Labels
+    "lic#fsf": "FSF-Free-Software-Lizenz",
+    "lic#osi": "OSI-approved-Lizenz",
+
+    # use
+    "use#doc": "Auf Dokumentation anwendbar.",
+    "use#lib": "Auf Bibliothek/Komponente anwendbar.",
+    "use#app": "Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar.",
+    "use#cld": "Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet.",
+
     # rul
-    "rul#nc": "Nicht-kommerzielle Nutzung",
+    "rul#nc": "Nur Nicht-kommerzielle Nutzung",
     "rul#com": "Kommerzielle Nutzung erlaubt",
     "rul#nomili": "Keine militärische Nutzung",
 
@@ -139,10 +149,6 @@ DEFAULT_LABELS: dict[str, str] = {
     "cpy#weak": "Wirkt sich nur bedingt auf das Gesamtwerk aus",
     "cpy#network": "Wirkt bei Netzwerkverteilung",
     "cpy#none": "Kein Copyleft",
-
-    # lic – neue Default-Labels
-    "lic#fsf": "FSF-Free-Software-lizenz",
-    "lic#osi": "OSI-approved-Lizenz",
 }
 
 
