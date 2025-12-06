@@ -396,7 +396,10 @@
                     <!-- SPDX: SPDX-ID: Wert -->
                     <xsl:when test="@type='lic#spdx' and @label">
                         <xsl:text>SPDX-ID: </xsl:text>
-                        <a href="https://spdx.org/licenses/{@label}.html">
+                        <a href="https://spdx.org/licenses/{@label}.html"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                        >
                             <xsl:value-of select="@label"/>
                         </a>
                     </xsl:when>
