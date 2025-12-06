@@ -90,6 +90,8 @@ CPY_EMOJI: dict[str, str] = {
 TYPE_LABELS: dict[str, str] = {
     # lic
     "lic#spdx": "SPDX-ID",
+    "lic#src": "Quell-URL des Lizenztexts",
+    "lic#date": "Download Datum des analysierten Lizenztextes",
     "lic#fsf": "FSF-Freigabe",
     "lic#osi": "OSI-Freigabe",
     "lic#c": "Alle Rechte vorbehalten",
@@ -130,8 +132,6 @@ TYPE_LABELS: dict[str, str] = {
 # Standard-Labels, falls kein Wert/Label im .liz angegeben ist
 DEFAULT_LABELS: dict[str, str] = {
     # lic – neue Default-Labels
-    "lic#src": "Quell-URL des Lizenztexts",
-    "lic#date": "Download Datum des analysierten Lizenztextes",
     "lic#fsf": "FSF-Free-Software-Lizenz",
     "lic#osi": "OSI-approved-Lizenz",
 
