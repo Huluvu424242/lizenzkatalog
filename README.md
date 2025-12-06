@@ -317,7 +317,7 @@ sich im Browser auf das erzeugte `output.xml` anwenden.
 - Eingabetexte werden **Unicode‑NFC** normalisiert (stabile Offsets).
 - **IDs sind Pflicht** bei **überlappenden Bereichen**.
 - **Single‑Tags** besitzen **kein schließendes Gegenstück**.
-- Für die **SPDX‑ID** kann die offizielle Liste referenziert werden (z. B. `[[lic#spdx="Apache-2.0"]]`).
+- Für die **SPDX‑ID** kann die [offizielle Liste](https://spdx.org/licenses/licenses.json) referenziert werden (z. B. `[[lic#spdx="Apache-2.0"]]`).
 
 ---
 
