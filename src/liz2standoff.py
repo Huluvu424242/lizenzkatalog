@@ -129,14 +129,22 @@ TYPE_LABELS: dict[str, str] = {
 
 # Standard-Labels, falls kein Wert/Label im .liz angegeben ist
 DEFAULT_LABELS: dict[str, str] = {
+    # rul
     "rul#nc": "Nicht-kommerzielle Nutzung",
     "rul#com": "Kommerzielle Nutzung erlaubt",
     "rul#nomili": "Keine militärische Nutzung",
-    "cpy#strong": "Strong Copyleft",
-    "cpy#weak": "Weak Copyleft",
-    "cpy#network": "Network Copyleft",
+
+    # cpy
+    "cpy#strong": "Wirkt sich immer auf das Gesamtwerk aus",
+    "cpy#weak": "Wirkt sich nur bedingt auf das Gesamtwerk aus",
+    "cpy#network": "Wirkt bei Netzwerkverteilung",
     "cpy#none": "Kein Copyleft",
+
+    # lic – neue Default-Labels
+    "lic#fsf": "FSF-Free-Software-lizenz",
+    "lic#osi": "OSI-approved-Lizenz",
 }
+
 
 # -------------------- Regexe (ohne VERBOSE) ----------------------------------
 # "=" oder " <KV-Paare>" bis "]]"
