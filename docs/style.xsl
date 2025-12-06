@@ -58,9 +58,9 @@
             <xsl:when test="$t='rul#nodrm'">Kein Kopierschutz</xsl:when>
             <xsl:when test="$t='rul#nomili'">Keine militärische Nutzung</xsl:when>
             <xsl:when test="$t='rul#nc'">Nicht-kommerziell</xsl:when>
-            <xsl:when test="$t='rul#com'">Kommerziell</xsl:when>
-            <xsl:when test="$t='rul#edu'">Bildung</xsl:when>
-            <xsl:when test="$t='rul#gov'">Verwaltung</xsl:when>
+            <xsl:when test="$t='rul#com'">Kommerzielle Nutzung</xsl:when>
+            <xsl:when test="$t='rul#edu'">Bildung/Schule</xsl:when>
+            <xsl:when test="$t='rul#gov'">Verwaltung/Behörde</xsl:when>
             <xsl:when test="$t='rul#notice'">Hinweispflicht</xsl:when>
             <xsl:when test="$t='rul#lictxt'">Lizenztext beifügen</xsl:when>
             <xsl:when test="$t='rul#changes'">Änderungen kennzeichnen</xsl:when>
