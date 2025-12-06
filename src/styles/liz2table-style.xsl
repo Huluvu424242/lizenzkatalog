@@ -24,6 +24,8 @@
             <!-- lic -->
             <xsl:when test="$t='lic#name'">Lizenzname</xsl:when>
             <xsl:when test="$t='lic#spdx'">SPDX-ID</xsl:when>
+            <xsl:when test="$t='lic#src'">Download Url des Lizenztextes</xsl:when>
+            <xsl:when test="$t='lic#date'">Download Datum des Lizenztextes</xsl:when>
             <xsl:when test="$t='lic#fsf'">FSF-Freigabe</xsl:when>
             <xsl:when test="$t='lic#osi'">OSI-Freigabe</xsl:when>
             <xsl:when test="$t='lic#c'">Alle Rechte vorbehalten</xsl:when>
