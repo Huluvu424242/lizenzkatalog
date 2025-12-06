@@ -4,6 +4,8 @@
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text xml:space="preserve">
+
+
   
 
   
@@ -691,43 +693,45 @@ Public License instead of this License.  But first, please read
 
   </text>
   <notes>
-    <note id="a8" type="lic#name" start="17" end="90" category="lic" name="name"/>
-    <note id="a9" type="act#mod" start="4054" end="4411" category="act" name="mod"/>
-    <note id="a10" type="act#cop" start="4808" end="5014" category="act" name="cop"/>
-    <note id="a11" type="act#mov" start="8193" end="8333" category="act" name="mov"/>
-    <note id="a12" type="act#mov" start="8877" end="8971" category="act" name="mov"/>
-    <note id="a13" type="act#cop" start="9859" end="9936" category="act" name="cop"/>
-    <note id="a14" type="rul#notice" start="9938" end="10312" category="rul" name="notice"/>
-    <note id="a15" type="rul#lictxt" start="10242" end="10312" category="rul" name="lictxt"/>
-    <note id="a17" type="rul#com" start="10316" end="10443" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
-    <note id="a16" type="act#sel" start="10316" end="10443" category="act" name="sel"/>
-    <note id="a18" type="act#mov" start="10446" end="10485" category="act" name="mov"/>
-    <note id="a19" type="act#der" start="10486" end="12320" category="act" name="der"/>
-    <note id="a20" type="rul#changes" start="10701" end="10803" category="rul" name="changes"/>
-    <note id="a22" type="rul#src" start="12357" end="12570" category="rul" name="src"/>
-    <note id="a21" type="act#mov" start="12357" end="12570" category="act" name="mov"/>
-    <note id="a23" type="act#mov" start="12575" end="12814" category="act" name="mov"/>
-    <note id="a24" type="act#mov" start="12820" end="13534" category="act" name="mov"/>
-    <note id="a25" type="act#mov" start="13540" end="13831" category="act" name="mov"/>
-    <note id="a26" type="act#mov" start="13837" end="14653" category="act" name="mov"/>
-    <note id="a27" type="act#mov" start="14659" end="14894" category="act" name="mov"/>
-    <note id="a28" type="rul#tivo" start="16363" end="16809" category="rul" name="tivo"/>
-    <note id="a29" type="rul#by" start="19097" end="19281" category="rul" name="by"/>
-    <note id="a30" type="rul#patret" start="23924" end="24389" category="rul" name="patret"/>
-    <note id="a31" type="rul#pat" start="25172" end="25428" category="rul" name="pat"/>
-    <note id="a32" type="rul#nolia" start="30803" end="31355" category="rul" name="nolia"/>
-    <note id="a33" type="rul#nolia" start="31387" end="31993" category="rul" name="nolia"/>
-    <note id="a34" type="rul#nolia" start="31994" end="32420" category="rul" name="nolia"/>
-    <note id="a1" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
-    <note id="a2" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
-    <note id="a3" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
-    <note id="a4" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a5" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
-    <note id="a6" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
-    <note id="a7" type="use#cld" label="Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet." category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
-    <note id="a35" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a36" type="pol#if" if="env=com,use=lib,dst=partners,cpy=strong" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🤝 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a37" type="pol#if" if="env=com,use=lib,dst=internal,cpy=strong" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏢 📚 🏢 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a38" type="pol#_section" present="true"/>
+    <note id="a10" type="lic#name" start="19" end="92" category="lic" name="name"/>
+    <note id="a11" type="act#mod" start="4056" end="4413" category="act" name="mod"/>
+    <note id="a12" type="act#cop" start="4810" end="5016" category="act" name="cop"/>
+    <note id="a13" type="act#mov" start="8195" end="8335" category="act" name="mov"/>
+    <note id="a14" type="act#mov" start="8879" end="8973" category="act" name="mov"/>
+    <note id="a15" type="act#cop" start="9861" end="9938" category="act" name="cop"/>
+    <note id="a16" type="rul#notice" start="9940" end="10314" category="rul" name="notice"/>
+    <note id="a17" type="rul#lictxt" start="10244" end="10314" category="rul" name="lictxt"/>
+    <note id="a19" type="rul#com" start="10318" end="10445" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
+    <note id="a18" type="act#sel" start="10318" end="10445" category="act" name="sel"/>
+    <note id="a20" type="act#mov" start="10448" end="10487" category="act" name="mov"/>
+    <note id="a21" type="act#der" start="10488" end="12322" category="act" name="der"/>
+    <note id="a22" type="rul#changes" start="10703" end="10805" category="rul" name="changes"/>
+    <note id="a24" type="rul#src" start="12359" end="12572" category="rul" name="src"/>
+    <note id="a23" type="act#mov" start="12359" end="12572" category="act" name="mov"/>
+    <note id="a25" type="act#mov" start="12577" end="12816" category="act" name="mov"/>
+    <note id="a26" type="act#mov" start="12822" end="13536" category="act" name="mov"/>
+    <note id="a27" type="act#mov" start="13542" end="13833" category="act" name="mov"/>
+    <note id="a28" type="act#mov" start="13839" end="14655" category="act" name="mov"/>
+    <note id="a29" type="act#mov" start="14661" end="14896" category="act" name="mov"/>
+    <note id="a30" type="rul#tivo" start="16365" end="16811" category="rul" name="tivo"/>
+    <note id="a31" type="rul#by" start="19099" end="19283" category="rul" name="by"/>
+    <note id="a32" type="rul#patret" start="23926" end="24391" category="rul" name="patret"/>
+    <note id="a33" type="rul#pat" start="25174" end="25430" category="rul" name="pat"/>
+    <note id="a34" type="rul#nolia" start="30805" end="31357" category="rul" name="nolia"/>
+    <note id="a35" type="rul#nolia" start="31389" end="31995" category="rul" name="nolia"/>
+    <note id="a36" type="rul#nolia" start="31996" end="32422" category="rul" name="nolia"/>
+    <note id="a1" type="lic#src" label="https://www.gnu.org/licenses/gpl-3.0.txt" category="lic" name="src"/>
+    <note id="a2" type="lic#date" label="06.12.2025" category="lic" name="date"/>
+    <note id="a3" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
+    <note id="a4" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
+    <note id="a5" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
+    <note id="a6" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a7" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
+    <note id="a8" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
+    <note id="a9" type="use#cld" label="Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet." category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
+    <note id="a37" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a38" type="pol#if" if="env=com,use=lib,dst=partners,cpy=strong" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🤝 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a39" type="pol#if" if="env=com,use=lib,dst=internal,cpy=strong" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏢 📚 🏢 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a40" type="pol#_section" present="true"/>
   </notes>
 </annotation>
