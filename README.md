@@ -270,6 +270,9 @@ Manuell gepflegte Bewertung/Richtlinie für konkrete Nutzungsszenarien.
     - Darstellung der Annotationen als HTML‑Tabelle und farbige Textstellen
     - kann direkt im Browser genutzt werden (XML + XSL im selben Verzeichnis)
 
+## Logik der Singleton und Bereichs Tags
+siehe Dokumentation der [Taglogik](./src/site/hinweise/lizenzkatalog_taglogik.md)
+
 ---
 
 ## Verzeichnisstruktur
