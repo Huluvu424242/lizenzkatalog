@@ -682,7 +682,7 @@ Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
 
 
-[[pol#if if="env=com,use=lib,dst=public,cpy=strong"
+[[pol#if if="env=com,use=lib,dst=public,lic=c"
 then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
 [[pol#if if="env=com,use=lib,dst=partners,cpy=strong"
 then="rot"  because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
