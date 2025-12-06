@@ -104,15 +104,16 @@ Die Bereiche:
 
 Allgemeine Eigenschaften / Metadaten der Lizenz.
 
-| Schlüssel | Bedeutung                     | Tag‑Typ    | Beispiel                                                                   |
-|-----------|-------------------------------|------------|----------------------------------------------------------------------------|
-| `name`    | Lizenzname                    | **Block**  | `[[lic#name]]GPL-3.0[[/lic#name]]`                                         |
-| `src`     | Quelle des analyierten Textes | **Single** | `[[lic#src=https://spdx.org/licenses/GPL-3.0-only.html date="06.12.2025"]]`|
-| `spdx`    | SPDX‑ID                       | **Single** | `[[lic#spdx="GPL-3.0-only"]]`                                              |
-| `fsf`     | FSF Approved                  | **Single** | `[[lic#fsf]]`                                                              |
-| `osi`     | OSI Approved                  | **Single** | `[[lic#osi]]`                                                              |
-| `c`       | Alle Rechte vorbehalten       | **Single** | `[[lic#c]]`                                                                |
-| `c0`      | Public Domain                 | **Single** | `[[lic#c0]]`                                                               |
+| Schlüssel | Bedeutung                     | Tag‑Typ    | Beispiel                                                    |
+|-----------|-------------------------------|------------|-------------------------------------------------------------|
+| `name`    | Lizenzname                    | **Block**  | `[[lic#name]]GPL-3.0[[/lic#name]]`                          |
+| `src`     | Quelle des analyierten Textes | **Single** | `[[lic#src="https://spdx.org/licenses/GPL-3.0-only.html"]]` |
+| `date`    | Download Datum des Textes     | **Single** | `[[lic#date="06.12.2025"]]`                                 |
+| `spdx`    | SPDX‑ID                       | **Single** | `[[lic#spdx="GPL-3.0-only"]]`                               |
+| `fsf`     | FSF Approved                  | **Single** | `[[lic#fsf]]`                                               |
+| `osi`     | OSI Approved                  | **Single** | `[[lic#osi]]`                                               |
+| `c`       | Alle Rechte vorbehalten       | **Single** | `[[lic#c]]`                                                 |
+| `c0`      | Public Domain                 | **Single** | `[[lic#c0]]`                                                |
 
 ---
 
