@@ -1,4 +1,3 @@
 Apache-2.0
 GPL-3.0
 ODC-By-1.0
-test-gpl3
