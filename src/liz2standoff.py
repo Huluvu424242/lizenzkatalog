@@ -86,6 +86,12 @@ CPY_EMOJI: dict[str, str] = {
     "network": "🌐",  # network copyleft
 }
 
+LIC_EMOJI: dict[str, str] = {
+    "c0": "⚪",     # gemeinfrei
+    "c": "🔴",   # alle Rechte vorbehalten
+}
+
+
 # Menschlich lesbare Bezeichnungen pro type (für Tooltips)
 TYPE_LABELS: dict[str, str] = {
     # lic
@@ -385,7 +391,7 @@ def make_policy_if_tooltip(if_raw: str | None) -> str | None:
         key = key.strip()
         val = val.strip()
 
-        if key not in {"env", "use", "dst", "cpy"}:
+        if key not in {"env", "use", "dst", "cpy", "lic"}:
             chunks.append(p)
             continue
 
@@ -397,8 +403,10 @@ def make_policy_if_tooltip(if_raw: str | None) -> str | None:
             emoji = USE_EMOJI.get(val)
         elif key == "dst":
             emoji = DST_EMOJI.get(val)
-        else:  # cpy
+        elif key == "cpy":
             emoji = CPY_EMOJI.get(val)
+        else:  # lic
+            emoji = LIC_EMOJI.get(val)
 
         type_label = TYPE_LABELS.get(full_type, "")
         seg_parts: list[str] = [full_type]
