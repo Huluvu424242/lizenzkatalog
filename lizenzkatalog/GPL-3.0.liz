@@ -1,5 +1,5 @@
 [[lic#spdx="GPL-3.0-only"]] [[lic#fsf]] [[lic#osi]]
-[[cpy#strong]]
+[[cpy#strong]] [[rul#lictxt]]
 [[use#lib]] [[use#app]] [[use#cld]]
 
 
@@ -203,8 +203,8 @@ receive it[[/act#cop]], [[rul#notice]]in any medium, provided that you conspicuo
 appropriately publish on each copy an appropriate copyright notice;
 keep intact all notices stating that this License and any
 non-permissive terms added in accord with section 7 apply to the code;
-keep intact all notices of the absence of any warranty; [[rul#lictxt]]and give all
-recipients a copy of this License along with the Program.[[/rul#lictxt]][[/rul#notice]]
+keep intact all notices of the absence of any warranty; and give all
+recipients a copy of this License along with the Program.[[/rul#notice]]
 
   [[act#sel]][[rul#com]]You may charge any price or no price for each copy that you convey,
 and you may offer support or warranty protection for a fee.[[/rul#com]][[/act#sel]]
