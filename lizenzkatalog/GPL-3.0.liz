@@ -1,5 +1,5 @@
 [[lic#spdx="GPL-3.0-only"]] [[lic#fsf]] [[lic#osi]]
-[[cpy#strong]] [[rul#lictxt]] [[rul#notice]] [[rul#tivio]]
+[[cpy#strong]] [[rul#lictxt]] [[rul#notice]] [[rul#tivo]]
 [[use#lib]] [[use#app]] [[use#cld]]
 
 
@@ -319,13 +319,13 @@ suffice to ensure that the continued functioning of the modified object
 code is in no case prevented or interfered with solely because
 modification has been made.
 
-  [[rul#tivo]]If you convey an object code work under this section in, or with, or
+  If you convey an object code work under this section in, or with, or
 specifically for use in, a User Product, and the conveying occurs as
 part of a transaction in which the right of possession and use of the
 User Product is transferred to the recipient in perpetuity or for a
 fixed term (regardless of how the transaction is characterized), the
 Corresponding Source conveyed under this section must be accompanied
-by the Installation Information.[[/rul#tivo]]  But this requirement does not apply
+by the Installation Information. But this requirement does not apply
 if neither you nor any third party retains the ability to install
 modified object code on the User Product (for example, the work has
 been installed in ROM).
