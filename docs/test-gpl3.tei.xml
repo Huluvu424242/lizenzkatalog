@@ -26,7 +26,7 @@ Haftungsausschluss.
     <note id="a7" type="rul#changes" start="212" end="235" category="rul" name="changes"/>
     <note id="a8" type="rul#nolia" start="237" end="255" category="rul" name="nolia"/>
     <note id="a2" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
-    <note id="a3" type="lic#fsf" label="FSF-Free-Software-lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
+    <note id="a3" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
     <note id="a4" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
     <note id="a5" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
     <note id="a9" type="pol#if" if="env=com,use=lib,dst=internal+srv,cpy=strong" then="grün" because="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." status="green" title="Intern, kein Distribut/Client-Code → Copyleft-Pflichten werden nicht ausgelöst." label="🏢 📚 🔴 dst=internal+srv" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal+srv, cpy#strong 🔴 Strong Copyleft"/>

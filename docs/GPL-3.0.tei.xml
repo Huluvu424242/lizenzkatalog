@@ -719,12 +719,12 @@ Public License instead of this License.  But first, please read
     <note id="a33" type="rul#nolia" start="31387" end="31993" category="rul" name="nolia"/>
     <note id="a34" type="rul#nolia" start="31994" end="32420" category="rul" name="nolia"/>
     <note id="a1" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
-    <note id="a2" type="lic#fsf" label="FSF-Free-Software-lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
+    <note id="a2" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
     <note id="a3" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
     <note id="a4" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a5" type="use#lib" category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
-    <note id="a6" type="use#app" category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
-    <note id="a7" type="use#cld" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
+    <note id="a5" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
+    <note id="a6" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
+    <note id="a7" type="use#cld" label="Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet." category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
     <note id="a35" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
     <note id="a36" type="pol#if" if="env=com,use=lib,dst=partners,cpy=strong" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🤝 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, cpy#strong 🔴 Strong Copyleft"/>
     <note id="a37" type="pol#if" if="env=com,use=lib,dst=internal,cpy=strong" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏢 📚 🏢 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe, cpy#strong 🔴 Strong Copyleft"/>
