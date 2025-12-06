@@ -719,9 +719,9 @@ Public License instead of this License.  But first, please read
     <note id="a33" type="rul#nolia" start="31387" end="31993" category="rul" name="nolia"/>
     <note id="a34" type="rul#nolia" start="31994" end="32420" category="rul" name="nolia"/>
     <note id="a1" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
-    <note id="a2" type="lic#fsf" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
-    <note id="a3" type="lic#osi" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
-    <note id="a4" type="cpy#strong" label="Strong Copyleft" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a2" type="lic#fsf" label="FSF-Free-Software-lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
+    <note id="a3" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
+    <note id="a4" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
     <note id="a5" type="use#lib" category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
     <note id="a6" type="use#app" category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
     <note id="a7" type="use#cld" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
