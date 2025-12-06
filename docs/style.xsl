@@ -396,7 +396,9 @@
                     <!-- SPDX: SPDX-ID: Wert -->
                     <xsl:when test="@type='lic#spdx' and @label">
                         <xsl:text>SPDX-ID: </xsl:text>
-                        <xsl:value-of select="@label"/>
+                        <a href="https://spdx.org/licenses/{@label}.html">
+                            <xsl:value-of select="@label"/>
+                        </a>
                     </xsl:when>
 
                     <!-- generischer Fall: nutze @label, falls vorhanden -->
