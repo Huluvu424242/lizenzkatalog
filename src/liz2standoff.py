@@ -130,6 +130,8 @@ TYPE_LABELS: dict[str, str] = {
 # Standard-Labels, falls kein Wert/Label im .liz angegeben ist
 DEFAULT_LABELS: dict[str, str] = {
     # lic – neue Default-Labels
+    "lic#src": "Quell-URL des Lizenztexts",
+    "lic#date": "Download Datum des analysierten Lizenztextes",
     "lic#fsf": "FSF-Free-Software-Lizenz",
     "lic#osi": "OSI-approved-Lizenz",
 
