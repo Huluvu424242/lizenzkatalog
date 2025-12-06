@@ -1,5 +1,5 @@
 [[lic#spdx="GPL-3.0-only"]] [[lic#fsf]] [[lic#osi]]
-[[cpy#strong]] [[rul#lictxt]]
+[[cpy#strong]] [[rul#lictxt]] [[rul#notice]]
 [[use#lib]] [[use#app]] [[use#cld]]
 
 
@@ -199,12 +199,12 @@ technological measures.
   4. Conveying Verbatim Copies.
 
   [[act#cop]]You may convey verbatim copies of the Program's source code as you
-receive it[[/act#cop]], [[rul#notice]]in any medium, provided that you conspicuously and
+receive it[[/act#cop]], in any medium, provided that you conspicuously and
 appropriately publish on each copy an appropriate copyright notice;
 keep intact all notices stating that this License and any
 non-permissive terms added in accord with section 7 apply to the code;
 keep intact all notices of the absence of any warranty; and give all
-recipients a copy of this License along with the Program.[[/rul#notice]]
+recipients a copy of this License along with the Program.
 
   [[act#sel]][[rul#com]]You may charge any price or no price for each copy that you convey,
 and you may offer support or warranty protection for a fee.[[/rul#com]][[/act#sel]]
