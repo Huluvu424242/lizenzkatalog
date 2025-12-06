@@ -3,7 +3,7 @@ Testlizenz - GNU General Public License, Version 3 (GPL-3.0)
 
 
 Pflichten (auszugsweise):
-    
+[[rul#notice=]] [[rul#lictxt=]] [[rul#pat=]] [[rul#patret=]] [[rul#tivo=]]
 vollständiger, korrespondierender Quellcode,
 Änderungen kennzeichnen,
 Haftungsausschluss.
