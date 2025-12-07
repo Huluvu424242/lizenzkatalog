@@ -68,6 +68,10 @@ USE_EMOJI: dict[str, str] = {
     "lib": "📚",  # Bibliothek / Komponente
     "app": "💻",  # Lokale Anwendung
     "cld": "☁️",  # Cloud-Anwendung
+    "data": "☁️",  # Cloud-Anwendung
+    "ai": "☁️",  # Cloud-Anwendung
+    "img": "☁️",  # Cloud-Anwendung
+    "art": "☁️",  # Cloud-Anwendung
 }
 
 DST_EMOJI: dict[str, str] = {
@@ -108,6 +112,10 @@ TYPE_LABELS: dict[str, str] = {
     "use#lib": "Bibliothek/Komponente",
     "use#app": "Lokale Anwendung",
     "use#cld": "Cloud-Anwendung",
+    "use#data": "Daten (allgemein)",
+    "use#ai": "KI Modelle, Parser etc.",
+    "use#img": "Bilder, Fotos, Gemälde",
+    "use#art": "Kunstwerke, Gegenstände, Skulpturen etc.",
 
     # env
     "env#com": "Unternehmen",
