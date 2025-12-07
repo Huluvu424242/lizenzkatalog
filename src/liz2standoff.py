@@ -135,11 +135,13 @@ TYPE_LABELS: dict[str, str] = {
     "rul#nomili": "Keine militärische Nutzung",
 }
 
-# Standard-Labels, falls kein Wert/Label im .liz angegeben ist
+# Standard-Labels: Wert in Tabelle 1
 DEFAULT_LABELS: dict[str, str] = {
     # lic – neue Default-Labels
     "lic#fsf": "FSF-Free-Software-Lizenz",
+    "lic#nofsf": "Keine FSF-Free-Software-Lizenz",
     "lic#osi": "OSI-approved-Lizenz",
+    "lic#noosi": "NICHT OSI-approved-Lizenz",
 
     # use
     "use#doc": "Auf Dokumentation anwendbar.",
