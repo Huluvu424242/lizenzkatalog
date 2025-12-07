@@ -136,9 +136,9 @@ express Statement of Purpose.
     party to this document and has no duty or obligation with respect to
     this CC0 or use of the Work.
 
-[[pol#if if="env=com,use=lib,dst=public,lic=c0"
+[[pol#if if="env=com,use=lib,dst=public,lic=c0,lic=c"
 then="grün"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks in jeder Form möglich."]]
-[[pol#if if="env=com,use=lib,use=art,dst=partners,lic=c0"
+[[pol#if if="env=com,use=lib,use=art,dst=partners,lic=c0,lic=c"
 then="grün"  because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks in jeder Form möglich."]]
-[[pol#if if="env=com,use=lib,dst=internal,lic=c0"
+[[pol#if if="env=com,use=lib,dst=internal,lic=c0,lic=c"
 then="grün"  because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks in jder Form möglich."]]
