@@ -716,6 +716,7 @@ def konvertiere(
 
         # label IMMER ausgeben, sofern vorhanden und nicht bereits in attrs_dict
         if sg.get("label") is not None and "label" not in attrs_dict:
+            print(f"SG Label {sg["label"]}")
             attrs.append(xml_attr_pair("label", sg["label"]))
 
         for k, v in attrs_dict.items():
