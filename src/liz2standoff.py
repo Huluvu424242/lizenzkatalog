@@ -138,10 +138,10 @@ TYPE_LABELS: dict[str, str] = {
 # Standard-Labels: Wert in Tabelle 1
 DEFAULT_LABELS: dict[str, str] = {
     # lic – neue Default-Labels
-    "lic#fsf": "FSF-Free-Software-Lizenz",
+    "lic#fsf": "Ist FSF-Free-Software-Lizenz",
     "lic#nofsf": "Keine FSF-Free-Software-Lizenz",
-    "lic#osi": "OSI-approved-Lizenz",
-    "lic#noosi": "NICHT OSI-approved-Lizenz",
+    "lic#osi": "Ist OSI-approved-Lizenz",
+    "lic#noosi": "Keine OSI-approved-Lizenz",
 
     # use
     "use#doc": "Auf Dokumentation anwendbar.",
