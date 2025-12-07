@@ -54,29 +54,29 @@ SINGLETON_TAGS: set[str] = {
 
 # Emoji-Mappings für env / use / dst / cpy
 ENV_EMOJI: dict[str, str] = {
-    "com": "🏢",  # Unternehmen
+    "com": "🏭",  # Unternehmen
     "edu": "🎓",  # Bildung
     "sci": "🔬",  # Wissenschaft
     "prv": "🏠",  # Privat
     "oss": "🐧",  # OSS / Pinguin
-    "gov": "🏛",  # Verwaltung / Behörde
+    "gov": "🏢",  # Verwaltung / Behörde
     "ngo": "🤝",  # NGO / Gemeinnützig
 }
 
 USE_EMOJI: dict[str, str] = {
     "doc": "📄",  # Dokumentation
-    "lib": "📚",  # Bibliothek / Komponente
-    "app": "💻",  # Lokale Anwendung
+    "lib": "📗",  # Bibliothek / Komponente
+    "app": "📲",  # Lokale Anwendung
     "cld": "☁️",  # Cloud-Anwendung
-    "data": "☁️",  # Cloud-Anwendung
-    "ai": "☁️",  # Cloud-Anwendung
-    "img": "☁️",  # Cloud-Anwendung
-    "art": "☁️",  # Cloud-Anwendung
+    "data": "🫆",  # Cloud-Anwendung
+    "ai": "🧠",  # Cloud-Anwendung
+    "img": "🎞️",  # Cloud-Anwendung
+    "art": "🎭",  # Cloud-Anwendung
 }
 
 DST_EMOJI: dict[str, str] = {
     "none": "🚫",      # keine Weitergabe
-    "internal": "🏢",  # intern im Unternehmen
+    "internal": "♻️",  # intern im Unternehmen
     "partners": "🤝",  # Partner/Kunden
     "public": "🌍",    # öffentlich
     "srv": "🖥️",      # Server-seitig
