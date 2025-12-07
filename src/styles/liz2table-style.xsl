@@ -38,6 +38,10 @@
             <xsl:when test="$t='use#lib'">Bibliothek/Komponente</xsl:when>
             <xsl:when test="$t='use#app'">Lokale Anwendung</xsl:when>
             <xsl:when test="$t='use#cld'">Cloud-Anwendung</xsl:when>
+            <xsl:when test="$t='use#data'">Daten allgemein</xsl:when>
+            <xsl:when test="$t='use#ai'">KI Umfeld</xsl:when>
+            <xsl:when test="$t='use#img'">Bilder</xsl:when>
+            <xsl:when test="$t='use#art'">Kunstwerke</xsl:when>
 
             <!-- lim -->
             <xsl:when test="$t='lim#pc'">Anzahl Rechner</xsl:when>
