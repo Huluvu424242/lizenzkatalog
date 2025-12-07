@@ -15,7 +15,7 @@ async function loadFileList() {
             .map(line => line.trim())
             .filter(line => line.length > 0);
 
-        // UL-Element im HTML finden oder neu erzeugen
+        // OL-Element im HTML finden oder neu erzeugen
         const listContainer = document.getElementById('fileList') || document.body.appendChild(document.createElement('ol'));
 
         // Vorhandene Inhalte leeren
