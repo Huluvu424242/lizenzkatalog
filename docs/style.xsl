@@ -243,7 +243,9 @@
                                     </xsl:attribute>
                                     <xsl:choose>
                                         <xsl:when test="@link">
-                                            <a href="{@link}">
+                                            <a href="{@link}"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
                                                 <xsl:value-of select="@link"/>
                                             </a>
                                         </xsl:when>
