@@ -87,6 +87,10 @@ Lizenz hervorzuheben.
 > **Block‑Tag**: `[[bereich#schlüssel]] … [[/bereich#schlüssel]]`  
 > **Single‑Tag**: `[[bereich#schlüssel[="wert"]]]`
 
+Sollte man keine Stelle zum Zitieren für ein Block Tag finden, so kann durch Zuweisen eines leeren Wertes daraus ein
+Single Tag gemacht werden z.B. [[rul#lictxt=]] statt [[rul#lictxt]]....[[/rul#lictxt]]
+
+
 Die Annotationen lassen sich den folgenden Themenbereichen zuordnen.
 
 Die Bereiche:
@@ -100,14 +104,16 @@ Die Bereiche:
 
 Allgemeine Eigenschaften / Metadaten der Lizenz.
 
-| Schlüssel | Bedeutung               | Tag‑Typ    | Beispiel                           |
-|-----------|-------------------------|------------|------------------------------------|
-| `name`    | Lizenzname              | **Block**  | `[[lic#name]]GPL-3.0[[/lic#name]]` |
-| `spdx`    | SPDX‑ID                 | **Single** | `[[lic#spdx="GPL-3.0-only"]]`      |
-| `fsf`     | FSF Approved            | **Single** | `[[lic#fsf]]`                      |
-| `osi`     | OSI Approved            | **Single** | `[[lic#osi]]`                      |
-| `c`       | Alle Rechte vorbehalten | **Single** | `[[lic#c]]`                        |
-| `c0`      | Public Domain           | **Single** | `[[lic#c0]]`                       |
+| Schlüssel | Bedeutung                     | Tag‑Typ    | Beispiel                                                    |
+|-----------|-------------------------------|------------|-------------------------------------------------------------|
+| `name`    | Lizenzname                    | **Block**  | `[[lic#name]]GPL-3.0[[/lic#name]]`                          |
+| `src`     | Quelle des analyierten Textes | **Single** | `[[lic#src="https://spdx.org/licenses/GPL-3.0-only.html"]]` |
+| `date`    | Download Datum des Textes     | **Single** | `[[lic#date="06.12.2025"]]`                                 |
+| `spdx`    | SPDX‑ID                       | **Single** | `[[lic#spdx="GPL-3.0-only"]]`                               |
+| `fsf`     | FSF Approved                  | **Single** | `[[lic#fsf]]`                                               |
+| `osi`     | OSI Approved                  | **Single** | `[[lic#osi]]`                                               |
+| `c`       | Alle Rechte vorbehalten       | **Single** | `[[lic#c]]`                                                 |
+| `c0`      | Public Domain                 | **Single** | `[[lic#c0]]`                                                |
 
 ---
 
@@ -158,25 +164,25 @@ Die Lizenz geht speziell auf bestimmte Verwendungen des Lizenzgegenstandes ein.
 
 In der Lizenz werden aufgeführte Pflichten und Folgen beschrieben.
 
-| Schlüssel | Bedeutung                                | Tag‑Typ    | Beispiel                         |
-|-----------|------------------------------------------|------------|----------------------------------|
-| `nolia`   | Haftungsausschluss (Warranty Disclaimer) | **Block**  | `[[rul#nolia]]…[[/rul#nolia]]`   |
-| `by`      | Namensnennung                            | **Block**  | `[[rul#by]]…[[/rul#by]]`         |
-| `sa`      | Share‑Alike                              | **Block**  | `[[rul#sa]]…[[/rul#sa]]`         |
-| `nd`      | Keine Bearbeitung                        | **Block**  | `[[rul#nd]]…[[/rul#nd]]`         |
-| `nodrm`   | Keine DRM                                | **Block**  | `[[rul#nodrm]]…[[/rul#nodrm]]`   |
-| `nomili`  | Keine militärische Nutzung               | **Block**  | `[[rul#nomili]]…[[/rul#nomili]]` |
-| `nc`      | Keine kommerzielle Nutzung               | **Block**  | `[[rul#nc]]…[[/rul#nc]]`         |
-| `com`     | Kommerzielle Nutzung erlaubt             | **Block**  | `[[rul#com]]…[[/rul#com]]`       |
-| `edu`     | Bildung                                  | **Block**  | `[[rul#edu]]…[[/rul#edu]]`       |
-| `gov`     | Behörden                                 | **Block**  | `[[rul#gov]]…[[/rul#gov]]`       |
-| `src`     | Quellcodepflicht                         | **Block**  | `[[rul#src]]…[[/rul#src]]`       |
-| `notice`  | Copyright‑/Hinweispflicht                | **Single** | `[[rul#notice]]`                 |
-| `lictxt`  | Lizenztext beifügen                      | **Single** | `[[rul#lictxt]]`                 |
-| `changes` | Änderungen kennzeichnen                  | **Single** | `[[rul#changes]]`                |
-| `pat`     | Patentlizenz gewährt                     | **Single** | `[[rul#pat]]`                    |
-| `patret`  | Patentretaliation                        | **Single** | `[[rul#patret]]`                 |
-| `tivo`    | Anti‑Tivoization                         | **Single** | `[[rul#tivo]]`                   |
+| Schlüssel | Bedeutung                                | Tag‑Typ   | Beispiel                         |
+|-----------|------------------------------------------|-----------|----------------------------------|
+| `nolia`   | Haftungsausschluss (Warranty Disclaimer) | **Block** | `[[rul#nolia]]…[[/rul#nolia]]`   |
+| `by`      | Namensnennung                            | **Block** | `[[rul#by]]…[[/rul#by]]`         |
+| `sa`      | Share‑Alike                              | **Block** | `[[rul#sa]]…[[/rul#sa]]`         |
+| `nd`      | Keine Bearbeitung                        | **Block** | `[[rul#nd]]…[[/rul#nd]]`         |
+| `nodrm`   | Keine DRM                                | **Block** | `[[rul#nodrm]]…[[/rul#nodrm]]`   |
+| `nomili`  | Keine militärische Nutzung               | **Block** | `[[rul#nomili]]…[[/rul#nomili]]` |
+| `nc`      | Keine kommerzielle Nutzung               | **Block** | `[[rul#nc]]…[[/rul#nc]]`         |
+| `com`     | Kommerzielle Nutzung erlaubt             | **Block** | `[[rul#com]]…[[/rul#com]]`       |
+| `edu`     | Bildung                                  | **Block** | `[[rul#edu]]…[[/rul#edu]]`       |
+| `gov`     | Behörden                                 | **Block** | `[[rul#gov]]…[[/rul#gov]]`       |
+| `src`     | Quellcodepflicht                         | **Block** | `[[rul#src]]…[[/rul#src]]`       |
+| `notice`  | Copyright‑/Hinweispflicht                | **Blcok** | `[[rul#notice]]`                 |
+| `lictxt`  | Lizenztext beifügen                      | **Block** | `[[rul#lictxt]]`                 |
+| `changes` | Änderungen kennzeichnen                  | **Block** | `[[rul#changes]]`                |
+| `pat`     | Patentlizenz gewährt                     | **Block** | `[[rul#pat]]`                    |
+| `patret`  | Patentretaliation                        | **Block** | `[[rul#patret]]`                 |
+| `tivo`    | Anti‑Tivoization                         | **Block** | `[[rul#tivo]]`                   |
 
 ---
 
@@ -270,6 +276,9 @@ Manuell gepflegte Bewertung/Richtlinie für konkrete Nutzungsszenarien.
     - Darstellung der Annotationen als HTML‑Tabelle und farbige Textstellen
     - kann direkt im Browser genutzt werden (XML + XSL im selben Verzeichnis)
 
+## Logik der Singleton und Bereichs Tags
+siehe Dokumentation der [Taglogik](./src/site/hinweise/lizenzkatalog_taglogik.md)
+
 ---
 
 ## Verzeichnisstruktur
@@ -314,7 +323,7 @@ sich im Browser auf das erzeugte `output.xml` anwenden.
 - Eingabetexte werden **Unicode‑NFC** normalisiert (stabile Offsets).
 - **IDs sind Pflicht** bei **überlappenden Bereichen**.
 - **Single‑Tags** besitzen **kein schließendes Gegenstück**.
-- Für die **SPDX‑ID** kann die offizielle Liste referenziert werden (z. B. `[[lic#spdx="Apache-2.0"]]`).
+- Für die **SPDX‑ID** kann die [offizielle Liste](https://spdx.org/licenses/licenses.json) referenziert werden (z. B. `[[lic#spdx="Apache-2.0"]]`).
 
 ---
 

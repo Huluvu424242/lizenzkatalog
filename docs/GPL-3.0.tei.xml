@@ -4,9 +4,15 @@
 <?thomas-schubert document-status="draft" version="2.0"?>
 <annotation>
   <text xml:space="preserve">
+
+
+  
+
+  
+
+
         GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
-
  Copyright (C) 2007 Free Software Foundation, Inc. &lt;https://fsf.org/&gt;
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
@@ -615,6 +621,7 @@ PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
 EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
+
   17. Interpretation of Sections 15 and 16.
 
   If the disclaimer of warranty and limitation of liability provided
@@ -623,6 +630,7 @@ reviewing courts shall apply local law that most closely approximates
 an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
+
 
                      END OF TERMS AND CONDITIONS
 
@@ -685,16 +693,45 @@ Public License instead of this License.  But first, please read
 
   </text>
   <notes>
-    <note id="a1" type="lic#name" start="8" end="81" category="lic" name="name"/>
-    <note id="a3" type="act#mod" start="4046" end="4403" category="act" name="mod"/>
-    <note id="a4" type="act#der" start="10478" end="10688" category="act" name="der"/>
-    <note id="a5" type="act#der" start="11029" end="11496" category="act" name="der"/>
-    <note id="a6" type="rul#nolia" start="30795" end="31347" category="rul" name="nolia"/>
-    <note id="a7" type="rul#nolia" start="31379" end="31985" category="rul" name="nolia"/>
-    <note id="a2" type="lic#spdx" label="GPL-3.0" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0"/>
-    <note id="a8" type="pol#if" if="env=com,use=lib,dst=public,cpy=strong" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a9" type="pol#if" if="env=com,use=lib,dst=partners,cpy=strong" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🤝 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a10" type="pol#if" if="env=com,use=lib,dst=internal,cpy=strong" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏢 📚 🏢 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe, cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a11" type="pol#_section" present="true"/>
+    <note id="a10" type="lic#name" start="19" end="92" category="lic" name="name"/>
+    <note id="a11" type="act#mod" start="4056" end="4413" category="act" name="mod"/>
+    <note id="a12" type="act#cop" start="4810" end="5016" category="act" name="cop"/>
+    <note id="a13" type="act#mov" start="8195" end="8335" category="act" name="mov"/>
+    <note id="a14" type="act#mov" start="8879" end="8973" category="act" name="mov"/>
+    <note id="a15" type="act#cop" start="9861" end="9938" category="act" name="cop"/>
+    <note id="a16" type="rul#notice" start="9940" end="10314" category="rul" name="notice"/>
+    <note id="a17" type="rul#lictxt" start="10244" end="10314" category="rul" name="lictxt"/>
+    <note id="a19" type="rul#com" start="10318" end="10445" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
+    <note id="a18" type="act#sel" start="10318" end="10445" category="act" name="sel"/>
+    <note id="a20" type="act#mov" start="10448" end="10487" category="act" name="mov"/>
+    <note id="a21" type="act#der" start="10488" end="12322" category="act" name="der"/>
+    <note id="a22" type="rul#changes" start="10703" end="10805" category="rul" name="changes"/>
+    <note id="a24" type="rul#src" start="12359" end="12572" category="rul" name="src"/>
+    <note id="a23" type="act#mov" start="12359" end="12572" category="act" name="mov"/>
+    <note id="a25" type="act#mov" start="12577" end="12816" category="act" name="mov"/>
+    <note id="a26" type="act#mov" start="12822" end="13536" category="act" name="mov"/>
+    <note id="a27" type="act#mov" start="13542" end="13833" category="act" name="mov"/>
+    <note id="a28" type="act#mov" start="13839" end="14655" category="act" name="mov"/>
+    <note id="a29" type="act#mov" start="14661" end="14896" category="act" name="mov"/>
+    <note id="a30" type="rul#tivo" start="16365" end="16811" category="rul" name="tivo"/>
+    <note id="a31" type="rul#by" start="19099" end="19283" category="rul" name="by"/>
+    <note id="a32" type="rul#patret" start="23926" end="24391" category="rul" name="patret"/>
+    <note id="a33" type="rul#pat" start="25174" end="25430" category="rul" name="pat"/>
+    <note id="a34" type="rul#nolia" start="30805" end="31357" category="rul" name="nolia"/>
+    <note id="a35" type="rul#nolia" start="31389" end="31995" category="rul" name="nolia"/>
+    <note id="a36" type="rul#nolia" start="31996" end="32422" category="rul" name="nolia"/>
+    <note id="a1" type="lic#src" label="https://www.gnu.org/licenses/gpl-3.0.txt" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
+    <note id="a2" type="lic#date" label="06.12.2025" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
+    <note id="a3" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
+    <note id="a4" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
+    <note id="a5" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
+    <note id="a6" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a7" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
+    <note id="a8" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
+    <note id="a9" type="use#cld" label="In der Cloud anwendbar, evlt. geeigneter Lizenzen mit Netzwerk-Copyleft wie z.B. AGPL" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
+    <note id="a37" type="pol#if" if="env=com,use=lib,dst=public,lic=c" then="rot" because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🌍 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#public 🌍 Öffentlich, lic#c 🔴 Alle Rechte vorbehalten"/>
+    <note id="a38" type="pol#if" if="env=com,use=lib,dst=partners,cpy=strong" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏢 📚 🤝 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a39" type="pol#if" if="env=com,use=lib,dst=internal,cpy=strong" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏢 📚 🏢 🔴" if_tooltip="env#com 🏢 Unternehmen, use#lib 📚 Bibliothek/Komponente, dst#internal 🏢 Interne Weitergabe, cpy#strong 🔴 Strong Copyleft"/>
+    <note id="a40" type="pol#_section" present="true"/>
   </notes>
 </annotation>

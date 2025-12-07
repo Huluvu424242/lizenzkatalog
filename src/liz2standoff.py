@@ -50,7 +50,6 @@ SINGLETON_CATEGORIES: set[str] = {
 # Konkrete Singleton-Tags
 SINGLETON_TAGS: set[str] = {
     "lic#spdx", "lic#fsf", "lic#osi", "lic#c", "lic#c0",
-    "rul#notice", "rul#lictxt", "rul#pat", "rul#patret", "rul#tivo",
 }
 
 # Emoji-Mappings für env / use / dst / cpy
@@ -87,10 +86,18 @@ CPY_EMOJI: dict[str, str] = {
     "network": "🌐",  # network copyleft
 }
 
+LIC_EMOJI: dict[str, str] = {
+    "c0": "⚪",     # gemeinfrei
+    "c": "🔴",   # alle Rechte vorbehalten
+}
+
+
 # Menschlich lesbare Bezeichnungen pro type (für Tooltips)
 TYPE_LABELS: dict[str, str] = {
     # lic
     "lic#spdx": "SPDX-ID",
+    "lic#src": "Quell-URL des Lizenztexts",
+    "lic#date": "Download Datum des analysierten Lizenztextes",
     "lic#fsf": "FSF-Freigabe",
     "lic#osi": "OSI-Freigabe",
     "lic#c": "Alle Rechte vorbehalten",
@@ -130,14 +137,28 @@ TYPE_LABELS: dict[str, str] = {
 
 # Standard-Labels, falls kein Wert/Label im .liz angegeben ist
 DEFAULT_LABELS: dict[str, str] = {
-    "rul#nc": "Nicht-kommerzielle Nutzung",
+    # lic – neue Default-Labels
+    "lic#fsf": "FSF-Free-Software-Lizenz",
+    "lic#osi": "OSI-approved-Lizenz",
+
+    # use
+    "use#doc": "Auf Dokumentation anwendbar.",
+    "use#lib": "Auf Bibliothek/Komponente anwendbar.",
+    "use#app": "Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar.",
+    "use#cld": "Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet.",
+
+    # rul
+    "rul#nc": "Nur Nicht-kommerzielle Nutzung",
     "rul#com": "Kommerzielle Nutzung erlaubt",
     "rul#nomili": "Keine militärische Nutzung",
-    "cpy#strong": "Strong Copyleft",
-    "cpy#weak": "Weak Copyleft",
-    "cpy#network": "Network Copyleft",
+
+    # cpy
+    "cpy#strong": "Wirkt sich immer auf das Gesamtwerk aus",
+    "cpy#weak": "Wirkt sich nur bedingt auf das Gesamtwerk aus",
+    "cpy#network": "Wirkt bei Netzwerkverteilung",
     "cpy#none": "Kein Copyleft",
 }
+
 
 # -------------------- Regexe (ohne VERBOSE) ----------------------------------
 # "=" oder " <KV-Paare>" bis "]]"
@@ -286,6 +307,7 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     use_emojis: list[str] = []
     dst_emojis: list[str] = []
     cpy_emojis: list[str] = []
+    lic_emojis: list[str] = []
     other_parts: list[str] = []
 
     for p in parts:
@@ -321,6 +343,12 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
                 cpy_emojis.append(em)
             else:
                 other_parts.append(p)
+        elif key == "lic":
+            em = LIC_EMOJI.get(val)
+            if em:
+                lic_emojis.append(em)
+            else:
+                other_parts.append(p)
         else:
             other_parts.append(p)
 
@@ -329,6 +357,7 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     emoji_chunks.extend(use_emojis)
     emoji_chunks.extend(dst_emojis)
     emoji_chunks.extend(cpy_emojis)
+    emoji_chunks.extend(lic_emojis)
 
     label_parts: list[str] = []
 
@@ -370,7 +399,7 @@ def make_policy_if_tooltip(if_raw: str | None) -> str | None:
         key = key.strip()
         val = val.strip()
 
-        if key not in {"env", "use", "dst", "cpy"}:
+        if key not in {"env", "use", "dst", "cpy", "lic"}:
             chunks.append(p)
             continue
 
@@ -382,8 +411,10 @@ def make_policy_if_tooltip(if_raw: str | None) -> str | None:
             emoji = USE_EMOJI.get(val)
         elif key == "dst":
             emoji = DST_EMOJI.get(val)
-        else:  # cpy
+        elif key == "cpy":
             emoji = CPY_EMOJI.get(val)
+        else:  # lic
+            emoji = LIC_EMOJI.get(val)
 
         type_label = TYPE_LABELS.get(full_type, "")
         seg_parts: list[str] = [full_type]
@@ -419,6 +450,9 @@ def enrich_note_metadata(note: dict, cat: str, name: str) -> None:
         emoji = DST_EMOJI.get(name)
     elif cat == "cpy":
         emoji = CPY_EMOJI.get(name)
+    elif cat == "lic":
+        emoji = LIC_EMOJI.get(name)
+
 
     if emoji:
         attrs.setdefault("emoji", emoji)

@@ -24,6 +24,8 @@
             <!-- lic -->
             <xsl:when test="$t='lic#name'">Lizenzname</xsl:when>
             <xsl:when test="$t='lic#spdx'">SPDX-ID</xsl:when>
+            <xsl:when test="$t='lic#src'">Download Url des Lizenztextes</xsl:when>
+            <xsl:when test="$t='lic#date'">Download Datum des Lizenztextes</xsl:when>
             <xsl:when test="$t='lic#fsf'">FSF-Freigabe</xsl:when>
             <xsl:when test="$t='lic#osi'">OSI-Freigabe</xsl:when>
             <xsl:when test="$t='lic#c'">Alle Rechte vorbehalten</xsl:when>
@@ -58,9 +60,9 @@
             <xsl:when test="$t='rul#nodrm'">Kein Kopierschutz</xsl:when>
             <xsl:when test="$t='rul#nomili'">Keine militärische Nutzung</xsl:when>
             <xsl:when test="$t='rul#nc'">Nicht-kommerziell</xsl:when>
-            <xsl:when test="$t='rul#com'">Kommerziell</xsl:when>
-            <xsl:when test="$t='rul#edu'">Bildung</xsl:when>
-            <xsl:when test="$t='rul#gov'">Verwaltung</xsl:when>
+            <xsl:when test="$t='rul#com'">Kommerzielle Nutzung</xsl:when>
+            <xsl:when test="$t='rul#edu'">Bildung/Schule</xsl:when>
+            <xsl:when test="$t='rul#gov'">Verwaltung/Behörde</xsl:when>
             <xsl:when test="$t='rul#notice'">Hinweispflicht</xsl:when>
             <xsl:when test="$t='rul#lictxt'">Lizenztext beifügen</xsl:when>
             <xsl:when test="$t='rul#changes'">Änderungen kennzeichnen</xsl:when>
@@ -396,7 +398,12 @@
                     <!-- SPDX: SPDX-ID: Wert -->
                     <xsl:when test="@type='lic#spdx' and @label">
                         <xsl:text>SPDX-ID: </xsl:text>
-                        <xsl:value-of select="@label"/>
+                        <a href="https://spdx.org/licenses/{@label}.html"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                        >
+                            <xsl:value-of select="@label"/>
+                        </a>
                     </xsl:when>
 
                     <!-- generischer Fall: nutze @label, falls vorhanden -->

@@ -24,4 +24,5 @@
           colorIndex    CDATA  #IMPLIED
           if_tooltip    CDATA  #IMPLIED
           tooltip    CDATA  #IMPLIED
+          emoji    CDATA  #IMPLIED
           value  CDATA  #IMPLIED>
