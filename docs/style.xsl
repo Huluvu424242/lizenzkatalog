@@ -201,11 +201,11 @@
                     <a href=".">
                         <img src="ospolizenzkatalog.svg"
                              alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
-                             title="KI generiert by ChatGPT©️2025\nNavigiert zur Übersicht"
+                             title="KI generiert by ChatGPT©️2025 -> Navigiert zur Übersicht"
                              width="100" height="100"
                              style="max-width:100%; height:auto;"/>
-                        Allgemeine Infos
                     </a>
+                    Allgemeine Infos
                 </h2>
                 <table>
                     <tr>
@@ -263,11 +263,11 @@
                     <a href=".">
                         <img src="ospolizenzkatalog.svg"
                              alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
-                             title="KI generiert by ChatGPT©️2025\nNavigiert zur Übersicht"
+                             title="KI generiert by ChatGPT©️2025 -> Navigiert zur Übersicht"
                              width="100" height="100"
                              style="max-width:100%; height:auto;"/>
-                        Informationen mit Textbezug
                     </a>
+                    Informationen mit Textbezug
                 </h2>
 
                 <!-- typeOrder bestimmen -->
