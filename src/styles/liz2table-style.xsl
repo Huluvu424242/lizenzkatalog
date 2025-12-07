@@ -221,7 +221,7 @@
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
 
-                            <!-- Typ: sprechender Name, Tooltip = [[type]] -->
+                            <!-- Tabelle 1 Spalte Typ: sprechender Name, Tooltip = [[type]] -->
                             <td>
                                 <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
                                 <span title="{$tooltip}">
@@ -231,7 +231,7 @@
                                 </span>
                             </td>
 
-                            <!-- Wert: primär @label -->
+                            <!-- Tabelle 1 Spalte Wert: primär @label -->
                             <td>
                                 <span class="tooltip-label">
                                     <xsl:attribute name="title">
