@@ -307,6 +307,7 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     use_emojis: list[str] = []
     dst_emojis: list[str] = []
     cpy_emojis: list[str] = []
+    lic_emojis: list[str] = []
     other_parts: list[str] = []
 
     for p in parts:
@@ -342,6 +343,12 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
                 cpy_emojis.append(em)
             else:
                 other_parts.append(p)
+        elif key == "lic":
+            em = CPY_EMOJI.get(val)
+            if em:
+                cpy_emojis.append(em)
+            else:
+                other_parts.append(p)
         else:
             other_parts.append(p)
 
@@ -350,6 +357,7 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
     emoji_chunks.extend(use_emojis)
     emoji_chunks.extend(dst_emojis)
     emoji_chunks.extend(cpy_emojis)
+    emoji_chunks.extend(lic_emojis)
 
     label_parts: list[str] = []
 
@@ -442,6 +450,9 @@ def enrich_note_metadata(note: dict, cat: str, name: str) -> None:
         emoji = DST_EMOJI.get(name)
     elif cat == "cpy":
         emoji = CPY_EMOJI.get(name)
+    elif cat == "lic":
+        emoji = LIC_EMOJI.get(name)
+
 
     if emoji:
         attrs.setdefault("emoji", emoji)
