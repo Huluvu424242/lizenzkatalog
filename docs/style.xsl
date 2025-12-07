@@ -198,12 +198,14 @@
 
                 <!-- ===== Tabelle 1: ohne Textbezug (Singletons) ===== -->
                 <h2>
-                    <img src="ospolizenzkatalog.svg"
-                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
-                         title="KI generiert by ChatGPT©️2025"
-                         width="100" height="100"
-                         style="max-width:100%; height:auto;"/>
-                    Allgemeine Infos
+                    <a href=".">
+                        <img src="ospolizenzkatalog.svg"
+                             alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                             title="KI generiert by ChatGPT©️2025\nNavigiert zur Übersicht"
+                             width="100" height="100"
+                             style="max-width:100%; height:auto;"/>
+                        Allgemeine Infos
+                    </a>
                 </h2>
                 <table>
                     <tr>
@@ -258,12 +260,14 @@
 
                 <!-- ===== Textbezug-Tabelle ===== -->
                 <h2>
-                    <img src="ospolizenzkatalog.svg"
-                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
-                         title="KI generiert by ChatGPT©️2025"
-                         width="100" height="100"
-                         style="max-width:100%; height:auto;"/>
-                    Informationen mit Textbezug
+                    <a href=".">
+                        <img src="ospolizenzkatalog.svg"
+                             alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                             title="KI generiert by ChatGPT©️2025\nNavigiert zur Übersicht"
+                             width="100" height="100"
+                             style="max-width:100%; height:auto;"/>
+                        Informationen mit Textbezug
+                    </a>
                 </h2>
 
                 <!-- typeOrder bestimmen -->
