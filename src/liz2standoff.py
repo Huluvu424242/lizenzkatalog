@@ -155,7 +155,11 @@ DEFAULT_LABELS: dict[str, str] = {
     "use#doc": "Auf Dokumentation anwendbar.",
     "use#lib": "Auf Bibliothek/Komponente anwendbar.",
     "use#app": "Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar.",
-    "use#cld": "Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet.",
+    "use#cld": "Auf Cloud-Anwendungen anwendbar bzw. speziell dafür geeignet.",
+    "use#data": "Auf Daten im allgemeinen anwendbar.",
+    "use#ai": "Auf KI Modelle, Parser etc. anwendbar.",
+    "use#img": "Auf Bilder, Fotos, Gemälde etc. anwendbar.",
+    "use#art": "Auf Kunstwerke, Gegenstände, Skulpturen etc. anwendbar.",
 
     # rul
     "rul#nc": "Nur Nicht-kommerzielle Nutzung",
