@@ -130,6 +130,10 @@ durchaus für mehrere Produktarten sinnvoll sein kann. Lizenz ist geeigent für:
 | `lib`     | Software Bibliotheken / Plugins oder anderen Abhängigkeiten | **Single** | `[[use#lib]]` |
 | `app`     | Anwendungen (Desktop, Server, Mobile, ...)                  | **Single** | `[[use#app]]` |
 | `cld`     | Cloud‑Anwendungen                                           | **Single** | `[[use#cld]]` |
+| `data`    | Daten im allgemeinen Sinne                                  | **Single** | `[[use#cld]]` |
+| `ai`      | KI Modelle, Parser ...                                      | **Single** | `[[use#cld]]` |
+| `img`     | Bilder, Fotos, Gemälde                                      | **Single** | `[[use#cld]]` |
+| `art`     | Kunstwerke, Gegenstände, Skulpturen etc.                    | **Single** | `[[use#cld]]` |
 
 ---
 
