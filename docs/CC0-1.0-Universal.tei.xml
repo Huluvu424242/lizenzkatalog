@@ -139,6 +139,6 @@ express Statement of Purpose.
     <note id="a2" type="lic#date" label="07.12.2025" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
     <note id="a3" type="lic#spdx" label="CC0-1.0" category="lic" name="spdx" tooltip="lic#spdx CC0-1.0"/>
     <note id="a4" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
-    <note id="a5" type="lic#noosi" category="lic" name="noosi"/>
+    <note id="a5" type="lic#noosi" label="NICHT OSI-approved-Lizenz" category="lic" name="noosi"/>
   </notes>
 </annotation>
