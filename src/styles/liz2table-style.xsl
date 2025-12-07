@@ -242,6 +242,11 @@
                                         </xsl:if>
                                     </xsl:attribute>
                                     <xsl:choose>
+                                        <xsl:when test="@link">
+                                            <a href="{@link}">
+                                                <xsl:value-of select="@link"/>
+                                            </a>
+                                        </xsl:when>
                                         <xsl:when test="@label">
                                             <xsl:value-of select="@label"/>
                                         </xsl:when>
