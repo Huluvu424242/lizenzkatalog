@@ -49,7 +49,7 @@ SINGLETON_CATEGORIES: set[str] = {
 
 # Konkrete Singleton-Tags
 SINGLETON_TAGS: set[str] = {
-    "lic#spdx", "lic#fsf", "lic#osi", "lic#c", "lic#c0",
+    "lic#spdx", "lic#fsf","lic#nofsf", "lic#osi", "lic#noosi", "lic#c", "lic#c0",
 }
 
 # Emoji-Mappings für env / use / dst / cpy
