@@ -65,6 +65,7 @@ limited to, the following:
 
   i. the right to reproduce, adapt, distribute, perform, display,
      communicate, and translate a Work;
+
  ii. moral rights retained by the original author(s) and/or performer(s);
 iii. publicity and privacy rights pertaining to a person&#x27;s image or
      likeness depicted in a Work;
@@ -144,6 +145,12 @@ express Statement of Purpose.
   </text>
   <notes>
     <note id="a15" type="lic#name" start="16" end="64" category="lic" name="name"/>
+    <note id="a20" type="act#dist" start="2291" end="2398" category="act" name="dist"/>
+    <note id="a19" type="act#der" start="2291" end="2398" category="act" name="der"/>
+    <note id="a18" type="act#mod" start="2291" end="2398" category="act" name="mod"/>
+    <note id="a17" type="act#mov" start="2291" end="2398" category="act" name="mov"/>
+    <note id="a16" type="act#cop" start="2291" end="2398" category="act" name="cop"/>
+    <note id="a21" type="act#sel" start="3909" end="4001" category="act" name="sel"/>
     <note id="a1" type="lic#src" label="https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt" link="https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
     <note id="a2" type="lic#date" label="07.12.2025" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
     <note id="a3" type="lic#c0" label="Kein Urheberrechtsschutz (gemeinfrei)" category="lic" name="c0" emoji="⚪" tooltip="lic#c0 ⚪ Nutzung uneingeschränkt"/>
