@@ -111,7 +111,9 @@ Allgemeine Eigenschaften / Metadaten der Lizenz.
 | `date`    | Download Datum des Textes     | **Single** | `[[lic#date="06.12.2025"]]`                                 |
 | `spdx`    | SPDX‑ID                       | **Single** | `[[lic#spdx="GPL-3.0-only"]]`                               |
 | `fsf`     | FSF Approved                  | **Single** | `[[lic#fsf]]`                                               |
+| `nofsf`   | Nicht FSF Approved            | **Single** | `[[lic#nofsf]]`                                             |
 | `osi`     | OSI Approved                  | **Single** | `[[lic#osi]]`                                               |
+| `noosi`   | Nicht OSI Approved            | **Single** | `[[lic#noosi]]`                                             |
 | `c`       | Alle Rechte vorbehalten       | **Single** | `[[lic#c]]`                                                 |
 | `c0`      | Public Domain                 | **Single** | `[[lic#c0]]`                                                |
 
