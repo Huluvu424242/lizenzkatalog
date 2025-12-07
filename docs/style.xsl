@@ -246,7 +246,7 @@
                                             <a href="{@link}"
                                                target="_blank"
                                                rel="noopener noreferrer">
-                                                <xsl:value-of select="@link"/>
+                                                <xsl:value-of select="@label"/>
                                             </a>
                                         </xsl:when>
                                         <xsl:when test="@label">
