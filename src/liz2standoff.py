@@ -716,10 +716,12 @@ def konvertiere(
 
         # label IMMER ausgeben, sofern vorhanden und nicht bereits in attrs_dict
         if sg.get("label") is not None and "label" not in attrs_dict:
-            print(f"SG Label {sg["label"]}")
+            print(f"SG Type {sg["type"]}")
             attrs.append(xml_attr_pair("label", sg["label"]))
             if sg["label"] and sg["label"].startswith("http://") or sg["label"].startswith("https://"):
                 attrs.append(xml_attr_pair("link", sg["label"]))
+            if sg["type"] and sg["type"] == "lic#spdx":
+                attrs.append(xml_attr_pair("link", f"https://spdx.org/licenses/{sg["label"]}.html"))
 
         for k, v in attrs_dict.items():
             attrs.append(xml_attr_pair(k, v))
