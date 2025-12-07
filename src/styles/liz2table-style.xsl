@@ -401,8 +401,7 @@
                         <a href="https://spdx.org/licenses/{@label}.html"
                            target="_blank"
                            rel="noopener noreferrer">
-                        >
-                            <xsl:value-of select="@label"/>
+                           <xsl:value-of select="@label"/>
                         </a>
                     </xsl:when>
 
