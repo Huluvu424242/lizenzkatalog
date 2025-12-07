@@ -720,7 +720,7 @@ Public License instead of this License.  But first, please read
     <note id="a34" type="rul#nolia" start="30805" end="31357" category="rul" name="nolia"/>
     <note id="a35" type="rul#nolia" start="31389" end="31995" category="rul" name="nolia"/>
     <note id="a36" type="rul#nolia" start="31996" end="32422" category="rul" name="nolia"/>
-    <note id="a1" type="lic#src" label="https://www.gnu.org/licenses/gpl-3.0.txt" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
+    <note id="a1" type="lic#src" label="https://www.gnu.org/licenses/gpl-3.0.txt" link="https://www.gnu.org/licenses/gpl-3.0.txt" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
     <note id="a2" type="lic#date" label="06.12.2025" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
     <note id="a3" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
     <note id="a4" type="lic#fsf" label="Ist FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
