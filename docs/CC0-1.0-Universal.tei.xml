@@ -152,7 +152,7 @@ express Statement of Purpose.
     <note id="a6" type="lic#noosi" label="Keine OSI-approved-Lizenz" category="lic" name="noosi"/>
     <note id="a7" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
     <note id="a8" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
-    <note id="a9" type="use#cld" label="Auf Cloud-Anwendungen anwendbar bzw. speziell dafür geeignet." category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
+    <note id="a9" type="use#cld" label="Auf Cloud-Anwendungen anwendbar." category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
     <note id="a10" type="use#doc" label="Auf Dokumentation anwendbar." category="use" name="doc" emoji="📄" tooltip="use#doc 📄 Dokumentation"/>
     <note id="a11" type="use#data" label="Quasi-Standardlizenz für Open Data" category="use" name="data" emoji="☁️" tooltip="use#data ☁️ Daten (allgemein)"/>
     <note id="a12" type="use#ai" label="Auf KI Modelle, Parser etc. anwendbar." category="use" name="ai" emoji="☁️" tooltip="use#ai ☁️ KI Modelle, Parser etc."/>
