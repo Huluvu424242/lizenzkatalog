@@ -15,7 +15,7 @@
     <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
 
     <!-- ========================================================= -->
-    <!-- Label-Mapping (Fallback, falls kein @label vorhanden)     -->
+    <!-- Label-Mapping Tabelle 1 Spalte Typ                        -->
     <!-- ========================================================= -->
     <xsl:template name="label-for-type">
         <xsl:param name="t"/>
@@ -27,7 +27,9 @@
             <xsl:when test="$t='lic#src'">Download Url des Lizenztextes</xsl:when>
             <xsl:when test="$t='lic#date'">Download Datum des Lizenztextes</xsl:when>
             <xsl:when test="$t='lic#fsf'">FSF-Freigabe</xsl:when>
+            <xsl:when test="$t='lic#nofsf'">FSF-Freigabe</xsl:when>
             <xsl:when test="$t='lic#osi'">OSI-Freigabe</xsl:when>
+            <xsl:when test="$t='lic#noosi'">OSI-Freigabe</xsl:when>
             <xsl:when test="$t='lic#c'">Alle Rechte vorbehalten</xsl:when>
             <xsl:when test="$t='lic#c0'">Nutzung uneingeschränkt</xsl:when>
 
@@ -36,6 +38,10 @@
             <xsl:when test="$t='use#lib'">Bibliothek/Komponente</xsl:when>
             <xsl:when test="$t='use#app'">Lokale Anwendung</xsl:when>
             <xsl:when test="$t='use#cld'">Cloud-Anwendung</xsl:when>
+            <xsl:when test="$t='use#data'">Daten allgemein</xsl:when>
+            <xsl:when test="$t='use#ai'">KI Umfeld</xsl:when>
+            <xsl:when test="$t='use#img'">Bilder</xsl:when>
+            <xsl:when test="$t='use#art'">Kunstwerke</xsl:when>
 
             <!-- lim -->
             <xsl:when test="$t='lim#pc'">Anzahl Rechner</xsl:when>
@@ -198,11 +204,13 @@
 
                 <!-- ===== Tabelle 1: ohne Textbezug (Singletons) ===== -->
                 <h2>
-                    <img src="ospolizenzkatalog.svg"
-                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
-                         title="KI generiert by ChatGPT©️2025"
-                         width="100" height="100"
-                         style="max-width:100%; height:auto;"/>
+                    <a href=".">
+                        <img src="ospolizenzkatalog.svg"
+                             alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                             title="KI generiert by ChatGPT©️2025 -> Navigiert zur Übersicht"
+                             width="100" height="100"
+                             style="max-width:100%; height:auto;"/>
+                    </a>
                     Allgemeine Infos
                 </h2>
                 <table>
@@ -217,7 +225,7 @@
                         <tr>
                             <td><xsl:value-of select="position()"/></td>
 
-                            <!-- Typ: sprechender Name, Tooltip = [[type]] -->
+                            <!-- Tabelle 1 Spalte Typ: sprechender Name, Tooltip = [[type]] -->
                             <td>
                                 <xsl:variable name="tooltip" select="concat('[[', @type, ']]')"/>
                                 <span title="{$tooltip}">
@@ -227,7 +235,7 @@
                                 </span>
                             </td>
 
-                            <!-- Wert: primär @label -->
+                            <!-- Tabelle 1 Spalte Wert: primär @label -->
                             <td>
                                 <span class="tooltip-label">
                                     <xsl:attribute name="title">
@@ -238,6 +246,13 @@
                                         </xsl:if>
                                     </xsl:attribute>
                                     <xsl:choose>
+                                        <xsl:when test="@link">
+                                            <a href="{@link}"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                <xsl:value-of select="@label"/>
+                                            </a>
+                                        </xsl:when>
                                         <xsl:when test="@label">
                                             <xsl:value-of select="@label"/>
                                         </xsl:when>
@@ -258,11 +273,13 @@
 
                 <!-- ===== Textbezug-Tabelle ===== -->
                 <h2>
-                    <img src="ospolizenzkatalog.svg"
-                         alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
-                         title="KI generiert by ChatGPT©️2025"
-                         width="100" height="100"
-                         style="max-width:100%; height:auto;"/>
+                    <a href=".">
+                        <img src="ospolizenzkatalog.svg"
+                             alt="Bücherregal mit einem aufgeschlagenem Buch aus dem ein Paragraphenzeichen aufsteigt."
+                             title="KI generiert by ChatGPT©️2025 -> Navigiert zur Übersicht"
+                             width="100" height="100"
+                             style="max-width:100%; height:auto;"/>
+                    </a>
                     Informationen mit Textbezug
                 </h2>
 
@@ -401,8 +418,7 @@
                         <a href="https://spdx.org/licenses/{@label}.html"
                            target="_blank"
                            rel="noopener noreferrer">
-                        >
-                            <xsl:value-of select="@label"/>
+                           <xsl:value-of select="@label"/>
                         </a>
                     </xsl:when>
 

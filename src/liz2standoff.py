@@ -49,30 +49,34 @@ SINGLETON_CATEGORIES: set[str] = {
 
 # Konkrete Singleton-Tags
 SINGLETON_TAGS: set[str] = {
-    "lic#spdx", "lic#fsf", "lic#osi", "lic#c", "lic#c0",
+    "lic#spdx", "lic#fsf","lic#nofsf", "lic#osi", "lic#noosi", "lic#c", "lic#c0",
 }
 
 # Emoji-Mappings für env / use / dst / cpy
 ENV_EMOJI: dict[str, str] = {
-    "com": "🏢",  # Unternehmen
+    "com": "🏭",  # Unternehmen
     "edu": "🎓",  # Bildung
     "sci": "🔬",  # Wissenschaft
     "prv": "🏠",  # Privat
     "oss": "🐧",  # OSS / Pinguin
-    "gov": "🏛",  # Verwaltung / Behörde
+    "gov": "🏢",  # Verwaltung / Behörde
     "ngo": "🤝",  # NGO / Gemeinnützig
 }
 
 USE_EMOJI: dict[str, str] = {
     "doc": "📄",  # Dokumentation
-    "lib": "📚",  # Bibliothek / Komponente
-    "app": "💻",  # Lokale Anwendung
+    "lib": "📗",  # Bibliothek / Komponente
+    "app": "📲",  # Lokale Anwendung
     "cld": "☁️",  # Cloud-Anwendung
+    "data": "🫆",  # Cloud-Anwendung
+    "ai": "🧠",  # Cloud-Anwendung
+    "img": "🎞️",  # Cloud-Anwendung
+    "art": "🎭",  # Cloud-Anwendung
 }
 
 DST_EMOJI: dict[str, str] = {
     "none": "🚫",      # keine Weitergabe
-    "internal": "🏢",  # intern im Unternehmen
+    "internal": "♻️",  # intern im Unternehmen
     "partners": "🤝",  # Partner/Kunden
     "public": "🌍",    # öffentlich
     "srv": "🖥️",      # Server-seitig
@@ -92,7 +96,7 @@ LIC_EMOJI: dict[str, str] = {
 }
 
 
-# Menschlich lesbare Bezeichnungen pro type (für Tooltips)
+# Tooltipps der Pillen-Tags ganz oben
 TYPE_LABELS: dict[str, str] = {
     # lic
     "lic#spdx": "SPDX-ID",
@@ -108,6 +112,10 @@ TYPE_LABELS: dict[str, str] = {
     "use#lib": "Bibliothek/Komponente",
     "use#app": "Lokale Anwendung",
     "use#cld": "Cloud-Anwendung",
+    "use#data": "Daten (allgemein)",
+    "use#ai": "KI Modelle, Parser etc.",
+    "use#img": "Bilder, Fotos, Gemälde",
+    "use#art": "Kunstwerke, Gegenstände, Skulpturen etc.",
 
     # env
     "env#com": "Unternehmen",
@@ -135,17 +143,24 @@ TYPE_LABELS: dict[str, str] = {
     "rul#nomili": "Keine militärische Nutzung",
 }
 
-# Standard-Labels, falls kein Wert/Label im .liz angegeben ist
+# Standard-Labels: Wert in Tabelle 1
 DEFAULT_LABELS: dict[str, str] = {
     # lic – neue Default-Labels
-    "lic#fsf": "FSF-Free-Software-Lizenz",
-    "lic#osi": "OSI-approved-Lizenz",
+    "lic#fsf": "Ist FSF-Free-Software-Lizenz",
+    "lic#nofsf": "Keine FSF-Free-Software-Lizenz",
+    "lic#osi": "Ist OSI-approved-Lizenz",
+    "lic#noosi": "Keine OSI-approved-Lizenz",
+    "lic#c0": "Kein Urheberrechtsschutz (gemeinfrei)",
 
     # use
     "use#doc": "Auf Dokumentation anwendbar.",
     "use#lib": "Auf Bibliothek/Komponente anwendbar.",
     "use#app": "Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar.",
-    "use#cld": "Auf Cloud-Anwendungen anwendbar bzw. speziell geeignet.",
+    "use#cld": "Auf Cloud-Anwendungen anwendbar.",
+    "use#data": "Auf Daten im allgemeinen anwendbar.",
+    "use#ai": "Auf KI Modelle, Parser etc. anwendbar.",
+    "use#img": "Auf Bilder, Fotos, Gemälde etc. anwendbar.",
+    "use#art": "Auf Kunstwerke, Gegenstände, Skulpturen etc. anwendbar.",
 
     # rul
     "rul#nc": "Nur Nicht-kommerzielle Nutzung",
@@ -714,7 +729,12 @@ def konvertiere(
 
         # label IMMER ausgeben, sofern vorhanden und nicht bereits in attrs_dict
         if sg.get("label") is not None and "label" not in attrs_dict:
+            print(f"SG Type {sg["type"]}")
             attrs.append(xml_attr_pair("label", sg["label"]))
+            if sg["label"] and sg["label"].startswith("http://") or sg["label"].startswith("https://"):
+                attrs.append(xml_attr_pair("link", sg["label"]))
+            if sg["type"] and sg["type"] == "lic#spdx":
+                attrs.append(xml_attr_pair("link", f"https://spdx.org/licenses/{sg["label"]}.html"))
 
         for k, v in attrs_dict.items():
             attrs.append(xml_attr_pair(k, v))

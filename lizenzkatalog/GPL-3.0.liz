@@ -2,7 +2,7 @@
 [[lic#date="06.12.2025"]]
 [[lic#spdx="GPL-3.0-only"]] [[lic#fsf]] [[lic#osi]]
 [[cpy#strong]]
-[[use#lib]] [[use#app]] [[use#cld="In der Cloud anwendbar, evlt. geeigneter Lizenzen mit Netzwerk-Copyleft wie z.B. AGPL"]]
+[[use#lib]] [[use#app]] [[use#cld="In der Cloud anwendbar, evlt. geeignetere Lizenzen mit Netzwerk-Copyleft wie z.B. AGPL"]]
 
 
         [[lic#name]]GNU GENERAL PUBLIC LICENSE
@@ -684,7 +684,7 @@ Public License instead of this License.  But first, please read
 
 [[pol#if if="env=com,use=lib,dst=public,lic=c"
 then="rot"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
-[[pol#if if="env=com,use=lib,dst=partners,cpy=strong"
+[[pol#if if="env=com,use=lib,dst=partners,lic=c"
 then="rot"  because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig."]]
-[[pol#if if="env=com,use=lib,dst=internal,cpy=strong"
+[[pol#if if="env=com,use=lib,dst=internal,lic=c"
 then="grün"  because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung möglich."]]

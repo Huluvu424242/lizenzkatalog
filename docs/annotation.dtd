@@ -18,6 +18,7 @@
           status    CDATA  #IMPLIED
           title    CDATA  #IMPLIED
           label    CDATA  #IMPLIED
+          link    CDATA  #IMPLIED
           present    CDATA  #IMPLIED
           category    CDATA  #IMPLIED
           name    CDATA  #IMPLIED
