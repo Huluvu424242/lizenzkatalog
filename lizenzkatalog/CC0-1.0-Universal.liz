@@ -135,3 +135,10 @@ express Statement of Purpose.
  d. Affirmer understands and acknowledges that Creative Commons is not a
     party to this document and has no duty or obligation with respect to
     this CC0 or use of the Work.
+
+[[pol#if if="env=com,use=lib,dst=public,lic=c0"
+then="grün"  because="Öffentliche Verteilung eines abgeleiteten Gesamtwerks in jeder Form möglich."]]
+[[pol#if if="env=com,use=lib,dst=partners,lic=c0"
+then="grün"  because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks in jeder Form möglich"]]
+[[pol#if if="env=com,use=lib,dst=internal,lic=c0"
+then="grün"  because="Interne Verteilung im Unternehmen eines abgeleiteten Gesamtwerks in jder Form möglich."]]
