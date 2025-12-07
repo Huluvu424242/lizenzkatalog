@@ -15,7 +15,7 @@
     <xsl:key name="kType" match="notes/note[@start and @end]" use="@type"/>
 
     <!-- ========================================================= -->
-    <!-- Label-Mapping (Fallback, falls kein @label vorhanden)     -->
+    <!-- Label-Mapping Tabelle 1 Spalte Typ                        -->
     <!-- ========================================================= -->
     <xsl:template name="label-for-type">
         <xsl:param name="t"/>
@@ -27,7 +27,9 @@
             <xsl:when test="$t='lic#src'">Download Url des Lizenztextes</xsl:when>
             <xsl:when test="$t='lic#date'">Download Datum des Lizenztextes</xsl:when>
             <xsl:when test="$t='lic#fsf'">FSF-Freigabe</xsl:when>
+            <xsl:when test="$t='lic#nofsf'">FSF-Freigabe</xsl:when>
             <xsl:when test="$t='lic#osi'">OSI-Freigabe</xsl:when>
+            <xsl:when test="$t='lic#noosi'">OSI-Freigabe</xsl:when>
             <xsl:when test="$t='lic#c'">Alle Rechte vorbehalten</xsl:when>
             <xsl:when test="$t='lic#c0'">Nutzung uneingeschränkt</xsl:when>
 

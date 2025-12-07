@@ -723,8 +723,8 @@ Public License instead of this License.  But first, please read
     <note id="a1" type="lic#src" label="https://www.gnu.org/licenses/gpl-3.0.txt" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
     <note id="a2" type="lic#date" label="06.12.2025" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
     <note id="a3" type="lic#spdx" label="GPL-3.0-only" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
-    <note id="a4" type="lic#fsf" label="FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
-    <note id="a5" type="lic#osi" label="OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
+    <note id="a4" type="lic#fsf" label="Ist FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
+    <note id="a5" type="lic#osi" label="Ist OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
     <note id="a6" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
     <note id="a7" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📚" tooltip="use#lib 📚 Bibliothek/Komponente"/>
     <note id="a8" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="💻" tooltip="use#app 💻 Lokale Anwendung"/>
