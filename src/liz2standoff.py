@@ -96,7 +96,7 @@ LIC_EMOJI: dict[str, str] = {
 }
 
 
-# Menschlich lesbare Bezeichnungen pro type (für Tooltips)
+# Tooltipps der Pillen-Tags ganz oben
 TYPE_LABELS: dict[str, str] = {
     # lic
     "lic#spdx": "SPDX-ID",
