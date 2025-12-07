@@ -150,6 +150,7 @@ DEFAULT_LABELS: dict[str, str] = {
     "lic#nofsf": "Keine FSF-Free-Software-Lizenz",
     "lic#osi": "Ist OSI-approved-Lizenz",
     "lic#noosi": "Keine OSI-approved-Lizenz",
+    "lic#c0": "Kein Urheberrechtsschutz (gemeinfrei)",
 
     # use
     "use#doc": "Auf Dokumentation anwendbar.",
