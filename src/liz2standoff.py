@@ -344,9 +344,9 @@ def make_policy_if_label(if_raw: str | None) -> str | None:
             else:
                 other_parts.append(p)
         elif key == "lic":
-            em = CPY_EMOJI.get(val)
+            em = LIC_EMOJI.get(val)
             if em:
-                cpy_emojis.append(em)
+                lic_emojis.append(em)
             else:
                 other_parts.append(p)
         else:
