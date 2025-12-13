@@ -36,8 +36,8 @@
 
 ## Projektziel
 
-Der **OSPO Lizenzkatalog** ist ein erweiterbares und anpassbares System zur **Analyse und Bewertung von Softwarelizenzen
-**. Es bietet:
+Der **OSPO Lizenzkatalog** ist ein erweiterbares und anpassbares System zur **Analyse und Bewertung von Softwarelizenzen**. 
+Es bietet:
 
 - ein Register der gängigsten Lizenzen ([Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/)),
 - eine einheitliche **Annotation-Systematik** für Lizenztexte,
