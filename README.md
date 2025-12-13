@@ -25,6 +25,7 @@
     - [9. Umgebung (env)](#9-umgebung-env)
     - [10. Bewertung / Policy (pol)](#10-bewertung--policy-pol)
 - [Technische Umsetzung](#technische-umsetzung)
+- [Logik der Tags (Singleton und Bereichs)](#logik-der-tags-singleton-und-bereichs)
 - [Verzeichnisstruktur](#verzeichnisstruktur)
 - [Nutzung (lokal)](#nutzung-lokal)
 - [Visualisierung](#visualisierung)
@@ -282,7 +283,7 @@ Manuell gepflegte Bewertung/Richtlinie für konkrete Nutzungsszenarien.
     - Darstellung der Annotationen als HTML‑Tabelle und farbige Textstellen
     - kann direkt im Browser genutzt werden (XML + XSL im selben Verzeichnis)
 
-## Logik der Singleton und Bereichs Tags
+## Logik der Tags (Singleton und Bereichs)
 siehe Dokumentation der [Taglogik](./src/site/hinweise/lizenzkatalog_taglogik.md)
 
 ---
@@ -338,3 +339,38 @@ sich im Browser auf das erzeugte `output.xml` anwenden.
 Mitmachen ist ausdrücklich willkommen (Erweiterungen der Systematik, neue Lizenz‑Annotationen, Verbesserungen von Skript
 und Stylesheet). Bitte Pull Requests mit klaren Commits und kurzen Testdaten beilegen.
 
+--- 
+
+## Historie
+
+Das Projekt wurde ursprünglich am 27.01.2013 unter meinem damaligen Account FunThomas424242 im Repo licenses unter 
+https://github.com/funthomas424242/licenses erstellt und später in meinen zweiten Account Huluvu424242 überführt.
+Bis dahin nutzte ich die Pseudonyme Huluvu424242 und FunThomas424242 massiv parallel. Ab dieser Zeit migrierte ich 
+über eine längere Zeit (Jahre) alle Daten auf den Huluvu424242 Account wobei so eine Migration wohl ein Lebenswerk ist und 
+nie vollständig abgeschlossen wird, zumindest nicht Plattformübergreifend. 
+Die Migration dieses Projektes ging allerdings schnell.
+Es existiert sogar noch ein alter Fork von waffle.io unter https://github.com/waffle-iron/licenses. Waffle.io war 
+früher ein auf github verfügbares Kanban System, welches ich für meine Projekte nutzte. Der Link zum Fork entspricht 
+praktisch einer Zeitreise. 
+
+Die Idee zu diesem  Projekt entstand beim Lesen eines Artikel (siehe BibRef Notizen zu [Architektur vs. Lizenzrecht: Lizenzkonforme Verbauung von Open-Source-Software von R. Engelschall](https://www.bibsonomy.org/bibtex/23ad38e2fbc524230344bc7ea48979620/funthomas424242)) Darin wurde 
+scheinbar ein Excelbasiertes Toolset zur Lizenzbewertung beschrieben. Entsprechend findet sich in den Projektanfängen auch ein Excel mit dem ich 
+versuchte die Kriterien von Lizenzen zu kategorisieren. Dabei wurde ich allerdings von der überbordenden und sich von Jahr zu Jahr 
+vergrößernden Komplexität erschlagen, sodass ich aufgeben musste. Ich fand keine Systematik über die es mir gelang sinnvoll zu strukturieren.
+Dabei war der entscheidende Hinweis im Paper enthalten, nämlich das Wort "Nutzungsarten".
+
+Inzwischen ist die Bewertung über Nutzungsarten längst in den Unternehmen angekommen und es existieren Profitools
+um Compliance Verstösse zu erkennen. Trotzdem ist es immer noch notwendig die Lizenzen selbst zu klassifizieren
+und zu Katalogisieren. Um diesen Prozess zu vereinfachen und zu vereinheitlichen treibe ich dieses Projekt weiter voran.
+
+Es gibt zu diesem Thema bestimmt sehr viel interessante Literatur, die ich nicht kenne.
+Ein aus meiner Sicht scheibbar interessanter Artikel ist die [Bachelor Arbeit von Navina Lang](https://www.cs.cit.tum.de/fileadmin/w00cfj/sebis/thesis/200910_Lang_Thesis.pdf) bei der R. Engelschall
+als Advisor aufgeführt ist (siehe auch [BibRef](https://www.bibsonomy.org/bibtexkey/lang2020design/huluvu424242)). 
+Diese Arbeit habe ich heute erst entdeckt, denke aber auf Grundlage des Inhaltsverzeichnisses ein gutes Werk zu den Grundlagen
+der Lizenzbewertung gefunden zu haben und werde sie demnächst lesen und dann ins Projekt einfließen lassen. 
+
+Anbei meine BibRefs zum Thema:
+* https://www.bibsonomy.org/user/huluvu424242/lizenzrecht
+* https://www.bibsonomy.org/user/funthomas424242/lizenzrecht
+
+---
