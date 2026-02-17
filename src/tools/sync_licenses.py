@@ -45,6 +45,12 @@ def http_get_json(url: str) -> dict:
     with urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode("utf-8"))
 
+def filename_for_spdx_id(spdx_id: str) -> str:
+    # EXACT SPDX licenseId -> filename
+    # e.g. "Apache-2.0" -> "Apache-2.0.liz"
+    return f"{spdx_id}.liz"
+
+
 def sanitize_filename(spdx_id: str) -> str:
     # keep repo naming simple & stable: <spdx>.liz
     # SPDX IDs already safe-ish, but keep conservative
@@ -92,7 +98,7 @@ def main() -> int:
     for spdx_id in missing:
         url = SPDX_JSON_URL.format(spdx_id=spdx_id)
         meta = http_get_json(url)
-        out_name = sanitize_filename(spdx_id)
+        out_name = filename_for_spdx_id(spdx_id)
         out_path = CATALOG_DIR / out_name
 
         if out_path.exists():
