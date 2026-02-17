@@ -15,6 +15,14 @@ SPDX_JSON_URL = "https://spdx.org/licenses/{spdx_id}.json"
 
 SPDX_TAG_RE = re.compile(r'\[\[lic#spdx="([^"]+)"\]\]')
 
+SPDX_LICENSES_INDEX = "https://spdx.org/licenses/licenses.json"
+
+
+def load_valid_spdx_ids() -> set[str]:
+    idx = http_get_json(SPDX_LICENSES_INDEX)
+    # SPDX index has a "licenses" array with "licenseId" fields
+    return {x["licenseId"] for x in idx.get("licenses", []) if "licenseId" in x}
+
 def read_target_spdx_ids() -> list[str]:
     data = json.loads(TARGET_FILE.read_text(encoding="utf-8"))
     ids = data.get("spdx_ids", [])
@@ -82,6 +90,12 @@ def build_liz_content(spdx_id: str, meta: dict) -> str:
 
 def main() -> int:
     targets = read_target_spdx_ids()
+    valid = load_valid_spdx_ids()
+
+    invalid = [x for x in targets if x not in valid]
+    if invalid:
+        raise RuntimeError(f"Invalid SPDX IDs in target_licenses.json: {invalid}")
+
     present = inventory_present_spdx_ids()
     missing = [x for x in targets if x not in present]
 
