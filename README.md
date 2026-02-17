@@ -311,7 +311,7 @@ ospo-lizenzkatalog/
 
 ---
 
-## Nutzung (lokal)
+## Nutzung Visualisierung (lokal)
 
 ```bash
 python3 src/liz2standoff.py
@@ -327,6 +327,26 @@ Die Datei [`src/styles/liz2table-style.xsl`](src/styles/liz2table-style.xsl) ist
 sich im Browser auf das erzeugte `output.xml` anwenden.
 
 ---
+
+## Nutzung KI Automatisierung (lokal)
+
+1. Einmalig normalisieren
+```bash
+python3 src/tools/normalize_filenames.py
+git add -A
+git commit -m "chore(licenses): normalize filenames to SPDX licenseId"
+```
+
+2. Lint hinzufügen
+```bash
+python3 src/tools/license_lint.py
+```
+3. Sync Action laufen lassen
+Sie fügt künftig nur noch kanonische Dateien hinzu
+---
+
+
+
 
 ## Hinweise
 
