@@ -167,6 +167,10 @@ def main() -> int:
             print(f"\n- {r.filename}: {spdx_part}")
             print(r.message)
 
+        print("\nFailed files (copy/paste list):")
+        for r in fails:
+            print(r.filename)
+
     return 0 if not fails else 1
 
 
