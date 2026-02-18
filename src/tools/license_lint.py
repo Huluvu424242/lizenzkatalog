@@ -3,7 +3,7 @@ import re
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
 
 SPDX_TAG_RE = re.compile(r'\[\[lic#spdx="([^"]+)"\]\]')

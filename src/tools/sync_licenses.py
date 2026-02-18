@@ -7,7 +7,7 @@ import datetime
 from pathlib import Path
 from urllib.request import urlopen, Request
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
 TARGET_FILE = REPO_ROOT / "target_licenses.json"
 
