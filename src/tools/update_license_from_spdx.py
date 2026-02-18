@@ -27,8 +27,16 @@ REPO_ROOT = find_repo_root(Path(__file__).parent)
 # SPDX + tags
 # ---------------------------
 SPDX_TAG_RE = re.compile(r'\[\[lic#spdx="([^"]+)"\]\]')
-TAG_TOKEN_RE = re.compile(r"\[\[[^\]]+\]\]")  # any [[...]] token
+TAG_TOKEN_RE = re.compile(r"\[\[[^\]]+\]\]")
 SPDX_LICENSE_JSON_URL = "https://spdx.org/licenses/{spdx_id}.json"
+
+def strip_annotations(text: str) -> str:
+    """
+    Remove all annotation tokens of the form [[...]].
+    Keeps all other content unchanged.
+    """
+    return TAG_TOKEN_RE.sub("", text)
+
 
 def http_get_json(url: str) -> dict:
     req = Request(url, headers={"User-Agent": "lizenzkatalog-spdx-updater/1.0"})
@@ -121,24 +129,17 @@ def contains_whitespace(s: str) -> bool:
 
 @dataclass
 class Patch:
-    orig_start: int
-    orig_end: int
-    replacement: str
-    local_seg: str
-    spdx_seg: str
+    local_token: str
+    spdx_token: str
+    context_left: str
+    context_right: str
+
 
 def compute_token_patches(local_full: str, spdx_text: str) -> list[Patch]:
-    """
-    Compute safe patches:
-    - Compare whitespace-collapsed views.
-    - For 'replace' ops, only patch segments that contain NO whitespace on either side.
-      (This preserves formatting & avoids reflowing lines.)
-    """
-    local_norm, local_map = normalize_ws_with_map(local_full)
+    local_norm = normalize_ws_plain(strip_annotations(local_full))
     spdx_norm = normalize_ws_plain(spdx_text)
 
     sm = difflib.SequenceMatcher(a=local_norm, b=spdx_norm, autojunk=False)
-
     patches: list[Patch] = []
 
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
@@ -148,57 +149,105 @@ def compute_token_patches(local_full: str, spdx_text: str) -> list[Patch]:
         local_seg = local_norm[i1:i2]
         spdx_seg = spdx_norm[j1:j2]
 
-        # Only patch token-like segments (no spaces) to preserve formatting
+        # Only token-like patches (no spaces) to preserve formatting
         if not local_seg or not spdx_seg:
             continue
         if contains_whitespace(local_seg) or contains_whitespace(spdx_seg):
             continue
 
-        # Map normalized slice to original indices
-        # We replace from orig at local_map[i1] up to local_map[i2-1]+1
-        if i1 >= len(local_map) or (i2 - 1) >= len(local_map):
-            continue
-
-        orig_start = local_map[i1]
-        orig_end = local_map[i2 - 1] + 1
+        # Capture small context around the token in normalized space
+        left = local_norm[max(0, i1 - 25):i1]
+        right = local_norm[i2:i2 + 25]
 
         patches.append(Patch(
-            orig_start=orig_start,
-            orig_end=orig_end,
-            replacement=spdx_seg,
-            local_seg=local_seg,
-            spdx_seg=spdx_seg
+            local_token=local_seg,
+            spdx_token=spdx_seg,
+            context_left=left,
+            context_right=right
         ))
 
-    # Deduplicate/merge exact same ranges
+    # dedupe
     uniq = {}
     for p in patches:
-        key = (p.orig_start, p.orig_end, p.replacement)
-        uniq[key] = p
-    patches = list(uniq.values())
+        uniq[(p.local_token, p.spdx_token, p.context_left, p.context_right)] = p
+    return list(uniq.values())
 
-    # Apply from end to start to keep indices valid
-    patches.sort(key=lambda p: (p.orig_start, p.orig_end), reverse=True)
-    return patches
 
 def apply_patches(text: str, patches: list[Patch]) -> tuple[str, int]:
     updated = text
     applied = 0
-    for p in patches:
-        if p.orig_start < 0 or p.orig_end > len(updated) or p.orig_start >= p.orig_end:
-            continue
-        # Safety check: ensure the substring still matches what we expect loosely
-        # (avoid patching if file changed during run)
-        old = updated[p.orig_start:p.orig_end]
-        # If it doesn't match local_seg exactly (because of tags/format), we still allow,
-        # but only when it's very close; otherwise skip.
-        # Since patches are token-level, exact match should usually hold.
-        if old != old:  # no-op, placeholder for potential stricter checks
-            pass
 
-        updated = updated[:p.orig_start] + p.replacement + updated[p.orig_end:]
+    # Apply in any order; each patch is anchored by context
+    for p in patches:
+        # Build a regex that matches:
+        #   <context_left> ... <local_token> ... <context_right>
+        # but allow any whitespace variability inside the context
+        def ws_fuzzy(s: str) -> str:
+            # escape and replace spaces with \s+
+            s = re.escape(s)
+            s = s.replace(r"\ ", r"\s+")
+            return s
+
+        left_pat = ws_fuzzy(p.context_left[-25:])  # keep small
+        right_pat = ws_fuzzy(p.context_right[:25])
+
+        # We also ignore tags between context and token by allowing optional tag tokens
+        tag_pat = r"(?:\[\[[^\]]+\]\]\s*)*"
+
+        pattern = (
+                left_pat +
+                tag_pat +
+                re.escape(p.local_token) +
+                tag_pat +
+                right_pat
+        )
+
+        m = re.search(pattern, updated)
+        if not m:
+            # Fallback: replace first exact token occurrence outside tags (safer than breaking text)
+            # We'll do a conservative non-tag replacement:
+            updated2, n = replace_token_outside_tags(updated, p.local_token, p.spdx_token, max_repl=1)
+            if n:
+                updated = updated2
+                applied += 1
+            continue
+
+        # Replace only the token inside the matched window, preserve everything else
+        window = updated[m.start():m.end()]
+        window2 = window.replace(p.local_token, p.spdx_token, 1)
+        updated = updated[:m.start()] + window2 + updated[m.end():]
         applied += 1
+
     return updated, applied
+
+
+def replace_token_outside_tags(text: str, old: str, new: str, max_repl: int = 1) -> tuple[str, int]:
+    """
+    Replace token occurrences that are not inside [[...]] tags.
+    Simple scanner that skips tag ranges.
+    """
+    out = []
+    i = 0
+    n = 0
+    L = len(text)
+
+    while i < L:
+        if text.startswith("[[", i):
+            m = TAG_TOKEN_RE.match(text, i)
+            if m:
+                out.append(text[i:m.end()])
+                i = m.end()
+                continue
+
+        if n < max_repl and text.startswith(old, i):
+            out.append(new)
+            i += len(old)
+            n += 1
+        else:
+            out.append(text[i])
+            i += 1
+
+    return "".join(out), n
 
 def main() -> int:
     if len(sys.argv) != 2:
