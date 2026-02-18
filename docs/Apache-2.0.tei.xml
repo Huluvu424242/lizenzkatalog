@@ -219,13 +219,14 @@
 
   </text>
   <notes>
-    <note id="a4" type="lic#name" start="69" end="171" category="lic" name="name"/>
-    <note id="a1" type="use#doc" label="Auf Dokumentation anwendbar." category="use" name="doc" emoji="📄" tooltip="use#doc 📄 Dokumentation"/>
-    <note id="a2" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📗" tooltip="use#lib 📗 Bibliothek/Komponente"/>
-    <note id="a3" type="cpy#weak" label="Schwaches Copyleft" category="cpy" name="weak" emoji="🟢" tooltip="cpy#weak 🟢 Weak Copyleft"/>
-    <note id="a5" type="pol#if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="🏭 📗 🌍" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#public 🌍 Öffentlich"/>
-    <note id="a6" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="🏭 📗 🤝" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden"/>
-    <note id="a7" type="pol#if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="🏭 📗 ♻️" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#internal ♻️ Interne Weitergabe"/>
-    <note id="a8" type="pol#_section" present="true"/>
+    <note id="a5" type="lic#name" start="69" end="171" category="lic" name="name"/>
+    <note id="a1" type="lic#spdx" label="Apache-2.0" link="https://spdx.org/licenses/Apache-2.0.html" category="lic" name="spdx" tooltip="lic#spdx Apache-2.0"/>
+    <note id="a2" type="use#doc" label="Auf Dokumentation anwendbar." category="use" name="doc" emoji="📄" tooltip="use#doc 📄 Dokumentation"/>
+    <note id="a3" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📗" tooltip="use#lib 📗 Bibliothek/Komponente"/>
+    <note id="a4" type="cpy#weak" label="Schwaches Copyleft" category="cpy" name="weak" emoji="🟢" tooltip="cpy#weak 🟢 Weak Copyleft"/>
+    <note id="a6" type="pol#if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="🏭 📗 🌍" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#public 🌍 Öffentlich"/>
+    <note id="a7" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="🏭 📗 🤝" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden"/>
+    <note id="a8" type="pol#if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="🏭 📗 ♻️" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#internal ♻️ Interne Weitergabe"/>
+    <note id="a9" type="pol#_section" present="true"/>
   </notes>
 </annotation>
