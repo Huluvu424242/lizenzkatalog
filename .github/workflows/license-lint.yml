@@ -25,4 +25,4 @@ jobs:
       - name: Run license lint
         run: |
           python -V
-          python tools/license_lint.py
+          python src/tools/license_lint.py

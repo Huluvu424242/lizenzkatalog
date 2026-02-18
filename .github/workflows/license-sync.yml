@@ -49,7 +49,7 @@ jobs:
       - name: Run sync (add missing SPDX licenses)
         run: |
           python -V
-          python tools/sync_licenses.py
+          python src/tools/sync_licenses.py
 
       - name: Detect changes
         id: changes
