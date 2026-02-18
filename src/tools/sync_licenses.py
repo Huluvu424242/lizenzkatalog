@@ -66,27 +66,25 @@ def sanitize_filename(spdx_id: str) -> str:
 
 def build_liz_content(spdx_id: str, meta: dict) -> str:
     today = datetime.date.today().isoformat()
-    name = meta.get("name", spdx_id)
-    # Canonical "details page" is stable; json includes "detailsUrl" or can use SPDX page
     src = meta.get("detailsUrl") or f"https://spdx.org/licenses/{spdx_id}.html"
-    license_text = meta.get("licenseText", "").rstrip()
+    license_text = (meta.get("licenseText") or "").rstrip()
 
     if not license_text:
         raise RuntimeError(f"No licenseText in SPDX JSON for {spdx_id}")
 
-    # Minimal header per your repo conventions (lic#name is a block; lic#spdx/src/date are single tags)
-    header = []
-    header.append(f"[[lic#spdx=\"{spdx_id}\"]]")
-    header.append(f"[[lic#src=\"{src}\"]]")
-    header.append(f"[[lic#date=\"{today}\"]]")
-    header.append("")
-    header.append("[[lic#name]]")
-    header.append(name)
-    header.append("[[/lic#name]]")
-    header.append("")
-    header.append(license_text)
-    header.append("")
-    return "\n".join(header)
+    lines = []
+    # Pflicht
+    lines.append(f"[[lic#spdx=\"{spdx_id}\"]]")
+    # Optional, aber praktisch
+    lines.append(f"[[lic#src=\"{src}\"]]")
+    lines.append(f"[[lic#date=\"{today}\"]]")
+    lines.append("")
+
+    # Dann der reine Lizenztext
+    lines.append(license_text)
+    lines.append("")
+    return "\n".join(lines)
+
 
 def main() -> int:
     targets = read_target_spdx_ids()
