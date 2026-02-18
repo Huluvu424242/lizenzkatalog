@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
+<annotation>
+  <text xml:space="preserve">
+
+
+
+
+
+MIT No Attribution
+
+
+MIT No Attribution
+
+Copyright &lt;YEAR&gt; &lt;COPYRIGHT HOLDER&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+  </text>
+  <notes>
+    <note id="a4" type="lic#name" start="4" end="24" category="lic" name="name"/>
+    <note id="a1" type="lic#spdx" label="MIT-0" link="https://spdx.org/licenses/MIT-0.html" category="lic" name="spdx" tooltip="lic#spdx MIT-0"/>
+    <note id="a2" type="lic#src" label="https://spdx.org/licenses/MIT-0.html" link="https://spdx.org/licenses/MIT-0.html" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
+    <note id="a3" type="lic#date" label="2026-02-18" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
+  </notes>
+</annotation>
