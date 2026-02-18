@@ -66,7 +66,7 @@ def sanitize_filename(spdx_id: str) -> str:
 
 def build_liz_content(spdx_id: str, meta: dict) -> str:
     today = datetime.date.today().isoformat()
-    src = meta.get("detailsUrl") or f"https://spdx.org/licenses/{spdx_id}.html"
+    src = meta.get("detailsUrl") or f"https://spdx.org/licenses/{spdx_id}.json"
     license_text = (meta.get("licenseText") or "").rstrip()
 
     if not license_text:
