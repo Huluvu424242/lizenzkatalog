@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
 import json
 import re
-import sys
+from dataclasses import dataclass
 from pathlib import Path
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 
-# --- Repo root discovery (works even when script is in src/tools) ---
+# ---------------------------
+# Config
+# ---------------------------
+SPDX_TAG_RE = re.compile(r'\[\[lic#spdx="([^"]+)"\]\]')
+ANY_TAG_RE = re.compile(r"\[\[[^\]]+\]\]")  # any [[...]] token
+SPDX_LICENSE_JSON_URL = "https://spdx.org/licenses/{spdx_id}.json"
+
+PRINT_OK = True          # set False if you only want errors
+CONTEXT_CHARS = 60       # context around first mismatch
+
+
+# ---------------------------
+# Repo root discovery
+# ---------------------------
 def find_repo_root(start: Path) -> Path:
     cur = start.resolve()
     for _ in range(12):
@@ -17,15 +30,14 @@ def find_repo_root(start: Path) -> Path:
         cur = cur.parent
     raise RuntimeError("Could not find repo root (expected 'lizenzkatalog/' or '.git').")
 
+
 REPO_ROOT = find_repo_root(Path(__file__).parent)
 CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
 
-SPDX_TAG_RE = re.compile(r'\[\[lic#spdx="([^"]+)"\]\]')
-ANY_TAG_RE = re.compile(r"\[\[[^\]]+\]\]")  # remove any [[...]] tokens
 
-SPDX_LICENSE_JSON_URL = "https://spdx.org/licenses/{spdx_id}.json"
-
-
+# ---------------------------
+# Helpers
+# ---------------------------
 def http_get_json(url: str) -> dict:
     req = Request(url, headers={"User-Agent": "lizenzkatalog-verify/1.0"})
     try:
@@ -45,23 +57,14 @@ def extract_spdx_id(text: str) -> str:
 
 
 def strip_annotations(text: str) -> str:
-    # Removes all annotation tokens like [[...]] anywhere in the document.
+    # remove all [[...]] tokens; keep the rest
     return ANY_TAG_RE.sub("", text)
 
 
 def normalize_for_compare(text: str) -> str:
-    """
-    Make formatting irrelevant:
-    - Remove annotations already, then:
-    - Convert any whitespace (incl. newlines/tabs) to single spaces
-    - Trim
-    """
-    # Normalize line endings first (optional, but keeps behavior predictable)
+    # normalize line endings then compress whitespace
     text = text.replace("\r\n", "\n").replace("\r", "\n")
-
-    # Collapse all whitespace runs (spaces, tabs, newlines) into single spaces
     text = re.sub(r"\s+", " ", text)
-
     return text.strip()
 
 
@@ -74,16 +77,23 @@ def fetch_spdx_license_text(spdx_id: str) -> str:
     return license_text
 
 
-def first_diff_context(a: str, b: str, ctx: int = 40) -> str:
+def first_diff_context(a: str, b: str, ctx: int) -> str:
     """
-    Returns a small snippet showing where strings differ.
+    Find first differing index and show small context.
+    a = SPDX normalized, b = LOCAL normalized
     """
     max_len = min(len(a), len(b))
     i = 0
     while i < max_len and a[i] == b[i]:
         i += 1
-    if i == max_len and len(a) == len(b):
-        return "No diff."
+    if i == max_len:
+        if len(a) == len(b):
+            return "No diff."
+        # One string is a prefix of the other
+        if len(a) < len(b):
+            return f"LOCAL has extra content starting at index {i}: …{b[i:i+ctx]}…"
+        return f"SPDX has extra content starting at index {i}: …{a[i:i+ctx]}…"
+
     a_snip = a[max(0, i - ctx): i + ctx]
     b_snip = b[max(0, i - ctx): i + ctx]
     return (
@@ -93,26 +103,40 @@ def first_diff_context(a: str, b: str, ctx: int = 40) -> str:
     )
 
 
-def verify_one_file(path: Path) -> tuple[bool, str]:
-    raw_local = path.read_text(encoding="utf-8", errors="replace")
-    spdx_id = extract_spdx_id(raw_local)
+@dataclass
+class VerifyResult:
+    filename: str
+    spdx_id: str | None
+    ok: bool
+    message: str
 
-    raw_spdx = fetch_spdx_license_text(spdx_id)
+
+def verify_one_file(path: Path) -> VerifyResult:
+    raw_local = path.read_text(encoding="utf-8", errors="replace")
+
+    try:
+        spdx_id = extract_spdx_id(raw_local)
+    except Exception as e:
+        return VerifyResult(path.name, None, False, f"ERROR: {e}")
+
+    try:
+        raw_spdx = fetch_spdx_license_text(spdx_id)
+    except Exception as e:
+        return VerifyResult(path.name, spdx_id, False, f"ERROR fetching SPDX text: {e}")
 
     local_norm = normalize_for_compare(strip_annotations(raw_local))
     spdx_norm = normalize_for_compare(raw_spdx)
 
     if local_norm == spdx_norm:
-        return True, f"{path.name}: OK (matches SPDX {spdx_id} ignoring formatting + annotations)"
+        return VerifyResult(path.name, spdx_id, True, "OK")
 
-    info = first_diff_context(spdx_norm, local_norm)
-    msg = (
-        f"{path.name}: MISMATCH vs SPDX {spdx_id}\n"
-        f"{info}"
-    )
-    return False, msg
+    info = first_diff_context(spdx_norm, local_norm, CONTEXT_CHARS)
+    return VerifyResult(path.name, spdx_id, False, info)
 
 
+# ---------------------------
+# Main
+# ---------------------------
 def main() -> int:
     if not CATALOG_DIR.exists():
         print(f"ERROR: Missing directory: {CATALOG_DIR}")
@@ -123,18 +147,27 @@ def main() -> int:
         print("No .liz files found.")
         return 0
 
-    ok_all = True
+    results: list[VerifyResult] = []
     for f in files:
-        try:
-            ok, msg = verify_one_file(f)
-            print(msg)
-            if not ok:
-                ok_all = False
-        except Exception as e:
-            ok_all = False
-            print(f"{f.name}: ERROR: {e}")
+        results.append(verify_one_file(f))
 
-    return 0 if ok_all else 1
+    oks = [r for r in results if r.ok]
+    fails = [r for r in results if not r.ok]
+
+    if PRINT_OK:
+        for r in oks:
+            print(f"{r.filename}: OK (matches SPDX {r.spdx_id} ignoring formatting + annotations)")
+
+    print(f"\nSummary: {len(oks)} OK, {len(fails)} FAIL")
+
+    if fails:
+        print("\nFailures:")
+        for r in fails:
+            spdx_part = f"SPDX {r.spdx_id}" if r.spdx_id else "SPDX <missing>"
+            print(f"\n- {r.filename}: {spdx_part}")
+            print(r.message)
+
+    return 0 if not fails else 1
 
 
 if __name__ == "__main__":
