@@ -48,8 +48,6 @@ def is_special_line(line: str) -> bool:
         return True
     if looks_preformatted(s):
         return True
-    if BULLET_RE.match(s):
-        return True
     # Lots of ALLCAPS headings or boilerplate lines – keep as-is
     if HEADING_RE.match(s.strip()):
         return True
@@ -88,15 +86,32 @@ def beautify_text(content: str, width: int) -> str:
             para_buf = []
 
     for line in src_lines:
-        # Platzhalter-Zeilen IMMER als special behandeln
-        if line.strip().startswith("@@TAGBLOCK") and line.strip().endswith("@@"):
+        s = line.rstrip("\n")
+
+        # placeholders/tags etc wie gehabt...
+        m = BULLET_RE.match(s)
+        if m:
             flush_para()
-            out.append(line.rstrip("\n"))
+
+            indent = re.match(r"\s*", s).group(0)
+            # Bullet prefix (z.B. "a) " oder "1. ")
+            prefix = s[len(indent):].split(maxsplit=1)[0] + " "
+            rest = s[len(indent) + len(prefix):] if len(s) > len(indent) + len(prefix) else ""
+
+            wrapped = textwrap.fill(
+                rest,
+                width=width,
+                initial_indent=indent + prefix,
+                subsequent_indent=indent + " " * len(prefix),
+                break_long_words=False,
+                break_on_hyphens=False,
+            )
+            out.extend(wrapped.splitlines())
             continue
 
         if is_special_line(line):
             flush_para()
-            out.append(line.rstrip("\n"))
+            out.append(s)
         else:
             para_buf.append(line)
 
