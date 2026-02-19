@@ -21,6 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
 
 TAG_LINE_RE = re.compile(r"^\s*\[\[[^\]]+\]\]\s*$")
+TAG_BLOCK_RE = re.compile(r"\[\[.*?\]\]", re.DOTALL)
 URL_RE = re.compile(r"https?://\S+")
 BULLET_RE = re.compile(r"^\s*(?:[-*•]|(\d+)[\.\)])\s+")
 HEADING_RE = re.compile(r"^[A-Z0-9][A-Z0-9\s\-\(\):]{8,}$")  # "THE SOFTWARE IS PROVIDED..." etc.
@@ -75,9 +76,10 @@ def wrap_paragraph(lines: list[str], width: int) -> list[str]:
 
 
 def beautify_text(content: str, width: int) -> str:
-    src_lines = content.splitlines()
-    out: list[str] = []
+    protected, blocks = protect_tag_blocks(content)
 
+    src_lines = protected.splitlines()
+    out: list[str] = []
     para_buf: list[str] = []
 
     def flush_para():
@@ -87,6 +89,12 @@ def beautify_text(content: str, width: int) -> str:
             para_buf = []
 
     for line in src_lines:
+        # Platzhalter-Zeilen IMMER als special behandeln
+        if line.strip().startswith("@@TAGBLOCK") and line.strip().endswith("@@"):
+            flush_para()
+            out.append(line.rstrip("\n"))
+            continue
+
         if is_special_line(line):
             flush_para()
             out.append(line.rstrip("\n"))
@@ -95,9 +103,8 @@ def beautify_text(content: str, width: int) -> str:
 
     flush_para()
 
-    # Keep trailing newline (nice for git)
-    return "\n".join(out).rstrip("\n") + "\n"
-
+    beautified = "\n".join(out).rstrip("\n") + "\n"
+    return unprotect_tag_blocks(beautified, blocks)
 
 def iter_target_files(paths: list[str], catalog_dir: Path) -> list[Path]:
     if paths:
@@ -164,6 +171,50 @@ def main() -> int:
     else:
         print("No changes needed.")
     return 0
+
+def protect_tag_blocks(text: str):
+    blocks = []
+    def repl(m):
+        blocks.append(m.group(0))
+        return f"@@TAGBLOCK{len(blocks)-1}@@"
+    return TAG_BLOCK_RE.sub(repl, text), blocks
+
+def unprotect_tag_blocks(text: str, blocks: list[str]) -> str:
+    for i, b in enumerate(blocks):
+        text = text.replace(f"@@TAGBLOCK{i}@@", b)
+    return text
+
+def beautify_preserving_tags(text: str, width: int = 120) -> str:
+    protected, blocks = protect_tag_blocks(text)
+
+    # Wichtig: NICHT "whitespace normalisieren" / join lines / split->join!
+    # Nur wrap normale Textzeilen, aber lass Placeholder-Zeilen in Ruhe.
+    out_lines = []
+    for line in protected.splitlines(True):  # True = keep line endings
+        stripped = line.strip()
+
+        # Wenn die Zeile ein Platzhalter ist, exakt so lassen
+        if stripped.startswith("@@TAGBLOCK") and stripped.endswith("@@"):
+            out_lines.append(line)
+            continue
+
+        # Optional: Fließtext wrap (nur wenn du wirklich willst)
+        if stripped and len(stripped) > width:
+            # Preserve indentation
+            indent = re.match(r"\s*", line).group(0)
+            wrapped = textwrap.fill(
+                stripped,
+                width=width,
+                subsequent_indent=indent,
+                break_long_words=False,
+                break_on_hyphens=False
+            )
+            out_lines.append(indent + wrapped + ("\n" if not wrapped.endswith("\n") else ""))
+        else:
+            out_lines.append(line)
+
+    beautified = "".join(out_lines)
+    return unprotect_tag_blocks(beautified, blocks)
 
 
 def run_beautifier_script() -> int:
