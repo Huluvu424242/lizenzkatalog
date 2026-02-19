@@ -77,8 +77,8 @@ liable for infringement under applicable copyright law, except executing it on a
 Propagation includes copying, distribution (with or without modification), making available to the public, and in some
 countries other activities as well.
 
-[[act#cop]]To “convey” a work means any kind of propagation that enables other parties to make or receive copies.  Mere
-interaction with a user through a computer network, with no transfer of a copy, is not conveying.[[/act#cop]]
+[[act#cop]]To “convey” a work means any kind of propagation that enables other parties to make or receive copies.
+Mere interaction with a user through a computer network, with no transfer of a copy, is not conveying.[[/act#cop]]
 
 An interactive user interface displays “Appropriate Legal Notices” to the extent that it includes a convenient and
 prominently visible feature that (1) displays an appropriate copyright notice, and (2) tells the user that there is no
@@ -145,14 +145,14 @@ your or third parties' legal rights to forbid circumvention of technological mea
 
   4. Conveying Verbatim Copies.
 
-[[act#cop]]You may convey verbatim copies of the Program's source code as you receive it[[/act#cop]], [[rul#notice]]in
-any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice; keep
-intact all notices stating that this License and any non-permissive terms added in accord with section 7 apply to the
-code; keep intact all notices of the absence of any warranty; [[rul#lictxt]]and give all recipients a copy of this
-License along with the Program.[[/rul#lictxt]][[/rul#notice]]
+[[act#cop]]You may convey verbatim copies of the Program's source code as you receive it[[/act#cop]],
+[[rul#notice]]in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate
+copyright notice; keep intact all notices stating that this License and any non-permissive terms added in accord with
+section 7 apply to the code; keep intact all notices of the absence of any warranty; [[rul#lictxt]]and give all
+recipients a copy of this License along with the Program.[[/rul#lictxt]][[/rul#notice]]
 
-[[act#sel]][[rul#com]]You may charge any price or no price for each copy that you convey, and you may offer support or
-warranty protection for a fee.[[/rul#com]][[/act#sel]]
+[[act#sel]][[rul#com]]You may charge any price or no price for each copy that you convey, and you may offer
+support or warranty protection for a fee.[[/rul#com]][[/act#sel]]
 
 [[act#mov]] 5. Conveying Modified Source Versions.[[/act#mov]]
 [[act#der]]
@@ -188,8 +188,8 @@ in an aggregate does not cause this License to apply to the other parts of the a
 [[/act#der]]
   6. Conveying Non-Source Forms.
 
-[[act#mov]][[rul#src]]You may convey a covered work in object code form under the terms of sections 4 and 5, provided
-that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these
+[[act#mov]][[rul#src]]You may convey a covered work in object code form under the terms of sections 4 and 5,
+provided that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these
 ways:[[/rul#src]][[/act#mov]]
 
 [[act#mov]] a) Convey the object code in, or embodied in, a physical product
@@ -376,9 +376,9 @@ selling its contributor version, but do not include claims that would be infring
 modification of the contributor version.  For purposes of this definition, “control” includes the right to grant patent
 sublicenses in a manner consistent with the requirements of this License.
 
-[[rul#pat]]Each contributor grants you a non-exclusive, worldwide, royalty-free patent license under the contributor's
-essential patent claims, to make, use, sell, offer for sale, import and otherwise run, modify and propagate the contents
-of its contributor version.[[/rul#pat]]
+[[rul#pat]]Each contributor grants you a non-exclusive, worldwide, royalty-free patent license under the
+contributor's essential patent claims, to make, use, sell, offer for sale, import and otherwise run, modify and
+propagate the contents of its contributor version.[[/rul#pat]]
 
 In the following three paragraphs, a “patent license” is any express agreement or commitment, however denominated, not
 to enforce a patent (such as an express permission to practice a patent or covenant not to sue for patent infringement).
@@ -400,8 +400,8 @@ them to use, propagate, modify or convey a specific copy of the covered work, th
 automatically extended to all recipients of the covered work and works based on it.
 
 A patent license is “discriminatory” if it does not include within the scope of its coverage, prohibits the exercise of,
-or is conditioned on the non-exercise of one or more of the rights that are specifically granted under this License.
-You may not convey a covered work if you are a party to an arrangement with a third party that is in the business of
+or is conditioned on the non-exercise of one or more of the rights that are specifically granted under this License. You
+may not convey a covered work if you are a party to an arrangement with a third party that is in the business of
 distributing software, under which you make payment to the third party based on the extent of your activity of conveying
 the work, and under which the third party grants, to any of the parties who would receive the covered work from you, a
 discriminatory patent license (a) in connection with copies of the covered work conveyed by you (or copies made from
