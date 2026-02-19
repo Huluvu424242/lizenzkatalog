@@ -279,7 +279,7 @@ Manuell gepflegte Bewertung/Richtlinie für konkrete Nutzungsszenarien.
 
 ## Technische Umsetzung
 
-1. **Python** (`src/liz2standoff.py`)
+1. **Python** (`src/generate_site.py`)
     - erzeugt `output.txt` (Plaintext ohne Marker)
     - erzeugt `output.xml` (Standoff‑Annotationen mit 0‑basierten, end‑exklusiven Offsets)
 
@@ -303,7 +303,7 @@ ospo-lizenzkatalog/
 │  ├─ apache-2.0.liz
 │  └─ gpl-3.0.liz
 ├─ src/
-│  ├─ liz2standoff.py
+│  ├─ generate_site.py
 │  └─ styles/
 │     └─ liz2table-style.xsl
 └─ build/              # Ausgabeordner für CI und lokale Läufe
@@ -314,7 +314,7 @@ ospo-lizenzkatalog/
 ## Nutzung Visualisierung (lokal)
 
 ```bash
-python3 src/liz2standoff.py
+python3 src/generate_site.py
 ```
 
 Die Ausgaben werden unter `build/` abgelegt (konfigurationsabhängig).

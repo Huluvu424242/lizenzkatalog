@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - master
-      - automation/license-catalog-sync
+      - configuration/license-catalog-sync
 
 permissions:
   contents: read
