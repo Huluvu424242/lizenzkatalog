@@ -9,7 +9,7 @@ from urllib.request import urlopen, Request
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
-TARGET_FILE = REPO_ROOT / "automation" / "target_licenses.json"
+TARGET_FILE = REPO_ROOT / "configuration" / "target_licenses.json"
 
 SPDX_JSON_URL = "https://spdx.org/licenses/{spdx_id}.json"
 
