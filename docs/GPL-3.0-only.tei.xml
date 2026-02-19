@@ -6,9 +6,9 @@
   <text xml:space="preserve">
 
 
-  
-
-  
+ [[lic#fsf/]] [[lic#osi/]]
+[[cpy#strong/]]
+[[use#lib/]] [[use#app/]] 
 
 
         GNU GENERAL PUBLIC LICENSE
@@ -82,8 +82,8 @@ liable for infringement under applicable copyright law, except executing it on a
 Propagation includes copying, distribution (with or without modification), making available to the public, and in some
 countries other activities as well.
 
-To “convey” a work means any kind of propagation that enables other parties to make or receive copies.  Mere
-interaction with a user through a computer network, with no transfer of a copy, is not conveying.
+To “convey” a work means any kind of propagation that enables other parties to make or receive copies.
+Mere interaction with a user through a computer network, with no transfer of a copy, is not conveying.
 
 An interactive user interface displays “Appropriate Legal Notices” to the extent that it includes a convenient and
 prominently visible feature that (1) displays an appropriate copyright notice, and (2) tells the user that there is no
@@ -150,14 +150,14 @@ your or third parties&#x27; legal rights to forbid circumvention of technologica
 
   4. Conveying Verbatim Copies.
 
-You may convey verbatim copies of the Program&#x27;s source code as you receive it, in
-any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice; keep
-intact all notices stating that this License and any non-permissive terms added in accord with section 7 apply to the
-code; keep intact all notices of the absence of any warranty; and give all recipients a copy of this
-License along with the Program.
+You may convey verbatim copies of the Program&#x27;s source code as you receive it,
+in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate
+copyright notice; keep intact all notices stating that this License and any non-permissive terms added in accord with
+section 7 apply to the code; keep intact all notices of the absence of any warranty; and give all
+recipients a copy of this License along with the Program.
 
-You may charge any price or no price for each copy that you convey, and you may offer support or
-warranty protection for a fee.
+You may charge any price or no price for each copy that you convey, and you may offer
+support or warranty protection for a fee.
 
  5. Conveying Modified Source Versions.
 
@@ -193,8 +193,8 @@ in an aggregate does not cause this License to apply to the other parts of the a
 
   6. Conveying Non-Source Forms.
 
-You may convey a covered work in object code form under the terms of sections 4 and 5, provided
-that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these
+You may convey a covered work in object code form under the terms of sections 4 and 5,
+provided that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these
 ways:
 
  a) Convey the object code in, or embodied in, a physical product
@@ -381,9 +381,9 @@ selling its contributor version, but do not include claims that would be infring
 modification of the contributor version.  For purposes of this definition, “control” includes the right to grant patent
 sublicenses in a manner consistent with the requirements of this License.
 
-Each contributor grants you a non-exclusive, worldwide, royalty-free patent license under the contributor&#x27;s
-essential patent claims, to make, use, sell, offer for sale, import and otherwise run, modify and propagate the contents
-of its contributor version.
+Each contributor grants you a non-exclusive, worldwide, royalty-free patent license under the
+contributor&#x27;s essential patent claims, to make, use, sell, offer for sale, import and otherwise run, modify and
+propagate the contents of its contributor version.
 
 In the following three paragraphs, a “patent license” is any express agreement or commitment, however denominated, not
 to enforce a patent (such as an express permission to practice a patent or covenant not to sue for patent infringement).
@@ -405,8 +405,8 @@ them to use, propagate, modify or convey a specific copy of the covered work, th
 automatically extended to all recipients of the covered work and works based on it.
 
 A patent license is “discriminatory” if it does not include within the scope of its coverage, prohibits the exercise of,
-or is conditioned on the non-exercise of one or more of the rights that are specifically granted under this License.
-You may not convey a covered work if you are a party to an arrangement with a third party that is in the business of
+or is conditioned on the non-exercise of one or more of the rights that are specifically granted under this License. You
+may not convey a covered work if you are a party to an arrangement with a third party that is in the business of
 distributing software, under which you make payment to the third party based on the extent of your activity of conveying
 the work, and under which the third party grants, to any of the parties who would receive the covered work from you, a
 discriminatory patent license (a) in connection with copies of the covered work conveyed by you (or copies made from
@@ -534,45 +534,40 @@ this is what you want to do, use the GNU Lesser General Public License instead o
 
   </text>
   <notes>
-    <note id="a10" type="lic#name" start="19" end="92" category="lic" name="name"/>
-    <note id="a11" type="act#mod" start="4023" end="4376" category="act" name="mod"/>
-    <note id="a12" type="act#cop" start="4768" end="4974" category="act" name="cop"/>
-    <note id="a13" type="act#mov" start="8133" end="8273" category="act" name="mov"/>
-    <note id="a14" type="act#mov" start="8815" end="8909" category="act" name="mov"/>
-    <note id="a15" type="act#cop" start="9790" end="9867" category="act" name="cop"/>
-    <note id="a16" type="rul#notice" start="9869" end="10243" category="rul" name="notice"/>
-    <note id="a17" type="rul#lictxt" start="10173" end="10243" category="rul" name="lictxt"/>
-    <note id="a19" type="rul#com" start="10245" end="10372" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
-    <note id="a18" type="act#sel" start="10245" end="10372" category="act" name="sel"/>
-    <note id="a20" type="act#mov" start="10374" end="10413" category="act" name="mov"/>
-    <note id="a21" type="act#der" start="10414" end="12244" category="act" name="der"/>
-    <note id="a22" type="rul#changes" start="10627" end="10729" category="rul" name="changes"/>
-    <note id="a24" type="rul#src" start="12279" end="12492" category="rul" name="src"/>
-    <note id="a23" type="act#mov" start="12279" end="12492" category="act" name="mov"/>
-    <note id="a25" type="act#mov" start="12494" end="12733" category="act" name="mov"/>
-    <note id="a26" type="act#mov" start="12739" end="13453" category="act" name="mov"/>
-    <note id="a27" type="act#mov" start="13459" end="13750" category="act" name="mov"/>
-    <note id="a28" type="act#mov" start="13756" end="14572" category="act" name="mov"/>
-    <note id="a29" type="act#mov" start="14578" end="14813" category="act" name="mov"/>
-    <note id="a30" type="rul#tivo" start="16274" end="16720" category="rul" name="tivo"/>
-    <note id="a31" type="rul#by" start="18997" end="19181" category="rul" name="by"/>
-    <note id="a32" type="rul#patret" start="23802" end="24267" category="rul" name="patret"/>
-    <note id="a33" type="rul#pat" start="25044" end="25300" category="rul" name="pat"/>
-    <note id="a34" type="rul#nolia" start="30650" end="31200" category="rul" name="nolia"/>
-    <note id="a35" type="rul#nolia" start="31232" end="31838" category="rul" name="nolia"/>
-    <note id="a36" type="rul#nolia" start="31839" end="32263" category="rul" name="nolia"/>
+    <note id="a5" type="lic#name" start="82" end="155" category="lic" name="name"/>
+    <note id="a6" type="act#mod" start="4086" end="4439" category="act" name="mod"/>
+    <note id="a7" type="act#cop" start="4831" end="5036" category="act" name="cop"/>
+    <note id="a8" type="act#mov" start="8195" end="8335" category="act" name="mov"/>
+    <note id="a9" type="act#mov" start="8877" end="8971" category="act" name="mov"/>
+    <note id="a10" type="act#cop" start="9852" end="9929" category="act" name="cop"/>
+    <note id="a11" type="rul#notice" start="9931" end="10305" category="rul" name="notice"/>
+    <note id="a12" type="rul#lictxt" start="10235" end="10305" category="rul" name="lictxt"/>
+    <note id="a14" type="rul#com" start="10307" end="10434" category="rul" name="com" tooltip="rul#com Kommerzielle Nutzung"/>
+    <note id="a13" type="act#sel" start="10307" end="10434" category="act" name="sel"/>
+    <note id="a15" type="act#mov" start="10436" end="10475" category="act" name="mov"/>
+    <note id="a16" type="act#der" start="10476" end="12306" category="act" name="der"/>
+    <note id="a17" type="rul#changes" start="10689" end="10791" category="rul" name="changes"/>
+    <note id="a19" type="rul#src" start="12341" end="12554" category="rul" name="src"/>
+    <note id="a18" type="act#mov" start="12341" end="12554" category="act" name="mov"/>
+    <note id="a20" type="act#mov" start="12556" end="12795" category="act" name="mov"/>
+    <note id="a21" type="act#mov" start="12801" end="13515" category="act" name="mov"/>
+    <note id="a22" type="act#mov" start="13521" end="13812" category="act" name="mov"/>
+    <note id="a23" type="act#mov" start="13818" end="14634" category="act" name="mov"/>
+    <note id="a24" type="act#mov" start="14640" end="14875" category="act" name="mov"/>
+    <note id="a25" type="rul#tivo" start="16336" end="16782" category="rul" name="tivo"/>
+    <note id="a26" type="rul#by" start="19059" end="19243" category="rul" name="by"/>
+    <note id="a27" type="rul#patret" start="23864" end="24329" category="rul" name="patret"/>
+    <note id="a28" type="rul#pat" start="25106" end="25362" category="rul" name="pat"/>
+    <note id="a29" type="rul#nolia" start="30712" end="31262" category="rul" name="nolia"/>
+    <note id="a30" type="rul#nolia" start="31294" end="31900" category="rul" name="nolia"/>
+    <note id="a31" type="rul#nolia" start="31901" end="32325" category="rul" name="nolia"/>
     <note id="a1" type="lic#src" label="https://www.gnu.org/licenses/gpl-3.0.txt" link="https://www.gnu.org/licenses/gpl-3.0.txt" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
     <note id="a2" type="lic#date" label="06.12.2025" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
     <note id="a3" type="lic#spdx" label="GPL-3.0-only" link="https://spdx.org/licenses/GPL-3.0-only.html" category="lic" name="spdx" tooltip="lic#spdx GPL-3.0-only"/>
-    <note id="a4" type="lic#fsf" label="Ist FSF-Free-Software-Lizenz" category="lic" name="fsf" tooltip="lic#fsf FSF-Freigabe"/>
-    <note id="a5" type="lic#osi" label="Ist OSI-approved-Lizenz" category="lic" name="osi" tooltip="lic#osi OSI-Freigabe"/>
-    <note id="a6" type="cpy#strong" label="Wirkt sich immer auf das Gesamtwerk aus" category="cpy" name="strong" emoji="🔴" tooltip="cpy#strong 🔴 Strong Copyleft"/>
-    <note id="a7" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📗" tooltip="use#lib 📗 Bibliothek/Komponente"/>
-    <note id="a8" type="use#app" label="Auf Anwendungen z.B. exe, binary, App (auch Server) anwendbar." category="use" name="app" emoji="📲" tooltip="use#app 📲 Lokale Anwendung"/>
-    <note id="a9" type="use#cld" label="In der Cloud anwendbar, evlt. geeignetere Lizenzen mit Netzwerk-Copyleft wie z.B.&#10;AGPL" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
-    <note id="a37" type="pol#if" if="env=com,use=lib,dst=public,lic=c" then="rot" because="Öffentliche Verteilung eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏭 📗 🌍 🔴" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#public 🌍 Öffentlich, lic#c 🔴 Alle Rechte vorbehalten"/>
-    <note id="a38" type="pol#if" if="env=com,use=lib,dst=partners,lic=c" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏭 📗 🤝 🔴" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, lic#c 🔴 Alle Rechte vorbehalten"/>
-    <note id="a39" type="pol#if" if="env=com,use=lib,dst=internal,lic=c" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏭 📗 ♻️ 🔴" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#internal ♻️ Interne Weitergabe, lic#c 🔴 Alle Rechte vorbehalten"/>
-    <note id="a40" type="pol#_section" present="true"/>
+    <note id="a4" type="use#cld" label="In der Cloud anwendbar, evlt. geeignetere Lizenzen mit Netzwerk-Copyleft wie z.B.&#10;AGPL" category="use" name="cld" emoji="☁️" tooltip="use#cld ☁️ Cloud-Anwendung"/>
+    <note id="a32" type="pol#if" if="env=com,use=lib,dst=public,lic=c" then="rot" because="Öffentliche Verteilung eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Öffentliche Verteilung eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏭 📗 🌍 🔴" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#public 🌍 Öffentlich, lic#c 🔴 Alle Rechte vorbehalten"/>
+    <note id="a33" type="pol#if" if="env=com,use=lib,dst=partners,lic=c" then="rot" because="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." status="red" title="Verteilung an Partner/Kunden eines abgeleiteten Gesamtwerks ohne GPL-Weiterlizenzierung unzulässig." label="🏭 📗 🤝 🔴" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden, lic#c 🔴 Alle Rechte vorbehalten"/>
+    <note id="a34" type="pol#if" if="env=com,use=lib,dst=internal,lic=c" then="grün" because="Interne Verteilung im Unternehmen eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung möglich." status="green" title="Interne Verteilung im Unternehmen eines abgeleiteten&#10;Gesamtwerks ohne GPL-Weiterlizenzierung möglich." label="🏭 📗 ♻️ 🔴" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#internal ♻️ Interne Weitergabe, lic#c 🔴 Alle Rechte vorbehalten"/>
+    <note id="a35" type="pol#_section" present="true"/>
   </notes>
 </annotation>
