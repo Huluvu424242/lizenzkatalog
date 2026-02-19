@@ -88,6 +88,12 @@ def beautify_text(content: str, width: int) -> str:
     for line in src_lines:
         s = line.rstrip("\n")
 
+        placeholder = s.strip()
+        if placeholder.startswith("@@TAGBLOCK") and placeholder.endswith("@@"):
+            flush_para()
+            out.append(s)     # exakt in eigener Zeile behalten
+            continue
+
         # placeholders/tags etc wie gehabt...
         m = BULLET_RE.match(s)
         if m:
