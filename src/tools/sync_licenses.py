@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import json
-import os
-import re
-import sys
 import datetime
+import json
+import re
 from pathlib import Path
 from urllib.request import urlopen, Request
+
+from tools.beautify_licenses import run_beautifier_script
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
@@ -23,6 +23,7 @@ def load_valid_spdx_ids() -> set[str]:
     # SPDX index has a "licenses" array with "licenseId" fields
     return {x["licenseId"] for x in idx.get("licenses", []) if "licenseId" in x}
 
+
 def read_target_spdx_ids() -> list[str]:
     data = json.loads(TARGET_FILE.read_text(encoding="utf-8"))
     ids = data.get("spdx_ids", [])
@@ -30,14 +31,17 @@ def read_target_spdx_ids() -> list[str]:
         raise RuntimeError("target_licenses.json has no spdx_ids")
     return ids
 
+
 def list_existing_liz_files() -> list[Path]:
     if not CATALOG_DIR.exists():
         raise RuntimeError(f"Missing directory: {CATALOG_DIR}")
     return sorted(CATALOG_DIR.glob("*.liz"))
 
+
 def extract_spdx_id_from_liz(text: str) -> str | None:
     m = SPDX_TAG_RE.search(text)
     return m.group(1) if m else None
+
 
 def inventory_present_spdx_ids() -> set[str]:
     present = set()
@@ -48,10 +52,12 @@ def inventory_present_spdx_ids() -> set[str]:
             present.add(spdx.strip())
     return present
 
+
 def http_get_json(url: str) -> dict:
     req = Request(url, headers={"User-Agent": "lizenzkatalog-sync-bot/1.0"})
     with urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode("utf-8"))
+
 
 def filename_for_spdx_id(spdx_id: str) -> str:
     # EXACT SPDX licenseId -> filename
@@ -63,6 +69,7 @@ def sanitize_filename(spdx_id: str) -> str:
     # keep repo naming simple & stable: <spdx>.liz
     # SPDX IDs already safe-ish, but keep conservative
     return re.sub(r"[^A-Za-z0-9\.\-\+]+", "_", spdx_id) + ".liz"
+
 
 def build_liz_content(spdx_id: str, meta: dict) -> str:
     today = datetime.date.today().isoformat()
@@ -125,7 +132,23 @@ def main() -> int:
         print(f"Created: {out_path}")
 
     print(f"Created files: {created}")
+
+    # 1️⃣ Beautify
+    print("Running beautifier...")
+    rc = run_beautifier_script()
+    print(f"Beautifier exit code: {rc!r} (type={type(rc).__name__})")
+    if rc != 0:
+        raise RuntimeError("Beautifier failed")
+
+    # 2️⃣ Lint (optional aber empfohlen!)
+    from tools.license_lint import main as lint_main
+    print("Running lint...")
+    lint_rc = lint_main()
+    if lint_rc != 0:
+        raise RuntimeError("Lint failed after beautify")
+
     return 0 if created >= 0 else 1
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -8,9 +8,11 @@ Beautifier for *.liz files:
 """
 
 from __future__ import annotations
+
 import argparse
 import os
 import re
+import subprocess
 import sys
 import textwrap
 from pathlib import Path
@@ -24,6 +26,7 @@ BULLET_RE = re.compile(r"^\s*(?:[-*•]|(\d+)[\.\)])\s+")
 HEADING_RE = re.compile(r"^[A-Z0-9][A-Z0-9\s\-\(\):]{8,}$")  # "THE SOFTWARE IS PROVIDED..." etc.
 ASCII_ART_RE = re.compile(r"^[=\-*_/\\|]{6,}$")
 
+
 def looks_preformatted(line: str) -> bool:
     # Indented lines are likely code/preformatted
     if line.startswith("    ") or line.startswith("\t"):
@@ -35,6 +38,7 @@ def looks_preformatted(line: str) -> bool:
     if ASCII_ART_RE.match(line.strip()):
         return True
     return False
+
 
 def is_special_line(line: str) -> bool:
     s = line.rstrip("\n")
@@ -50,6 +54,7 @@ def is_special_line(line: str) -> bool:
     if HEADING_RE.match(s.strip()):
         return True
     return False
+
 
 def wrap_paragraph(lines: list[str], width: int) -> list[str]:
     # Join paragraph lines with spaces (respect multiple spaces minimally)
@@ -67,6 +72,7 @@ def wrap_paragraph(lines: list[str], width: int) -> list[str]:
         break_on_hyphens=False,
     )
     return filled.splitlines()
+
 
 def beautify_text(content: str, width: int) -> str:
     src_lines = content.splitlines()
@@ -92,6 +98,7 @@ def beautify_text(content: str, width: int) -> str:
     # Keep trailing newline (nice for git)
     return "\n".join(out).rstrip("\n") + "\n"
 
+
 def iter_target_files(paths: list[str], catalog_dir: Path) -> list[Path]:
     if paths:
         out: list[Path] = []
@@ -103,6 +110,7 @@ def iter_target_files(paths: list[str], catalog_dir: Path) -> list[Path]:
                 out.append(path)
         return out
     return sorted(catalog_dir.glob("*.liz"))
+
 
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -156,6 +164,15 @@ def main() -> int:
     else:
         print("No changes needed.")
     return 0
+
+
+def run_beautifier_script() -> int:
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.beautify_licenses"],
+        check=False
+    )
+    return result.returncode
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
