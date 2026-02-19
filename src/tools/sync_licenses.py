@@ -2,10 +2,10 @@
 import datetime
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 from urllib.request import urlopen, Request
-
-from tools.beautify_licenses import run_beautifier_script
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
@@ -91,6 +91,14 @@ def build_liz_content(spdx_id: str, meta: dict) -> str:
     lines.append(license_text)
     lines.append("")
     return "\n".join(lines)
+
+
+def run_beautifier_script() -> int:
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.beautify_licenses"],
+        check=False
+    )
+    return result.returncode
 
 
 def main() -> int:

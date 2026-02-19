@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 import os
 import re
-import subprocess
 import sys
 import textwrap
 from pathlib import Path
@@ -106,6 +105,7 @@ def beautify_text(content: str, width: int) -> str:
     beautified = "\n".join(out).rstrip("\n") + "\n"
     return unprotect_tag_blocks(beautified, blocks)
 
+
 def iter_target_files(paths: list[str], catalog_dir: Path) -> list[Path]:
     if paths:
         out: list[Path] = []
@@ -172,17 +172,22 @@ def main() -> int:
         print("No changes needed.")
     return 0
 
+
 def protect_tag_blocks(text: str):
     blocks = []
+
     def repl(m):
         blocks.append(m.group(0))
-        return f"@@TAGBLOCK{len(blocks)-1}@@"
+        return f"@@TAGBLOCK{len(blocks) - 1}@@"
+
     return TAG_BLOCK_RE.sub(repl, text), blocks
+
 
 def unprotect_tag_blocks(text: str, blocks: list[str]) -> str:
     for i, b in enumerate(blocks):
         text = text.replace(f"@@TAGBLOCK{i}@@", b)
     return text
+
 
 def beautify_preserving_tags(text: str, width: int = 120) -> str:
     protected, blocks = protect_tag_blocks(text)
@@ -215,14 +220,6 @@ def beautify_preserving_tags(text: str, width: int = 120) -> str:
 
     beautified = "".join(out_lines)
     return unprotect_tag_blocks(beautified, blocks)
-
-
-def run_beautifier_script() -> int:
-    result = subprocess.run(
-        [sys.executable, "-m", "tools.beautify_licenses"],
-        check=False
-    )
-    return result.returncode
 
 
 if __name__ == "__main__":
