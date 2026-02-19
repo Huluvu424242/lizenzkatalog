@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""
+Beautifier for *.liz files:
+- Reflows plain-text paragraphs to a configured width
+- Preserves annotation tag lines ([[...]])
+- Preserves preformatted blocks (indented/code-ish), ASCII art, lists, headings, URLs
+- Can run on all files or on a list of files
+"""
+
+from __future__ import annotations
+import argparse
+import os
+import re
+import sys
+import textwrap
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_CATALOG_DIR = REPO_ROOT / "lizenzkatalog"
+
+TAG_LINE_RE = re.compile(r"^\s*\[\[[^\]]+\]\]\s*$")
+URL_RE = re.compile(r"https?://\S+")
+BULLET_RE = re.compile(r"^\s*(?:[-*•]|(\d+)[\.\)])\s+")
+HEADING_RE = re.compile(r"^[A-Z0-9][A-Z0-9\s\-\(\):]{8,}$")  # "THE SOFTWARE IS PROVIDED..." etc.
+ASCII_ART_RE = re.compile(r"^[=\-*_/\\|]{6,}$")
+
+def looks_preformatted(line: str) -> bool:
+    # Indented lines are likely code/preformatted
+    if line.startswith("    ") or line.startswith("\t"):
+        return True
+    # Contains a URL – keep as-is to avoid awkward wraps
+    if URL_RE.search(line):
+        return True
+    # Obvious ASCII separators
+    if ASCII_ART_RE.match(line.strip()):
+        return True
+    return False
+
+def is_special_line(line: str) -> bool:
+    s = line.rstrip("\n")
+    if not s.strip():
+        return True  # blank line
+    if TAG_LINE_RE.match(s):
+        return True
+    if looks_preformatted(s):
+        return True
+    if BULLET_RE.match(s):
+        return True
+    # Lots of ALLCAPS headings or boilerplate lines – keep as-is
+    if HEADING_RE.match(s.strip()):
+        return True
+    return False
+
+def wrap_paragraph(lines: list[str], width: int) -> list[str]:
+    # Join paragraph lines with spaces (respect multiple spaces minimally)
+    text = " ".join(l.strip() for l in lines).strip()
+    if not text:
+        return [""]
+
+    filled = textwrap.fill(
+        text,
+        width=width,
+        expand_tabs=False,
+        replace_whitespace=True,
+        drop_whitespace=True,
+        break_long_words=False,
+        break_on_hyphens=False,
+    )
+    return filled.splitlines()
+
+def beautify_text(content: str, width: int) -> str:
+    src_lines = content.splitlines()
+    out: list[str] = []
+
+    para_buf: list[str] = []
+
+    def flush_para():
+        nonlocal para_buf
+        if para_buf:
+            out.extend(wrap_paragraph(para_buf, width))
+            para_buf = []
+
+    for line in src_lines:
+        if is_special_line(line):
+            flush_para()
+            out.append(line.rstrip("\n"))
+        else:
+            para_buf.append(line)
+
+    flush_para()
+
+    # Keep trailing newline (nice for git)
+    return "\n".join(out).rstrip("\n") + "\n"
+
+def iter_target_files(paths: list[str], catalog_dir: Path) -> list[Path]:
+    if paths:
+        out: list[Path] = []
+        for p in paths:
+            path = (REPO_ROOT / p).resolve() if not Path(p).is_absolute() else Path(p)
+            if path.is_dir():
+                out.extend(sorted(path.glob("*.liz")))
+            else:
+                out.append(path)
+        return out
+    return sorted(catalog_dir.glob("*.liz"))
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--width", type=int, default=int(os.getenv("LIZ_WRAP_WIDTH", "100")),
+                    help="Target line width (default: env LIZ_WRAP_WIDTH or 100)")
+    ap.add_argument("--catalog", type=str, default=str(DEFAULT_CATALOG_DIR),
+                    help="Catalog directory (default: ./lizenzkatalog)")
+    ap.add_argument("--check", action="store_true",
+                    help="Do not modify files; exit 1 if any file would change")
+    ap.add_argument("--files", nargs="*", default=[],
+                    help="Optional list of files/dirs to process; default processes catalog dir")
+    args = ap.parse_args()
+
+    if args.width < 40:
+        print("ERROR: width < 40 is too small for legal texts.", file=sys.stderr)
+        return 2
+
+    catalog_dir = Path(args.catalog).resolve()
+    files = iter_target_files(args.files, catalog_dir)
+    if not files:
+        print("No .liz files found.")
+        return 0
+
+    changed: list[Path] = []
+    for f in files:
+        if not f.exists():
+            print(f"SKIP missing: {f}")
+            continue
+        if f.suffix.lower() != ".liz":
+            continue
+
+        original = f.read_text(encoding="utf-8", errors="replace")
+        beautified = beautify_text(original, args.width)
+
+        if beautified != original:
+            changed.append(f)
+            if not args.check:
+                f.write_text(beautified, encoding="utf-8")
+
+    if args.check:
+        if changed:
+            print("Beautify check FAILED. Files would change:")
+            for f in changed:
+                print(f"- {f.relative_to(REPO_ROOT)}")
+            return 1
+        print("Beautify check OK.")
+        return 0
+
+    if changed:
+        print(f"Beautified {len(changed)} file(s) to width={args.width}.")
+    else:
+        print("No changes needed.")
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())
