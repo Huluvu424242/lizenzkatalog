@@ -106,8 +106,8 @@ def iter_target_files(paths: list[str], catalog_dir: Path) -> list[Path]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--width", type=int, default=int(os.getenv("LIZ_WRAP_WIDTH", "100")),
-                    help="Target line width (default: env LIZ_WRAP_WIDTH or 100)")
+    ap.add_argument("--width", type=int, default=int(os.getenv("LIZ_WRAP_WIDTH", "120")),
+                    help="Target line width (default: env LIZ_WRAP_WIDTH or 120)")
     ap.add_argument("--catalog", type=str, default=str(DEFAULT_CATALOG_DIR),
                     help="Catalog directory (default: ./lizenzkatalog)")
     ap.add_argument("--check", action="store_true",
