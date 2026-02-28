@@ -343,6 +343,26 @@ python3 src/tools/license_lint.py
 ```
 3. Sync Action laufen lassen
 Sie fügt künftig nur noch kanonische Dateien hinzu
+
+4. Allgemeine Kommandos
+
+$env:PYTHONPATH = "src"
+: Setzen des src Verzeichnisses um Modulaufruf zu unterstützen 
+
+python -m tools.verify_against_spdx
+: Alle *.liz Dateien gegen spdx prüfen ob ID dort existiert.
+
+python -m tools.license-lint
+: Alle *.liz Files auf korrekte Syntax prüfen
+
+python -m tools.beautify_licenses
+: Alle *.liz Dateien hübsch formatieren
+
+python -m tools.update_license_from_spdx lizenzkatalog/Apache-2.0.liz
+: Das angegebene Lizenzfile aktualisieren aber die Annotationen und Formatierung erhalten
+
+python -m tools.sync_licenses
+: Alle fehlenden Lizenzen von spdx herunterladen und formatieren bis die Liste in target_licenses.json vorliegt
 ---
 
 
