@@ -5,6 +5,10 @@
 > Ein leichtgewichtiges, erweiterbares System zur Analyse und Bewertung von Softwarelizenzen auf Basis von
 > Plaintext-Annotationen, Standoff‑XML und XSLT‑Visualisierung.  
 > Online-Demo: [Lizenzkatalog](http://huluvu424242.github.io/lizenzkatalog/)
+>
+> Präsentationen: 
+> 
+> * [Lizenzkatalog Wozu?](https://huluvu424242.github.io/sld-slideshow-viewer/?url=https://huluvu424242.github.io/foile-pile/projects/lizenzkatalog/lizenzkatalog-wozu-grundlagen/slides.json)
 
 ---
 
