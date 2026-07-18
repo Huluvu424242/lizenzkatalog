@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   lint:
+    name: Lizenz Konformitaets Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
