@@ -1,4 +1,4 @@
 Apache-2.0
-CC0-1.0-Universal
-GPL-3.0
+CC0-1.0
+GPL-3.0-only
 ODC-By-1.0

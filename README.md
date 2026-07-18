@@ -279,7 +279,7 @@ Manuell gepflegte Bewertung/Richtlinie für konkrete Nutzungsszenarien.
 
 ## Technische Umsetzung
 
-1. **Python** (`src/liz2standoff.py`)
+1. **Python** (`src/generate_site.py`)
     - erzeugt `output.txt` (Plaintext ohne Marker)
     - erzeugt `output.xml` (Standoff‑Annotationen mit 0‑basierten, end‑exklusiven Offsets)
 
@@ -303,7 +303,7 @@ ospo-lizenzkatalog/
 │  ├─ apache-2.0.liz
 │  └─ gpl-3.0.liz
 ├─ src/
-│  ├─ liz2standoff.py
+│  ├─ generate_site.py
 │  └─ styles/
 │     └─ liz2table-style.xsl
 └─ build/              # Ausgabeordner für CI und lokale Läufe
@@ -311,10 +311,10 @@ ospo-lizenzkatalog/
 
 ---
 
-## Nutzung (lokal)
+## Nutzung Visualisierung (lokal)
 
 ```bash
-python3 src/liz2standoff.py
+python3 src/generate_site.py
 ```
 
 Die Ausgaben werden unter `build/` abgelegt (konfigurationsabhängig).
@@ -327,6 +327,46 @@ Die Datei [`src/styles/liz2table-style.xsl`](src/styles/liz2table-style.xsl) ist
 sich im Browser auf das erzeugte `output.xml` anwenden.
 
 ---
+
+## Nutzung KI Automatisierung (lokal)
+
+1. Einmalig normalisieren
+```bash
+python3 src/tools/normalize_filenames.py
+git add -A
+git commit -m "chore(licenses): normalize filenames to SPDX licenseId"
+```
+
+2. Lint hinzufügen
+```bash
+python3 src/tools/license_lint.py
+```
+3. Sync Action laufen lassen
+Sie fügt künftig nur noch kanonische Dateien hinzu
+
+4. Allgemeine Kommandos
+
+$env:PYTHONPATH = "src"
+: Setzen des src Verzeichnisses um Modulaufruf zu unterstützen 
+
+python -m tools.verify_against_spdx
+: Alle *.liz Dateien gegen spdx prüfen ob ID dort existiert.
+
+python -m tools.license-lint
+: Alle *.liz Files auf korrekte Syntax prüfen
+
+python -m tools.beautify_licenses
+: Alle *.liz Dateien hübsch formatieren
+
+python -m tools.update_license_from_spdx lizenzkatalog/Apache-2.0.liz
+: Das angegebene Lizenzfile aktualisieren aber die Annotationen und Formatierung erhalten
+
+python -m tools.sync_licenses
+: Alle fehlenden Lizenzen von spdx herunterladen und formatieren bis die Liste in target_licenses.json vorliegt
+---
+
+
+
 
 ## Hinweise
 

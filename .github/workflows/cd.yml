@@ -14,7 +14,7 @@ jobs:
       - name: Run converter on examples
         run: |
           mkdir -p docs
-          python src/liz2standoff.py
+          python src/generate_site.py
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:

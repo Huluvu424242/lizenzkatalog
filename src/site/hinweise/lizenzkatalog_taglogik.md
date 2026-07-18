@@ -1,7 +1,7 @@
 # Lizenzkatalog – Verhalten von Tags: Bereiche, Singletons & Default-Labels
 
 Diese Dokumentation beschreibt das Verhalten der Tags innerhalb des Python‑Parsers
-(`liz2standoff.py`). Sie erklärt die Regeln für **Bereiche**, **Singletons** und
+(`generate_site.py`). Sie erklärt die Regeln für **Bereiche**, **Singletons** und
 **Default-Labels**, sowie deren Zusammenspiel.
 
 ---

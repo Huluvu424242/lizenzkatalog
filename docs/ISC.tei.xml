@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
+<annotation>
+  <text xml:space="preserve">
+
+
+
+
+
+ISC License
+
+
+ISC License:
+
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. (&quot;ISC&quot;)
+Copyright (c) 1995-2003 by Internet Software Consortium
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+  </text>
+  <notes>
+    <note id="a4" type="lic#name" start="4" end="17" category="lic" name="name"/>
+    <note id="a1" type="lic#spdx" label="ISC" link="https://spdx.org/licenses/ISC.html" category="lic" name="spdx" tooltip="lic#spdx ISC"/>
+    <note id="a2" type="lic#src" label="https://spdx.org/licenses/ISC.html" link="https://spdx.org/licenses/ISC.html" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
+    <note id="a3" type="lic#date" label="2026-02-18" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
+  </notes>
+</annotation>

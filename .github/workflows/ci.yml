@@ -16,7 +16,7 @@ jobs:
       - name: Run converter on examples
         run: |
           mkdir -p docs
-          python src/liz2standoff.py
+          python src/generate_site.py
       - name: Commit and push build artifacts
         if: success()  # Nur ausführen, wenn der Build erfolgreich war
         run: |

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# liz2standoff.py — Konvertiert .liz (Plaintext mit Markern) in
+# generate_site.py — Konvertiert .liz (Plaintext mit Markern) in
 # 1) reinen Text (Marker entfernt) und
 # 2) ein Standoff-XML mit <note .../>-Elementen
 #

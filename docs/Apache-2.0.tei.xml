@@ -5,8 +5,8 @@
 <annotation>
   <text xml:space="preserve">
 
-
-
+[[use#doc/]]
+[[use#lib/]]
 
 [[rul#notice=]]
 [[rul#lictxt=]]
@@ -15,7 +15,7 @@
                            Version 2.0, January 2004 
                         http://www.apache.org/licenses/
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
    1. Definitions.
 
@@ -188,7 +188,7 @@
 
    END OF TERMS AND CONDITIONS
 
-   APPENDIX: How to apply the Apache License to your work.
+APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
       boilerplate notice, with the fields enclosed by brackets &quot;[]&quot;
@@ -199,19 +199,17 @@
       same &quot;printed page&quot; as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+Copyright [yyyy] [name of copyright owner]
 
-   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with the
+License. You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+&quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
+language governing permissions and limitations under the License.
+
 
 
 
@@ -219,13 +217,12 @@
 
   </text>
   <notes>
-    <note id="a4" type="lic#name" start="69" end="171" category="lic" name="name"/>
-    <note id="a1" type="use#doc" label="Auf Dokumentation anwendbar." category="use" name="doc" emoji="📄" tooltip="use#doc 📄 Dokumentation"/>
-    <note id="a2" type="use#lib" label="Auf Bibliothek/Komponente anwendbar." category="use" name="lib" emoji="📗" tooltip="use#lib 📗 Bibliothek/Komponente"/>
-    <note id="a3" type="cpy#weak" label="Schwaches Copyleft" category="cpy" name="weak" emoji="🟢" tooltip="cpy#weak 🟢 Weak Copyleft"/>
-    <note id="a5" type="pol#if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="🏭 📗 🌍" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#public 🌍 Öffentlich"/>
-    <note id="a6" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="🏭 📗 🤝" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden"/>
-    <note id="a7" type="pol#if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="🏭 📗 ♻️" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#internal ♻️ Interne Weitergabe"/>
-    <note id="a8" type="pol#_section" present="true"/>
+    <note id="a3" type="lic#name" start="93" end="195" category="lic" name="name"/>
+    <note id="a1" type="lic#spdx" label="Apache-2.0" link="https://spdx.org/licenses/Apache-2.0.html" category="lic" name="spdx" tooltip="lic#spdx Apache-2.0"/>
+    <note id="a2" type="cpy#weak" label="Schwaches Copyleft" category="cpy" name="weak" emoji="🟢" tooltip="cpy#weak 🟢 Weak Copyleft"/>
+    <note id="a4" type="pol#if" if="env=com,use=lib,dst=public" then="gelb" because="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." status="yellow" title="Bei Öffentlicher Verteilung ist Einzelfallprüfung erforderlich." label="🏭 📗 🌍" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#public 🌍 Öffentlich"/>
+    <note id="a5" type="pol#if" if="env=com,use=lib,dst=partners" then="grün" because="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." status="green" title="Bereitstellung bei Partner/Kunden auf eigener Hardware ist zulässig." label="🏭 📗 🤝" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#partners 🤝 Partner/Kunden"/>
+    <note id="a6" type="pol#if" if="env=com,use=lib,dst=internal" then="grün" because="Interne Verteilung im Unternehmen ist zulässig." status="green" title="Interne Verteilung im Unternehmen ist zulässig." label="🏭 📗 ♻️" if_tooltip="env#com 🏭 Unternehmen, use#lib 📗 Bibliothek/Komponente, dst#internal ♻️ Interne Weitergabe"/>
+    <note id="a7" type="pol#_section" present="true"/>
   </notes>
 </annotation>

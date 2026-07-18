@@ -24,7 +24,7 @@ classifiers = [
 ]
 
 [project.scripts]
-liz2standoff = "liz2standoff:main"
+generate_site = "generate_site:main"
 
 [project.urls]
 Homepage = "https://github.com/example/license-annotator"
@@ -35,7 +35,7 @@ Issues = "https://github.com/example/license-annotator/issues"
 # Füge das src-Verzeichnis hinzu, aber vermeide build/
 packages = []
 include-package-data = false
-script-files = ["src/liz2standoff.py"]
+script-files = ["src/generate_site.py"]
 
 [tool.black]
 line-length = 100

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE annotation SYSTEM "annotation.dtd">
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<?thomas-schubert document-status="draft" version="2.0"?>
+<annotation>
+  <text xml:space="preserve">
+
+
+
+
+
+BSD 1-Clause License
+
+
+Copyright (c) &lt;year&gt; &lt;owner&gt;. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS&#x27;&#x27; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+  </text>
+  <notes>
+    <note id="a4" type="lic#name" start="4" end="26" category="lic" name="name"/>
+    <note id="a1" type="lic#spdx" label="BSD-1-Clause" link="https://spdx.org/licenses/BSD-1-Clause.html" category="lic" name="spdx" tooltip="lic#spdx BSD-1-Clause"/>
+    <note id="a2" type="lic#src" label="https://spdx.org/licenses/BSD-1-Clause.html" link="https://spdx.org/licenses/BSD-1-Clause.html" category="lic" name="src" tooltip="lic#src Quell-URL des Lizenztexts"/>
+    <note id="a3" type="lic#date" label="2026-02-18" category="lic" name="date" tooltip="lic#date Download Datum des analysierten Lizenztextes"/>
+  </notes>
+</annotation>

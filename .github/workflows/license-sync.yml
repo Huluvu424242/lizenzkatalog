@@ -1,0 +1,88 @@
+name: License catalog sync
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: "17 2 * * 2" # Tuesdays 02:17 UTC (adjust if you like)
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  SYNC_BRANCH: automation/license-catalog-sync
+  BASE_BRANCH: master
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout base branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "lizenzkatalog-sync-bot"
+          git config user.email "lizenzkatalog-sync-bot@users.noreply.github.com"
+
+      - name: Switch to sync branch (create if missing)
+        run: |
+          if git show-ref --verify --quiet refs/heads/${SYNC_BRANCH}; then
+            git checkout ${SYNC_BRANCH}
+          else
+            git checkout -b ${SYNC_BRANCH}
+          fi
+
+      - name: Rebase onto latest base
+        run: |
+          git fetch origin ${BASE_BRANCH}
+          git rebase origin/${BASE_BRANCH}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run sync (add missing SPDX licenses)
+        run: |
+          python -V
+          python src/tools/sync_licenses.py
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if git status --porcelain | grep .; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git add -A
+          git commit -m "chore(licenses): add missing SPDX licenses"
+
+      - name: Push sync branch (safe force)
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git push origin ${SYNC_BRANCH} --force-with-lease
+
+      - name: Create or update PR
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # If PR exists, do nothing; otherwise create it.
+          if gh pr view ${SYNC_BRANCH} --json number -q .number >/dev/null 2>&1; then
+            echo "PR already exists for ${SYNC_BRANCH}"
+          else
+            gh pr create \
+              --base ${BASE_BRANCH} \
+              --head ${SYNC_BRANCH} \
+              --title "Sync license catalog (missing SPDX licenses)" \
+              --body "Automated update: added missing licenses from SPDX JSON sources."
+          fi
